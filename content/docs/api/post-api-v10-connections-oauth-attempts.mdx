@@ -1,0 +1,68 @@
+---
+title: "Start an OAuth attempt"
+description: "Begin a browser OAuth flow"
+---
+
+## POST `/api/v10/Connections/oauth/attempts`
+
+**Start an OAuth attempt**
+
+This endpoint exists to start an OAuth login without exposing client secrets to the browser. The server creates a tracked attempt and hands back a safe authorization URL for the user to visit.
+
+Tags: `Connections OAuth`
+
+### Parameters
+
+```json
+[]
+```
+
+### Request Body
+
+```json
+{
+  "content": {
+    "application/json-patch+json": {
+      "schema": {
+        "$ref": "#/components/schemas/StartConnectionOAuthAttemptRequest"
+      }
+    },
+    "application/json": {
+      "schema": {
+        "$ref": "#/components/schemas/StartConnectionOAuthAttemptRequest"
+      }
+    },
+    "text/json": {
+      "schema": {
+        "$ref": "#/components/schemas/StartConnectionOAuthAttemptRequest"
+      }
+    },
+    "application/*+json": {
+      "schema": {
+        "$ref": "#/components/schemas/StartConnectionOAuthAttemptRequest"
+      }
+    }
+  },
+  "required": true
+}
+```
+
+### Responses
+
+```json
+{
+  "200": {
+    "description": "OK"
+  },
+  "400": {
+    "description": "Bad Request",
+    "content": {
+      "application/problem+json": {
+        "schema": {
+          "$ref": "#/components/schemas/ProblemDetails"
+        }
+      }
+    }
+  }
+}
+```

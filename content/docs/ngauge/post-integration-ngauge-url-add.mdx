@@ -1,0 +1,77 @@
+---
+title: "Add Row"
+description: "External row submission"
+---
+
+## POST `/integration/ngauge/{url}/add`
+
+**Add Row**
+
+This endpoint exists so outside websites can submit entries into a form. Public intake works without giving external systems any internal access.
+
+Tags: `NGague \ Form \ Row`
+
+### Parameters
+
+```json
+[
+  {
+    "name": "url",
+    "in": "path",
+    "required": true,
+    "schema": {
+      "type": "string"
+    }
+  }
+]
+```
+
+### Request Body
+
+```json
+{
+  "content": {
+    "application/json-patch+json": {
+      "schema": {
+        "type": "object"
+      }
+    },
+    "application/json": {
+      "schema": {
+        "type": "object"
+      }
+    },
+    "text/json": {
+      "schema": {
+        "type": "object"
+      }
+    },
+    "application/*+json": {
+      "schema": {
+        "type": "object"
+      }
+    }
+  },
+  "required": true
+}
+```
+
+### Responses
+
+```json
+{
+  "200": {
+    "description": "OK"
+  },
+  "400": {
+    "description": "Bad Request",
+    "content": {
+      "application/problem+json": {
+        "schema": {
+          "$ref": "#/components/schemas/ProblemDetails"
+        }
+      }
+    }
+  }
+}
+```

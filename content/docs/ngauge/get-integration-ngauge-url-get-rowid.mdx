@@ -1,0 +1,55 @@
+---
+title: "Get Row"
+description: "External read of one row"
+---
+
+## GET `/integration/ngauge/{url}/get/{rowId}`
+
+**Get Row**
+
+This endpoint exists to let embedded integrations fetch a single record by its public URL. It is the read hook for portals that display NGauge data.
+
+Tags: `NGague \ Form \ Row`
+
+### Parameters
+
+```json
+[
+  {
+    "name": "url",
+    "in": "path",
+    "required": true,
+    "schema": {
+      "type": "string"
+    }
+  },
+  {
+    "name": "rowId",
+    "in": "path",
+    "required": true,
+    "schema": {
+      "type": "string"
+    }
+  }
+]
+```
+
+### Responses
+
+```json
+{
+  "200": {
+    "description": "OK"
+  },
+  "400": {
+    "description": "Bad Request",
+    "content": {
+      "application/problem+json": {
+        "schema": {
+          "$ref": "#/components/schemas/ProblemDetails"
+        }
+      }
+    }
+  }
+}
+```

@@ -1,0 +1,52 @@
+---
+title: "Delete List"
+description: "Delete a reference list"
+---
+
+## DELETE `/api/v10/ngauge/lists/{id}`
+
+**Delete List**
+
+This endpoint exists to retire lists that are no longer needed. Removing them centrally prevents users from picking stale values in new entries.
+
+Tags: `NGague \ List`
+
+### Parameters
+
+```json
+[
+  {
+    "name": "id",
+    "in": "path",
+    "required": true,
+    "schema": {
+      "pattern": "^-?(?:0|[1-9]\\d*)$",
+      "type": [
+        "integer",
+        "string"
+      ],
+      "format": "int64"
+    }
+  }
+]
+```
+
+### Responses
+
+```json
+{
+  "200": {
+    "description": "OK"
+  },
+  "400": {
+    "description": "Bad Request",
+    "content": {
+      "application/problem+json": {
+        "schema": {
+          "$ref": "#/components/schemas/ProblemDetails"
+        }
+      }
+    }
+  }
+}
+```

@@ -1,0 +1,55 @@
+---
+title: "Get connection provider catalogue"
+description: "List supported connection providers"
+---
+
+## GET `/api/v10/Connections/catalogue`
+
+**Get connection provider catalogue**
+
+This endpoint exists so that "new connection" screens can show which providers are available and what settings each one requires. It exposes provider shapes and metadata only, never secrets, letting the UI build the right form for each provider.
+
+Tags: `Connections`
+
+### Parameters
+
+```json
+[]
+```
+
+### Responses
+
+```json
+{
+  "200": {
+    "description": "OK",
+    "content": {
+      "text/plain": {
+        "schema": {
+          "$ref": "#/components/schemas/ConnectionCatalog"
+        }
+      },
+      "application/json": {
+        "schema": {
+          "$ref": "#/components/schemas/ConnectionCatalog"
+        }
+      },
+      "text/json": {
+        "schema": {
+          "$ref": "#/components/schemas/ConnectionCatalog"
+        }
+      }
+    }
+  },
+  "400": {
+    "description": "Bad Request",
+    "content": {
+      "application/problem+json": {
+        "schema": {
+          "$ref": "#/components/schemas/ProblemDetails"
+        }
+      }
+    }
+  }
+}
+```

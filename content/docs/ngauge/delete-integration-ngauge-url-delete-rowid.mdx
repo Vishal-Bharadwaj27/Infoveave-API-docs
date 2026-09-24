@@ -1,0 +1,55 @@
+---
+title: "Delete Row"
+description: "External row deletion"
+---
+
+## DELETE `/integration/ngauge/{url}/delete/{rowId}`
+
+**Delete Row**
+
+This endpoint exists to let integrations retract entries through the same public URL scheme. Full lifecycle support means portals never strand bad data.
+
+Tags: `NGague \ Form \ Row`
+
+### Parameters
+
+```json
+[
+  {
+    "name": "url",
+    "in": "path",
+    "required": true,
+    "schema": {
+      "type": "string"
+    }
+  },
+  {
+    "name": "rowId",
+    "in": "path",
+    "required": true,
+    "schema": {
+      "type": "string"
+    }
+  }
+]
+```
+
+### Responses
+
+```json
+{
+  "200": {
+    "description": "OK"
+  },
+  "400": {
+    "description": "Bad Request",
+    "content": {
+      "application/problem+json": {
+        "schema": {
+          "$ref": "#/components/schemas/ProblemDetails"
+        }
+      }
+    }
+  }
+}
+```

@@ -1,0 +1,97 @@
+---
+title: "Get NGauge Form Print Pdf"
+description: "Printable PDF of a view"
+---
+
+## POST `/api/v10/ngauge/Forms/{id}/views/{viewId}/get-pdf`
+
+**Get NGauge Form Print Pdf**
+
+This endpoint exists to render a record or view as a printable document. PDFs serve signatures, filings and offline records where a web grid will not do.
+
+Get ngauge form print pdf as an Excel file (.xlsx)
+
+Tags: `NGague \ Form \ View`
+
+### Parameters
+
+```json
+[
+  {
+    "name": "id",
+    "in": "path",
+    "required": true,
+    "schema": {
+      "pattern": "^-?(?:0|[1-9]\\d*)$",
+      "type": [
+        "integer",
+        "string"
+      ],
+      "format": "int64"
+    }
+  },
+  {
+    "name": "viewId",
+    "in": "path",
+    "required": true,
+    "schema": {
+      "pattern": "^-?(?:0|[1-9]\\d*)$",
+      "type": [
+        "integer",
+        "string"
+      ],
+      "format": "int64"
+    }
+  }
+]
+```
+
+### Request Body
+
+```json
+{
+  "content": {
+    "application/json-patch+json": {
+      "schema": {
+        "$ref": "#/components/schemas/NGaugeFormPrintPdfRequest"
+      }
+    },
+    "application/json": {
+      "schema": {
+        "$ref": "#/components/schemas/NGaugeFormPrintPdfRequest"
+      }
+    },
+    "text/json": {
+      "schema": {
+        "$ref": "#/components/schemas/NGaugeFormPrintPdfRequest"
+      }
+    },
+    "application/*+json": {
+      "schema": {
+        "$ref": "#/components/schemas/NGaugeFormPrintPdfRequest"
+      }
+    }
+  },
+  "required": true
+}
+```
+
+### Responses
+
+```json
+{
+  "200": {
+    "description": "OK"
+  },
+  "400": {
+    "description": "Bad Request",
+    "content": {
+      "application/problem+json": {
+        "schema": {
+          "$ref": "#/components/schemas/ProblemDetails"
+        }
+      }
+    }
+  }
+}
+```

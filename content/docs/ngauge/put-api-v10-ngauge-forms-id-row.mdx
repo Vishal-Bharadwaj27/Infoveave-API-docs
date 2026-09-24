@@ -1,0 +1,82 @@
+---
+title: "Update Row"
+description: "Update a form row"
+---
+
+## PUT `/api/v10/ngauge/Forms/{id}/row`
+
+**Update Row**
+
+This endpoint exists to correct a submitted entry while keeping its identity. Editable rows let data stay accurate without deleting history and re-entering.
+
+Tags: `NGague \ Form \ Row`
+
+### Parameters
+
+```json
+[
+  {
+    "name": "id",
+    "in": "path",
+    "required": true,
+    "schema": {
+      "pattern": "^-?(?:0|[1-9]\\d*)$",
+      "type": [
+        "integer",
+        "string"
+      ],
+      "format": "int64"
+    }
+  }
+]
+```
+
+### Request Body
+
+```json
+{
+  "content": {
+    "application/json-patch+json": {
+      "schema": {
+        "$ref": "#/components/schemas/UpdateRowRequest"
+      }
+    },
+    "application/json": {
+      "schema": {
+        "$ref": "#/components/schemas/UpdateRowRequest"
+      }
+    },
+    "text/json": {
+      "schema": {
+        "$ref": "#/components/schemas/UpdateRowRequest"
+      }
+    },
+    "application/*+json": {
+      "schema": {
+        "$ref": "#/components/schemas/UpdateRowRequest"
+      }
+    }
+  },
+  "required": true
+}
+```
+
+### Responses
+
+```json
+{
+  "200": {
+    "description": "OK"
+  },
+  "400": {
+    "description": "Bad Request",
+    "content": {
+      "application/problem+json": {
+        "schema": {
+          "$ref": "#/components/schemas/ProblemDetails"
+        }
+      }
+    }
+  }
+}
+```

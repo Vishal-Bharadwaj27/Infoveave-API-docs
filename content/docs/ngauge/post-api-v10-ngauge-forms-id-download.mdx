@@ -1,0 +1,84 @@
+---
+title: "Download NGauge Form Data"
+description: "Export form rows to Excel"
+---
+
+## POST `/api/v10/ngauge/Forms/{id}/download`
+
+**Download NGauge Form Data**
+
+This endpoint exists to produce a spreadsheet of collected entries for offline review and reporting. The export mirrors the live data so shared files stay trustworthy.
+
+Downloads the NGauge form data as an Excel file (.xlsx)
+
+Tags: `NGague \ Form`
+
+### Parameters
+
+```json
+[
+  {
+    "name": "id",
+    "in": "path",
+    "required": true,
+    "schema": {
+      "pattern": "^-?(?:0|[1-9]\\d*)$",
+      "type": [
+        "integer",
+        "string"
+      ],
+      "format": "int64"
+    }
+  }
+]
+```
+
+### Request Body
+
+```json
+{
+  "content": {
+    "application/json-patch+json": {
+      "schema": {
+        "$ref": "#/components/schemas/NGaugeFormDownloadDataRequest"
+      }
+    },
+    "application/json": {
+      "schema": {
+        "$ref": "#/components/schemas/NGaugeFormDownloadDataRequest"
+      }
+    },
+    "text/json": {
+      "schema": {
+        "$ref": "#/components/schemas/NGaugeFormDownloadDataRequest"
+      }
+    },
+    "application/*+json": {
+      "schema": {
+        "$ref": "#/components/schemas/NGaugeFormDownloadDataRequest"
+      }
+    }
+  },
+  "required": true
+}
+```
+
+### Responses
+
+```json
+{
+  "200": {
+    "description": "OK"
+  },
+  "400": {
+    "description": "Bad Request",
+    "content": {
+      "application/problem+json": {
+        "schema": {
+          "$ref": "#/components/schemas/ProblemDetails"
+        }
+      }
+    }
+  }
+}
+```

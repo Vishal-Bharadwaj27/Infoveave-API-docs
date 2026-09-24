@@ -1,0 +1,82 @@
+---
+title: "Get Row"
+description: "Fetch a single row"
+---
+
+## POST `/api/v10/ngauge/Forms/{id}/get-row`
+
+**Get Row**
+
+This endpoint exists to load one record for viewing or editing. Targeted reads avoid pulling whole pages when only one entry matters.
+
+Tags: `NGague \ Form \ Row`
+
+### Parameters
+
+```json
+[
+  {
+    "name": "id",
+    "in": "path",
+    "required": true,
+    "schema": {
+      "pattern": "^-?(?:0|[1-9]\\d*)$",
+      "type": [
+        "integer",
+        "string"
+      ],
+      "format": "int64"
+    }
+  }
+]
+```
+
+### Request Body
+
+```json
+{
+  "content": {
+    "application/json-patch+json": {
+      "schema": {
+        "$ref": "#/components/schemas/GetRowRequest"
+      }
+    },
+    "application/json": {
+      "schema": {
+        "$ref": "#/components/schemas/GetRowRequest"
+      }
+    },
+    "text/json": {
+      "schema": {
+        "$ref": "#/components/schemas/GetRowRequest"
+      }
+    },
+    "application/*+json": {
+      "schema": {
+        "$ref": "#/components/schemas/GetRowRequest"
+      }
+    }
+  },
+  "required": true
+}
+```
+
+### Responses
+
+```json
+{
+  "200": {
+    "description": "OK"
+  },
+  "400": {
+    "description": "Bad Request",
+    "content": {
+      "application/problem+json": {
+        "schema": {
+          "$ref": "#/components/schemas/ProblemDetails"
+        }
+      }
+    }
+  }
+}
+```

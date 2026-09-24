@@ -1,0 +1,52 @@
+---
+title: "Get NGauge Form By Id"
+description: "Read one form definition"
+---
+
+## GET `/api/v10/ngauge/Forms/{id}`
+
+**Get NGauge Form By Id**
+
+This endpoint exists so builders and renderers can load exactly how a form is structured. Everything about display, validation and storage flows from this definition.
+
+Tags: `NGague \ Form`
+
+### Parameters
+
+```json
+[
+  {
+    "name": "id",
+    "in": "path",
+    "required": true,
+    "schema": {
+      "pattern": "^-?(?:0|[1-9]\\d*)$",
+      "type": [
+        "integer",
+        "string"
+      ],
+      "format": "int64"
+    }
+  }
+]
+```
+
+### Responses
+
+```json
+{
+  "200": {
+    "description": "OK"
+  },
+  "400": {
+    "description": "Bad Request",
+    "content": {
+      "application/problem+json": {
+        "schema": {
+          "$ref": "#/components/schemas/ProblemDetails"
+        }
+      }
+    }
+  }
+}
+```

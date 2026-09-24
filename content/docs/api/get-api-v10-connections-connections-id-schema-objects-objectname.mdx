@@ -1,0 +1,73 @@
+---
+title: "Describe a schema object"
+description: "Describe one data object"
+---
+
+## GET `/api/v10/Connections/connections/{id}/schema/objects/{objectName}`
+
+**Describe a schema object**
+
+This endpoint exists to return the columns and types of a single table or object. Field-level detail is what allows UIs to build valid queries and map fields correctly.
+
+Tags: `Connections`
+
+### Parameters
+
+```json
+[
+  {
+    "name": "id",
+    "in": "path",
+    "required": true,
+    "schema": {
+      "type": "string",
+      "format": "uuid"
+    }
+  },
+  {
+    "name": "objectName",
+    "in": "path",
+    "required": true,
+    "schema": {
+      "type": "string"
+    }
+  }
+]
+```
+
+### Responses
+
+```json
+{
+  "200": {
+    "description": "OK",
+    "content": {
+      "text/plain": {
+        "schema": {
+          "$ref": "#/components/schemas/ConnectionObjectDescriptionResult"
+        }
+      },
+      "application/json": {
+        "schema": {
+          "$ref": "#/components/schemas/ConnectionObjectDescriptionResult"
+        }
+      },
+      "text/json": {
+        "schema": {
+          "$ref": "#/components/schemas/ConnectionObjectDescriptionResult"
+        }
+      }
+    }
+  },
+  "400": {
+    "description": "Bad Request",
+    "content": {
+      "application/problem+json": {
+        "schema": {
+          "$ref": "#/components/schemas/ProblemDetails"
+        }
+      }
+    }
+  }
+}
+```

@@ -1,0 +1,84 @@
+---
+title: "Validate NGauge Form Rule"
+description: "Check a form automation rule"
+---
+
+## POST `/api/v10/ngauge/Forms/{id}/validate-rule`
+
+**Validate NGauge Form Rule**
+
+This endpoint exists to test a rule before it goes live on the form. Catching broken rules early prevents silent automation failures on real user submissions.
+
+Validates the configured rule for NGauge From actions
+
+Tags: `NGague \ Form`
+
+### Parameters
+
+```json
+[
+  {
+    "name": "id",
+    "in": "path",
+    "required": true,
+    "schema": {
+      "pattern": "^-?(?:0|[1-9]\\d*)$",
+      "type": [
+        "integer",
+        "string"
+      ],
+      "format": "int64"
+    }
+  }
+]
+```
+
+### Request Body
+
+```json
+{
+  "content": {
+    "application/json-patch+json": {
+      "schema": {
+        "$ref": "#/components/schemas/AutomationRuleValidationForRequest"
+      }
+    },
+    "application/json": {
+      "schema": {
+        "$ref": "#/components/schemas/AutomationRuleValidationForRequest"
+      }
+    },
+    "text/json": {
+      "schema": {
+        "$ref": "#/components/schemas/AutomationRuleValidationForRequest"
+      }
+    },
+    "application/*+json": {
+      "schema": {
+        "$ref": "#/components/schemas/AutomationRuleValidationForRequest"
+      }
+    }
+  },
+  "required": true
+}
+```
+
+### Responses
+
+```json
+{
+  "200": {
+    "description": "OK"
+  },
+  "400": {
+    "description": "Bad Request",
+    "content": {
+      "application/problem+json": {
+        "schema": {
+          "$ref": "#/components/schemas/ProblemDetails"
+        }
+      }
+    }
+  }
+}
+```

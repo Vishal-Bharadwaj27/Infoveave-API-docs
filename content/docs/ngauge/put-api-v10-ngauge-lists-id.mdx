@@ -1,0 +1,82 @@
+---
+title: "Update List"
+description: "Update a reference list"
+---
+
+## PUT `/api/v10/ngauge/lists/{id}`
+
+**Update List**
+
+This endpoint exists to change a list definition while every form using it keeps working. Central edits here propagate to all consumers instead of being copy-pasted per form.
+
+Tags: `NGague \ List`
+
+### Parameters
+
+```json
+[
+  {
+    "name": "id",
+    "in": "path",
+    "required": true,
+    "schema": {
+      "pattern": "^-?(?:0|[1-9]\\d*)$",
+      "type": [
+        "integer",
+        "string"
+      ],
+      "format": "int64"
+    }
+  }
+]
+```
+
+### Request Body
+
+```json
+{
+  "content": {
+    "application/json-patch+json": {
+      "schema": {
+        "$ref": "#/components/schemas/UpdateListWithLinkedListViews"
+      }
+    },
+    "application/json": {
+      "schema": {
+        "$ref": "#/components/schemas/UpdateListWithLinkedListViews"
+      }
+    },
+    "text/json": {
+      "schema": {
+        "$ref": "#/components/schemas/UpdateListWithLinkedListViews"
+      }
+    },
+    "application/*+json": {
+      "schema": {
+        "$ref": "#/components/schemas/UpdateListWithLinkedListViews"
+      }
+    }
+  },
+  "required": true
+}
+```
+
+### Responses
+
+```json
+{
+  "200": {
+    "description": "OK"
+  },
+  "400": {
+    "description": "Bad Request",
+    "content": {
+      "application/problem+json": {
+        "schema": {
+          "$ref": "#/components/schemas/ProblemDetails"
+        }
+      }
+    }
+  }
+}
+```

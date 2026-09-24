@@ -1,0 +1,96 @@
+---
+title: "Manage Child Form Rows"
+description: "Keep parent and child rows consistent"
+---
+
+## POST `/api/v10/ngauge/Forms/{id}/row/manage-child-form`
+
+**Manage Child Form Rows**
+
+This endpoint exists to manage line-item rows that belong to a parent entry in one call. Handling them together prevents orphaned child rows when a parent changes.
+
+Manage adding, editing, and deleting child form rows in a single method
+
+Tags: `NGague \ Form \ Row`
+
+### Parameters
+
+```json
+[
+  {
+    "name": "id",
+    "in": "path",
+    "required": true,
+    "schema": {
+      "pattern": "^-?(?:0|[1-9]\\d*)$",
+      "type": [
+        "integer",
+        "string"
+      ],
+      "format": "int64"
+    }
+  }
+]
+```
+
+### Request Body
+
+```json
+{
+  "content": {
+    "application/json-patch+json": {
+      "schema": {
+        "type": "array",
+        "items": {
+          "$ref": "#/components/schemas/ManageChildFormRowRequest"
+        }
+      }
+    },
+    "application/json": {
+      "schema": {
+        "type": "array",
+        "items": {
+          "$ref": "#/components/schemas/ManageChildFormRowRequest"
+        }
+      }
+    },
+    "text/json": {
+      "schema": {
+        "type": "array",
+        "items": {
+          "$ref": "#/components/schemas/ManageChildFormRowRequest"
+        }
+      }
+    },
+    "application/*+json": {
+      "schema": {
+        "type": "array",
+        "items": {
+          "$ref": "#/components/schemas/ManageChildFormRowRequest"
+        }
+      }
+    }
+  },
+  "required": true
+}
+```
+
+### Responses
+
+```json
+{
+  "200": {
+    "description": "OK"
+  },
+  "400": {
+    "description": "Bad Request",
+    "content": {
+      "application/problem+json": {
+        "schema": {
+          "$ref": "#/components/schemas/ProblemDetails"
+        }
+      }
+    }
+  }
+}
+```

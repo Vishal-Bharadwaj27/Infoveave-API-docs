@@ -1,0 +1,68 @@
+---
+title: "Create NGauge Form"
+description: "Create a data-entry form"
+---
+
+## POST `/api/v10/ngauge/Forms`
+
+**Create NGauge Form**
+
+This endpoint exists to define a new structured form before any rows are collected. Defining the schema first is what makes every later entry validated and comparable.
+
+Tags: `NGague \ Form`
+
+### Parameters
+
+```json
+[]
+```
+
+### Request Body
+
+```json
+{
+  "content": {
+    "application/json-patch+json": {
+      "schema": {
+        "$ref": "#/components/schemas/NGaugeFormUpdateRequest"
+      }
+    },
+    "application/json": {
+      "schema": {
+        "$ref": "#/components/schemas/NGaugeFormUpdateRequest"
+      }
+    },
+    "text/json": {
+      "schema": {
+        "$ref": "#/components/schemas/NGaugeFormUpdateRequest"
+      }
+    },
+    "application/*+json": {
+      "schema": {
+        "$ref": "#/components/schemas/NGaugeFormUpdateRequest"
+      }
+    }
+  },
+  "required": true
+}
+```
+
+### Responses
+
+```json
+{
+  "200": {
+    "description": "OK"
+  },
+  "400": {
+    "description": "Bad Request",
+    "content": {
+      "application/problem+json": {
+        "schema": {
+          "$ref": "#/components/schemas/ProblemDetails"
+        }
+      }
+    }
+  }
+}
+```

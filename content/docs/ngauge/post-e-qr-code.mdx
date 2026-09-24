@@ -1,0 +1,47 @@
+---
+title: "POST /E/QR/{code}"
+description: "Submit through a QR code"
+---
+
+## POST `/E/QR/{code}`
+
+**POST /E/QR/&#123;code&#125;**
+
+This endpoint exists so QR-opened forms can post entries back without an app login flow. Scanning plus submitting in one loop is what makes paper-to-digital capture practical.
+
+Tags: `Forms`
+
+### Parameters
+
+```json
+[
+  {
+    "name": "code",
+    "in": "path",
+    "required": true,
+    "schema": {
+      "type": "string"
+    }
+  }
+]
+```
+
+### Responses
+
+```json
+{
+  "200": {
+    "description": "OK"
+  },
+  "400": {
+    "description": "Bad Request",
+    "content": {
+      "application/problem+json": {
+        "schema": {
+          "$ref": "#/components/schemas/ProblemDetails"
+        }
+      }
+    }
+  }
+}
+```

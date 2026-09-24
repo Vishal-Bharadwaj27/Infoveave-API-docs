@@ -1,0 +1,85 @@
+---
+title: "Update Row"
+description: "External row update"
+---
+
+## PUT `/integration/ngauge/{url}/update/{rowId}`
+
+**Update Row**
+
+This endpoint exists to let integrated systems correct entries they own. Scoped updates keep embedded portals useful after the first submission.
+
+Tags: `NGague \ Form \ Row`
+
+### Parameters
+
+```json
+[
+  {
+    "name": "url",
+    "in": "path",
+    "required": true,
+    "schema": {
+      "type": "string"
+    }
+  },
+  {
+    "name": "rowId",
+    "in": "path",
+    "required": true,
+    "schema": {
+      "type": "string"
+    }
+  }
+]
+```
+
+### Request Body
+
+```json
+{
+  "content": {
+    "application/json-patch+json": {
+      "schema": {
+        "type": "object"
+      }
+    },
+    "application/json": {
+      "schema": {
+        "type": "object"
+      }
+    },
+    "text/json": {
+      "schema": {
+        "type": "object"
+      }
+    },
+    "application/*+json": {
+      "schema": {
+        "type": "object"
+      }
+    }
+  },
+  "required": true
+}
+```
+
+### Responses
+
+```json
+{
+  "200": {
+    "description": "OK"
+  },
+  "400": {
+    "description": "Bad Request",
+    "content": {
+      "application/problem+json": {
+        "schema": {
+          "$ref": "#/components/schemas/ProblemDetails"
+        }
+      }
+    }
+  }
+}
+```

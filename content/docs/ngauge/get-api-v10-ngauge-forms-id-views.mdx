@@ -1,0 +1,52 @@
+---
+title: "Get All Views"
+description: "List saved form views"
+---
+
+## GET `/api/v10/ngauge/Forms/{id}/views`
+
+**Get All Views**
+
+This endpoint exists so users can pick from prebuilt filtered perspectives of a form. Saved views stop everyone from rebuilding the same filters by hand.
+
+Tags: `NGague \ Form \ View`
+
+### Parameters
+
+```json
+[
+  {
+    "name": "id",
+    "in": "path",
+    "required": true,
+    "schema": {
+      "pattern": "^-?(?:0|[1-9]\\d*)$",
+      "type": [
+        "integer",
+        "string"
+      ],
+      "format": "int64"
+    }
+  }
+]
+```
+
+### Responses
+
+```json
+{
+  "200": {
+    "description": "OK"
+  },
+  "400": {
+    "description": "Bad Request",
+    "content": {
+      "application/problem+json": {
+        "schema": {
+          "$ref": "#/components/schemas/ProblemDetails"
+        }
+      }
+    }
+  }
+}
+```

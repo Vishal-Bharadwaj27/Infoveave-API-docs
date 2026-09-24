@@ -1,0 +1,79 @@
+---
+title: "Get NGauge Form Data"
+description: "External paged read of form rows"
+---
+
+## POST `/integration/ngauge/{url}/get-data`
+
+**Get NGauge Form Data**
+
+This endpoint exists so third-party sites can read form data through a stable public URL. External consumers never need internal form IDs, which keeps integrations working across renames and moves.
+
+Retrieves a specific page of rows from the NGauge form data
+
+Tags: `NGague \ Form`
+
+### Parameters
+
+```json
+[
+  {
+    "name": "url",
+    "in": "path",
+    "required": true,
+    "schema": {
+      "type": "string"
+    }
+  }
+]
+```
+
+### Request Body
+
+```json
+{
+  "content": {
+    "application/json-patch+json": {
+      "schema": {
+        "$ref": "#/components/schemas/IntegrationNGaugeFormPaginationRequest"
+      }
+    },
+    "application/json": {
+      "schema": {
+        "$ref": "#/components/schemas/IntegrationNGaugeFormPaginationRequest"
+      }
+    },
+    "text/json": {
+      "schema": {
+        "$ref": "#/components/schemas/IntegrationNGaugeFormPaginationRequest"
+      }
+    },
+    "application/*+json": {
+      "schema": {
+        "$ref": "#/components/schemas/IntegrationNGaugeFormPaginationRequest"
+      }
+    }
+  },
+  "required": true
+}
+```
+
+### Responses
+
+```json
+{
+  "200": {
+    "description": "OK"
+  },
+  "400": {
+    "description": "Bad Request",
+    "content": {
+      "application/problem+json": {
+        "schema": {
+          "$ref": "#/components/schemas/ProblemDetails"
+        }
+      }
+    }
+  }
+}
+```

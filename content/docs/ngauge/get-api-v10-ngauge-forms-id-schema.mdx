@@ -1,0 +1,52 @@
+---
+title: "Get NGauge Form Schema"
+description: "Read a form column schema"
+---
+
+## GET `/api/v10/ngauge/Forms/{id}/schema`
+
+**Get NGauge Form Schema**
+
+This endpoint exists so dynamic renderers know each column name and type. The schema is the contract every grid, import and integration builds against.
+
+Tags: `NGague \ Form`
+
+### Parameters
+
+```json
+[
+  {
+    "name": "id",
+    "in": "path",
+    "required": true,
+    "schema": {
+      "pattern": "^-?(?:0|[1-9]\\d*)$",
+      "type": [
+        "integer",
+        "string"
+      ],
+      "format": "int64"
+    }
+  }
+]
+```
+
+### Responses
+
+```json
+{
+  "200": {
+    "description": "OK"
+  },
+  "400": {
+    "description": "Bad Request",
+    "content": {
+      "application/problem+json": {
+        "schema": {
+          "$ref": "#/components/schemas/ProblemDetails"
+        }
+      }
+    }
+  }
+}
+```

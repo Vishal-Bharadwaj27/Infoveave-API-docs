@@ -1,0 +1,1681 @@
+{
+  "openapi": "3.1.1",
+  "info": {
+    "title": "Infoveave V10",
+    "description": "Infoveave V10 APIs (Gateway)",
+    "termsOfService": "https://infoveave.com/product/terms",
+    "contact": {
+      "name": "Naresh Jois",
+      "url": "mailto:naresh@noesyssoftware.com"
+    },
+    "license": {
+      "name": "Infoveave SAAS/On-site License",
+      "url": "https://infoveave.com/product/license"
+    },
+    "version": "v10"
+  },
+  "servers": [
+    {
+      "url": "http://localhost:10021/"
+    }
+  ],
+  "paths": {
+    "/api/v10/Connections": {
+      "get": {
+        "tags": [
+          "Connections"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v10/Connections/catalogue": {
+      "get": {
+        "tags": [
+          "Connections"
+        ],
+        "summary": "Get connection provider catalogue",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ConnectionCatalog"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ConnectionCatalog"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ConnectionCatalog"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v10/Connections/connections": {
+      "get": {
+        "tags": [
+          "Connections"
+        ],
+        "summary": "List accessible connections",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ConnectionSummary"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ConnectionSummary"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ConnectionSummary"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Connections"
+        ],
+        "summary": "Create a connection",
+        "requestBody": {
+          "content": {
+            "application/json-patch+json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateConnectionRequest"
+              }
+            },
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateConnectionRequest"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateConnectionRequest"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateConnectionRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "description": "Created",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ConnectionSummary"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ConnectionSummary"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ConnectionSummary"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v10/Connections/connections/{id}": {
+      "get": {
+        "tags": [
+          "Connections"
+        ],
+        "summary": "Get an accessible connection",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ConnectionSummary"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ConnectionSummary"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ConnectionSummary"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Connections"
+        ],
+        "summary": "Completely replace a connection",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "If-Match",
+            "in": "header",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json-patch+json": {
+              "schema": {
+                "$ref": "#/components/schemas/ReplaceConnectionRequest"
+              }
+            },
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ReplaceConnectionRequest"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ReplaceConnectionRequest"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/ReplaceConnectionRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ConnectionSummary"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ConnectionSummary"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ConnectionSummary"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Connections"
+        ],
+        "summary": "Delete a connection",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "If-Match",
+            "in": "header",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "No Content"
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v10/Connections/connections/{id}/restore": {
+      "post": {
+        "tags": [
+          "Connections"
+        ],
+        "summary": "Restore a deleted connection",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "If-Match",
+            "in": "header",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ConnectionSummary"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ConnectionSummary"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ConnectionSummary"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v10/Connections/connections/{id}/access": {
+      "get": {
+        "tags": [
+          "Connections"
+        ],
+        "summary": "Get connection access",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ConnectionAccessSummary"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ConnectionAccessSummary"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ConnectionAccessSummary"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Connections"
+        ],
+        "summary": "Completely replace connection access",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "If-Match",
+            "in": "header",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json-patch+json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateConnectionAccessRequest"
+              }
+            },
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateConnectionAccessRequest"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateConnectionAccessRequest"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateConnectionAccessRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ConnectionAccessSummary"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ConnectionAccessSummary"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ConnectionAccessSummary"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v10/Connections/connections/{id}/test": {
+      "post": {
+        "tags": [
+          "Connections"
+        ],
+        "summary": "Test a connection",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ConnectionTestResult"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ConnectionTestResult"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ConnectionTestResult"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v10/Connections/connections/{id}/schema/objects": {
+      "get": {
+        "tags": [
+          "Connections"
+        ],
+        "summary": "List schema objects",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ConnectionObjectListingResult"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ConnectionObjectListingResult"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ConnectionObjectListingResult"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v10/Connections/connections/{id}/schema/objects/{objectName}": {
+      "get": {
+        "tags": [
+          "Connections"
+        ],
+        "summary": "Describe a schema object",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "objectName",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ConnectionObjectDescriptionResult"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ConnectionObjectDescriptionResult"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ConnectionObjectDescriptionResult"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v10/Connections/oauth/attempts": {
+      "post": {
+        "tags": [
+          "Connections OAuth"
+        ],
+        "summary": "Start an OAuth attempt",
+        "requestBody": {
+          "content": {
+            "application/json-patch+json": {
+              "schema": {
+                "$ref": "#/components/schemas/StartConnectionOAuthAttemptRequest"
+              }
+            },
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/StartConnectionOAuthAttemptRequest"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/StartConnectionOAuthAttemptRequest"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/StartConnectionOAuthAttemptRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v10/Connections/oauth/attempts/{id}": {
+      "get": {
+        "tags": [
+          "Connections OAuth"
+        ],
+        "summary": "Get an OAuth attempt",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v10/Connections/oauth/callback": {
+      "get": {
+        "tags": [
+          "Connections OAuth"
+        ],
+        "summary": "OAuth browser completion callback",
+        "parameters": [
+          {
+            "name": "status",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "handle",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "attemptId",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v10/Connections/oauth/attempts/{id}/complete": {
+      "post": {
+        "tags": [
+          "Connections OAuth"
+        ],
+        "summary": "Complete an OAuth attempt",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json-patch+json": {
+              "schema": {
+                "$ref": "#/components/schemas/CompleteConnectionOAuthAttemptRequest"
+              }
+            },
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CompleteConnectionOAuthAttemptRequest"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CompleteConnectionOAuthAttemptRequest"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/CompleteConnectionOAuthAttemptRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "CompleteConnectionOAuthAttemptRequest": {
+        "required": [
+          "completionHandle"
+        ],
+        "type": "object",
+        "properties": {
+          "completionHandle": {
+            "type": "string"
+          }
+        }
+      },
+      "ConnectionAccessSummary": {
+        "required": [
+          "createdBy",
+          "isPublic",
+          "sharedWithUsers",
+          "sharedWithRoles",
+          "revision",
+          "eTag"
+        ],
+        "type": "object",
+        "properties": {
+          "createdBy": {
+            "pattern": "^-?(?:0|[1-9]\\d*)$",
+            "type": [
+              "integer",
+              "string"
+            ],
+            "format": "int64"
+          },
+          "isPublic": {
+            "type": "boolean"
+          },
+          "sharedWithUsers": {
+            "type": "array",
+            "items": {
+              "pattern": "^-?(?:0|[1-9]\\d*)$",
+              "type": [
+                "integer",
+                "string"
+              ],
+              "format": "int64"
+            }
+          },
+          "sharedWithRoles": {
+            "type": "array",
+            "items": {
+              "pattern": "^-?(?:0|[1-9]\\d*)$",
+              "type": [
+                "integer",
+                "string"
+              ],
+              "format": "int64"
+            }
+          },
+          "revision": {
+            "pattern": "^-?(?:0|[1-9]\\d*)$",
+            "type": [
+              "integer",
+              "string"
+            ],
+            "format": "int64"
+          },
+          "eTag": {
+            "type": "string"
+          }
+        }
+      },
+      "ConnectionAuthMode": {
+        "type": "integer"
+      },
+      "ConnectionAuthModeMetadata": {
+        "required": [
+          "authMode",
+          "displayName",
+          "description",
+          "secretSettingKeys",
+          "publicSettingKeys"
+        ],
+        "type": "object",
+        "properties": {
+          "authMode": {
+            "$ref": "#/components/schemas/ConnectionAuthMode"
+          },
+          "displayName": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          },
+          "secretSettingKeys": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "publicSettingKeys": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        }
+      },
+      "ConnectionCapabilities": {
+        "required": [
+          "supportsTest",
+          "supportsSchemaDiscovery"
+        ],
+        "type": "object",
+        "properties": {
+          "supportsTest": {
+            "type": "boolean"
+          },
+          "supportsSchemaDiscovery": {
+            "type": "boolean"
+          }
+        }
+      },
+      "ConnectionCatalog": {
+        "required": [
+          "categories",
+          "providers",
+          "authModes"
+        ],
+        "type": "object",
+        "properties": {
+          "categories": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ConnectionCategoryMetadata"
+            }
+          },
+          "providers": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ConnectionProviderMetadata"
+            }
+          },
+          "authModes": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ConnectionAuthModeMetadata"
+            }
+          }
+        }
+      },
+      "ConnectionCategory": {
+        "type": "integer"
+      },
+      "ConnectionCategoryMetadata": {
+        "required": [
+          "category",
+          "displayName",
+          "description"
+        ],
+        "type": "object",
+        "properties": {
+          "category": {
+            "$ref": "#/components/schemas/ConnectionCategory"
+          },
+          "displayName": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          }
+        }
+      },
+      "ConnectionDocumentation": {
+        "required": [
+          "overview",
+          "whenToUse",
+          "pitfalls",
+          "seeAlso"
+        ],
+        "type": "object",
+        "properties": {
+          "overview": {
+            "type": "string"
+          },
+          "whenToUse": {
+            "type": "string"
+          },
+          "pitfalls": {
+            "type": "string"
+          },
+          "seeAlso": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/DocumentationLink"
+            }
+          },
+          "example": {
+            "type": [
+              "null",
+              "string"
+            ]
+          }
+        }
+      },
+      "ConnectionObjectDescriptionResult": {
+        "required": [
+          "object"
+        ],
+        "type": "object",
+        "properties": {
+          "object": {
+            "$ref": "#/components/schemas/ConnectionObjectSummary"
+          }
+        }
+      },
+      "ConnectionObjectFieldSummary": {
+        "required": [
+          "name",
+          "dataType",
+          "isNullable"
+        ],
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "dataType": {
+            "type": "string"
+          },
+          "isNullable": {
+            "type": "boolean"
+          }
+        }
+      },
+      "ConnectionObjectListingResult": {
+        "required": [
+          "objects"
+        ],
+        "type": "object",
+        "properties": {
+          "objects": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ConnectionObjectSummary"
+            }
+          }
+        }
+      },
+      "ConnectionObjectSummary": {
+        "required": [
+          "name",
+          "objectType"
+        ],
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "objectType": {
+            "type": "string"
+          },
+          "fields": {
+            "type": [
+              "null",
+              "array"
+            ],
+            "items": {
+              "$ref": "#/components/schemas/ConnectionObjectFieldSummary"
+            }
+          }
+        }
+      },
+      "ConnectionProvider": {
+        "type": "integer"
+      },
+      "ConnectionProviderMetadata": {
+        "required": [
+          "provider",
+          "displayName",
+          "category",
+          "documentation",
+          "supportedAuthModes",
+          "requiredPublicSettings",
+          "requiredSecretSettings",
+          "optionalSettings",
+          "supportsLocalTest",
+          "oauth"
+        ],
+        "type": "object",
+        "properties": {
+          "provider": {
+            "$ref": "#/components/schemas/ConnectionProvider"
+          },
+          "displayName": {
+            "type": "string"
+          },
+          "category": {
+            "$ref": "#/components/schemas/ConnectionCategory"
+          },
+          "documentation": {
+            "$ref": "#/components/schemas/ConnectionDocumentation"
+          },
+          "supportedAuthModes": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ConnectionAuthMode"
+            }
+          },
+          "requiredPublicSettings": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ConnectionSettingMetadata"
+            }
+          },
+          "requiredSecretSettings": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ConnectionSettingMetadata"
+            }
+          },
+          "optionalSettings": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ConnectionSettingMetadata"
+            }
+          },
+          "supportsLocalTest": {
+            "type": "boolean"
+          },
+          "oauth": {
+            "oneOf": [
+              {
+                "type": "null"
+              },
+              {
+                "$ref": "#/components/schemas/OAuthAuthorizationCodeMetadata"
+              }
+            ]
+          }
+        }
+      },
+      "ConnectionSettingKind": {
+        "type": "integer"
+      },
+      "ConnectionSettingMetadata": {
+        "required": [
+          "key",
+          "displayName",
+          "description",
+          "kind",
+          "isSecret"
+        ],
+        "type": "object",
+        "properties": {
+          "key": {
+            "type": "string"
+          },
+          "displayName": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          },
+          "kind": {
+            "$ref": "#/components/schemas/ConnectionSettingKind"
+          },
+          "isSecret": {
+            "type": "boolean"
+          }
+        }
+      },
+      "ConnectionSummary": {
+        "required": [
+          "id",
+          "name",
+          "category",
+          "provider",
+          "authMode",
+          "settings",
+          "revision",
+          "eTag",
+          "createdBy",
+          "createdOn",
+          "updatedBy",
+          "updatedOn",
+          "reconnectRequired",
+          "capabilities"
+        ],
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "name": {
+            "type": "string"
+          },
+          "category": {
+            "$ref": "#/components/schemas/ConnectionCategory"
+          },
+          "provider": {
+            "$ref": "#/components/schemas/ConnectionProvider"
+          },
+          "authMode": {
+            "$ref": "#/components/schemas/ConnectionAuthMode"
+          },
+          "settings": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "string"
+            }
+          },
+          "revision": {
+            "pattern": "^-?(?:0|[1-9]\\d*)$",
+            "type": [
+              "integer",
+              "string"
+            ],
+            "format": "int64"
+          },
+          "eTag": {
+            "type": "string"
+          },
+          "createdBy": {
+            "pattern": "^-?(?:0|[1-9]\\d*)$",
+            "type": [
+              "integer",
+              "string"
+            ],
+            "format": "int64"
+          },
+          "createdOn": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "updatedBy": {
+            "pattern": "^-?(?:0|[1-9]\\d*)$",
+            "type": [
+              "null",
+              "integer",
+              "string"
+            ],
+            "format": "int64"
+          },
+          "updatedOn": {
+            "type": [
+              "null",
+              "string"
+            ],
+            "format": "date-time"
+          },
+          "reconnectRequired": {
+            "type": "boolean"
+          },
+          "capabilities": {
+            "$ref": "#/components/schemas/ConnectionCapabilities"
+          }
+        }
+      },
+      "ConnectionTestResult": {
+        "required": [
+          "success",
+          "message"
+        ],
+        "type": "object",
+        "properties": {
+          "success": {
+            "type": "boolean"
+          },
+          "message": {
+            "type": [
+              "null",
+              "string"
+            ]
+          }
+        }
+      },
+      "CreateConnectionRequest": {
+        "required": [
+          "name",
+          "category",
+          "provider",
+          "authMode",
+          "settings",
+          "secretSettings"
+        ],
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "category": {
+            "$ref": "#/components/schemas/ConnectionCategory"
+          },
+          "provider": {
+            "$ref": "#/components/schemas/ConnectionProvider"
+          },
+          "authMode": {
+            "$ref": "#/components/schemas/ConnectionAuthMode"
+          },
+          "settings": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "string"
+            }
+          },
+          "secretSettings": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "string"
+            }
+          }
+        }
+      },
+      "DocumentationLink": {
+        "required": [
+          "kind",
+          "id"
+        ],
+        "type": "object",
+        "properties": {
+          "kind": {
+            "$ref": "#/components/schemas/DocumentationTargetKind"
+          },
+          "id": {
+            "type": "string"
+          }
+        }
+      },
+      "DocumentationTargetKind": {
+        "type": "integer"
+      },
+      "OAuthAuthorizationCodeMetadata": {
+        "required": [
+          "authorizationUrl",
+          "tokenUrl",
+          "defaultScopes",
+          "optionalScopes",
+          "requiresPkce",
+          "supportsRefreshToken",
+          "additionalAuthorizationParameters",
+          "providerAccountIdSettingKey",
+          "providerAccountNameSettingKey"
+        ],
+        "type": "object",
+        "properties": {
+          "authorizationUrl": {
+            "type": "string"
+          },
+          "tokenUrl": {
+            "type": "string"
+          },
+          "defaultScopes": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "optionalScopes": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "requiresPkce": {
+            "type": "boolean"
+          },
+          "supportsRefreshToken": {
+            "type": "boolean"
+          },
+          "additionalAuthorizationParameters": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "string"
+            }
+          },
+          "providerAccountIdSettingKey": {
+            "type": [
+              "null",
+              "string"
+            ]
+          },
+          "providerAccountNameSettingKey": {
+            "type": [
+              "null",
+              "string"
+            ]
+          }
+        }
+      },
+      "OAuthCredentialMode": {
+        "enum": [
+          "ServiceManaged",
+          "BringYourOwn"
+        ]
+      },
+      "ReplaceConnectionRequest": {
+        "required": [
+          "name",
+          "category",
+          "provider",
+          "authMode",
+          "settings",
+          "secretSettings",
+          "unchangedSecretKeys"
+        ],
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "category": {
+            "$ref": "#/components/schemas/ConnectionCategory"
+          },
+          "provider": {
+            "$ref": "#/components/schemas/ConnectionProvider"
+          },
+          "authMode": {
+            "$ref": "#/components/schemas/ConnectionAuthMode"
+          },
+          "settings": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "string"
+            }
+          },
+          "secretSettings": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "string"
+            }
+          },
+          "unchangedSecretKeys": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        }
+      },
+      "StartConnectionOAuthAttemptRequest": {
+        "required": [
+          "provider",
+          "credentialMode",
+          "connectionId",
+          "draftIdentity",
+          "name",
+          "category",
+          "settings",
+          "scopes",
+          "clientId",
+          "clientSecret",
+          "returnOrigin"
+        ],
+        "type": "object",
+        "properties": {
+          "provider": {
+            "$ref": "#/components/schemas/ConnectionProvider"
+          },
+          "credentialMode": {
+            "$ref": "#/components/schemas/OAuthCredentialMode"
+          },
+          "connectionId": {
+            "type": [
+              "null",
+              "string"
+            ],
+            "format": "uuid"
+          },
+          "draftIdentity": {
+            "type": [
+              "null",
+              "string"
+            ]
+          },
+          "name": {
+            "type": [
+              "null",
+              "string"
+            ]
+          },
+          "category": {
+            "oneOf": [
+              {
+                "type": "null"
+              },
+              {
+                "$ref": "#/components/schemas/ConnectionCategory"
+              }
+            ]
+          },
+          "settings": {
+            "type": [
+              "null",
+              "object"
+            ],
+            "additionalProperties": {
+              "type": "string"
+            }
+          },
+          "scopes": {
+            "type": [
+              "null",
+              "array"
+            ],
+            "items": {
+              "type": "string"
+            }
+          },
+          "clientId": {
+            "type": [
+              "null",
+              "string"
+            ]
+          },
+          "clientSecret": {
+            "type": [
+              "null",
+              "string"
+            ]
+          },
+          "returnOrigin": {
+            "type": [
+              "null",
+              "string"
+            ]
+          }
+        }
+      },
+      "UpdateConnectionAccessRequest": {
+        "required": [
+          "isPublic",
+          "sharedWithUsers",
+          "sharedWithRoles"
+        ],
+        "type": "object",
+        "properties": {
+          "isPublic": {
+            "type": "boolean"
+          },
+          "sharedWithUsers": {
+            "type": "array",
+            "items": {
+              "pattern": "^-?(?:0|[1-9]\\d*)$",
+              "type": [
+                "integer",
+                "string"
+              ],
+              "format": "int64"
+            }
+          },
+          "sharedWithRoles": {
+            "type": "array",
+            "items": {
+              "pattern": "^-?(?:0|[1-9]\\d*)$",
+              "type": [
+                "integer",
+                "string"
+              ],
+              "format": "int64"
+            }
+          }
+        }
+      }
+    }
+  },
+  "tags": [
+    {
+      "name": "Connections"
+    },
+    {
+      "name": "Connections OAuth"
+    }
+  ]
+}

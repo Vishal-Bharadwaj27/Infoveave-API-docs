@@ -1,0 +1,52 @@
+---
+title: "Get List View By Id"
+description: "Read one list view"
+---
+
+## GET `/api/v10/ngauge/list-Views/{id}`
+
+**Get List View By Id**
+
+This endpoint exists to load a single saved view definition for display or editing. It keeps view configuration separate from the data it presents.
+
+Tags: `NGague \ List \ List View`
+
+### Parameters
+
+```json
+[
+  {
+    "name": "id",
+    "in": "path",
+    "required": true,
+    "schema": {
+      "pattern": "^-?(?:0|[1-9]\\d*)$",
+      "type": [
+        "integer",
+        "string"
+      ],
+      "format": "int64"
+    }
+  }
+]
+```
+
+### Responses
+
+```json
+{
+  "200": {
+    "description": "OK"
+  },
+  "400": {
+    "description": "Bad Request",
+    "content": {
+      "application/problem+json": {
+        "schema": {
+          "$ref": "#/components/schemas/ProblemDetails"
+        }
+      }
+    }
+  }
+}
+```

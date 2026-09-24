@@ -1,0 +1,65 @@
+---
+title: "Get connection access"
+description: "View who can use a connection"
+---
+
+## GET `/api/v10/Connections/connections/{id}/access`
+
+**Get connection access**
+
+This endpoint exists so sharing screens can show which users or scopes have access to a connection. Visibility into access rules is what makes credential sharing auditable instead of guesswork.
+
+Tags: `Connections`
+
+### Parameters
+
+```json
+[
+  {
+    "name": "id",
+    "in": "path",
+    "required": true,
+    "schema": {
+      "type": "string",
+      "format": "uuid"
+    }
+  }
+]
+```
+
+### Responses
+
+```json
+{
+  "200": {
+    "description": "OK",
+    "content": {
+      "text/plain": {
+        "schema": {
+          "$ref": "#/components/schemas/ConnectionAccessSummary"
+        }
+      },
+      "application/json": {
+        "schema": {
+          "$ref": "#/components/schemas/ConnectionAccessSummary"
+        }
+      },
+      "text/json": {
+        "schema": {
+          "$ref": "#/components/schemas/ConnectionAccessSummary"
+        }
+      }
+    }
+  },
+  "400": {
+    "description": "Bad Request",
+    "content": {
+      "application/problem+json": {
+        "schema": {
+          "$ref": "#/components/schemas/ProblemDetails"
+        }
+      }
+    }
+  }
+}
+```

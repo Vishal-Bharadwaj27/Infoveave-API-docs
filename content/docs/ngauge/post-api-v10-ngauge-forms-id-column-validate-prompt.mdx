@@ -1,0 +1,84 @@
+---
+title: "Validate Prompt For AI Column"
+description: "Check an AI column prompt"
+---
+
+## POST `/api/v10/ngauge/Forms/{id}/column/validate-prompt`
+
+**Validate Prompt For AI Column**
+
+This endpoint exists to sanity-check the prompt behind an AI-generated column before it runs. A bad prompt wastes AI calls and fills rows with nonsense, so it is validated first.
+
+Validates the provided prompt intended for use in an AI-generated column within the NGauge form
+
+Tags: `NGague \ Form \ Column`
+
+### Parameters
+
+```json
+[
+  {
+    "name": "id",
+    "in": "path",
+    "required": true,
+    "schema": {
+      "pattern": "^-?(?:0|[1-9]\\d*)$",
+      "type": [
+        "integer",
+        "string"
+      ],
+      "format": "int64"
+    }
+  }
+]
+```
+
+### Request Body
+
+```json
+{
+  "content": {
+    "application/json-patch+json": {
+      "schema": {
+        "$ref": "#/components/schemas/AiColumnValidationRequest"
+      }
+    },
+    "application/json": {
+      "schema": {
+        "$ref": "#/components/schemas/AiColumnValidationRequest"
+      }
+    },
+    "text/json": {
+      "schema": {
+        "$ref": "#/components/schemas/AiColumnValidationRequest"
+      }
+    },
+    "application/*+json": {
+      "schema": {
+        "$ref": "#/components/schemas/AiColumnValidationRequest"
+      }
+    }
+  },
+  "required": true
+}
+```
+
+### Responses
+
+```json
+{
+  "200": {
+    "description": "OK"
+  },
+  "400": {
+    "description": "Bad Request",
+    "content": {
+      "application/problem+json": {
+        "schema": {
+          "$ref": "#/components/schemas/ProblemDetails"
+        }
+      }
+    }
+  }
+}
+```

@@ -1,0 +1,84 @@
+---
+title: "Get Column Wise Sums"
+description: "Column totals without full download"
+---
+
+## POST `/api/v10/ngauge/Forms/{id}/columns/sum`
+
+**Get Column Wise Sums**
+
+This endpoint exists to compute sums server-side for numeric columns. Totals for footers and dashboards arrive without shipping every row to the browser.
+
+Calculates and returns the sum of values for each specified column in the NGauge form data
+
+Tags: `NGague \ Form \ Column`
+
+### Parameters
+
+```json
+[
+  {
+    "name": "id",
+    "in": "path",
+    "required": true,
+    "schema": {
+      "pattern": "^-?(?:0|[1-9]\\d*)$",
+      "type": [
+        "integer",
+        "string"
+      ],
+      "format": "int64"
+    }
+  }
+]
+```
+
+### Request Body
+
+```json
+{
+  "content": {
+    "application/json-patch+json": {
+      "schema": {
+        "$ref": "#/components/schemas/ColumnWiseSumRequest"
+      }
+    },
+    "application/json": {
+      "schema": {
+        "$ref": "#/components/schemas/ColumnWiseSumRequest"
+      }
+    },
+    "text/json": {
+      "schema": {
+        "$ref": "#/components/schemas/ColumnWiseSumRequest"
+      }
+    },
+    "application/*+json": {
+      "schema": {
+        "$ref": "#/components/schemas/ColumnWiseSumRequest"
+      }
+    }
+  },
+  "required": true
+}
+```
+
+### Responses
+
+```json
+{
+  "200": {
+    "description": "OK"
+  },
+  "400": {
+    "description": "Bad Request",
+    "content": {
+      "application/problem+json": {
+        "schema": {
+          "$ref": "#/components/schemas/ProblemDetails"
+        }
+      }
+    }
+  }
+}
+```

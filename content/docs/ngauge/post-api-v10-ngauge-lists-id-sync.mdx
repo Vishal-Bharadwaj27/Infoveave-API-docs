@@ -1,0 +1,52 @@
+---
+title: "Sync List"
+description: "Pull fresh values into a list"
+---
+
+## POST `/api/v10/ngauge/lists/{id}/sync`
+
+**Sync List**
+
+This endpoint exists to refresh a list from its external source on demand. Manual sync is what keeps governed dropdowns current when the source system changes between scheduled syncs.
+
+Tags: `NGague \ List`
+
+### Parameters
+
+```json
+[
+  {
+    "name": "id",
+    "in": "path",
+    "required": true,
+    "schema": {
+      "pattern": "^-?(?:0|[1-9]\\d*)$",
+      "type": [
+        "integer",
+        "string"
+      ],
+      "format": "int64"
+    }
+  }
+]
+```
+
+### Responses
+
+```json
+{
+  "200": {
+    "description": "OK"
+  },
+  "400": {
+    "description": "Bad Request",
+    "content": {
+      "application/problem+json": {
+        "schema": {
+          "$ref": "#/components/schemas/ProblemDetails"
+        }
+      }
+    }
+  }
+}
+```

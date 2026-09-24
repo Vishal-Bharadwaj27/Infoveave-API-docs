@@ -1,0 +1,38 @@
+---
+title: "Get All NGauge Forms"
+description: "List all data-entry forms"
+---
+
+## GET `/api/v10/ngauge/Forms`
+
+**Get All NGauge Forms**
+
+This endpoint exists so the app can show every form in the tenant. Forms are the structured registers and surveys users fill in, and this is the starting point for managing them.
+
+Tags: `NGague \ Form`
+
+### Parameters
+
+```json
+[]
+```
+
+### Responses
+
+```json
+{
+  "200": {
+    "description": "OK"
+  },
+  "400": {
+    "description": "Bad Request",
+    "content": {
+      "application/problem+json": {
+        "schema": {
+          "$ref": "#/components/schemas/ProblemDetails"
+        }
+      }
+    }
+  }
+}
+```

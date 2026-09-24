@@ -1,0 +1,78 @@
+---
+title: "Complete an OAuth attempt"
+description: "Finalize an OAuth attempt"
+---
+
+## POST `/api/v10/Connections/oauth/attempts/{id}/complete`
+
+**Complete an OAuth attempt**
+
+This endpoint exists to complete the flow once authorization is proven and mint the stored connection. Splitting completion from the callback gives the server a clean, verifiable handoff point.
+
+Tags: `Connections OAuth`
+
+### Parameters
+
+```json
+[
+  {
+    "name": "id",
+    "in": "path",
+    "required": true,
+    "schema": {
+      "type": "string",
+      "format": "uuid"
+    }
+  }
+]
+```
+
+### Request Body
+
+```json
+{
+  "content": {
+    "application/json-patch+json": {
+      "schema": {
+        "$ref": "#/components/schemas/CompleteConnectionOAuthAttemptRequest"
+      }
+    },
+    "application/json": {
+      "schema": {
+        "$ref": "#/components/schemas/CompleteConnectionOAuthAttemptRequest"
+      }
+    },
+    "text/json": {
+      "schema": {
+        "$ref": "#/components/schemas/CompleteConnectionOAuthAttemptRequest"
+      }
+    },
+    "application/*+json": {
+      "schema": {
+        "$ref": "#/components/schemas/CompleteConnectionOAuthAttemptRequest"
+      }
+    }
+  },
+  "required": true
+}
+```
+
+### Responses
+
+```json
+{
+  "200": {
+    "description": "OK"
+  },
+  "400": {
+    "description": "Bad Request",
+    "content": {
+      "application/problem+json": {
+        "schema": {
+          "$ref": "#/components/schemas/ProblemDetails"
+        }
+      }
+    }
+  }
+}
+```

@@ -1,0 +1,47 @@
+---
+title: "GET /E/QR/{code}"
+description: "QR code entry point"
+---
+
+## GET `/E/QR/{code}`
+
+**GET /E/QR/&#123;code&#125;**
+
+This endpoint exists so a scanned QR code opens the right form or record. It turns a printed code into a one-tap path for field staff with no navigation needed.
+
+Tags: `Forms`
+
+### Parameters
+
+```json
+[
+  {
+    "name": "code",
+    "in": "path",
+    "required": true,
+    "schema": {
+      "type": "string"
+    }
+  }
+]
+```
+
+### Responses
+
+```json
+{
+  "200": {
+    "description": "OK"
+  },
+  "400": {
+    "description": "Bad Request",
+    "content": {
+      "application/problem+json": {
+        "schema": {
+          "$ref": "#/components/schemas/ProblemDetails"
+        }
+      }
+    }
+  }
+}
+```

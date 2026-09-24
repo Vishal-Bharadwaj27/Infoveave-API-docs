@@ -1,0 +1,55 @@
+---
+title: "Delete a connection"
+description: "Soft-delete a connection"
+---
+
+## DELETE `/api/v10/Connections/connections/{id}`
+
+**Delete a connection**
+
+This endpoint exists to remove a connection from everyday use without destroying it. The delete is reversible so that accidental removals and audit trails survive, and nothing downstream breaks silently.
+
+Tags: `Connections`
+
+### Parameters
+
+```json
+[
+  {
+    "name": "id",
+    "in": "path",
+    "required": true,
+    "schema": {
+      "type": "string",
+      "format": "uuid"
+    }
+  },
+  {
+    "name": "If-Match",
+    "in": "header",
+    "schema": {
+      "type": "string"
+    }
+  }
+]
+```
+
+### Responses
+
+```json
+{
+  "204": {
+    "description": "No Content"
+  },
+  "400": {
+    "description": "Bad Request",
+    "content": {
+      "application/problem+json": {
+        "schema": {
+          "$ref": "#/components/schemas/ProblemDetails"
+        }
+      }
+    }
+  }
+}
+```

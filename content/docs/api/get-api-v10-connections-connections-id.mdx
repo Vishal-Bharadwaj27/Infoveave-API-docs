@@ -1,0 +1,65 @@
+---
+title: "Get an accessible connection"
+description: "Read one connection"
+---
+
+## GET `/api/v10/Connections/connections/{id}`
+
+**Get an accessible connection**
+
+This endpoint exists so detail and edit screens can load a single connection's safe metadata. Secrets are never returned here; the point is to show what the connection is and how it is configured.
+
+Tags: `Connections`
+
+### Parameters
+
+```json
+[
+  {
+    "name": "id",
+    "in": "path",
+    "required": true,
+    "schema": {
+      "type": "string",
+      "format": "uuid"
+    }
+  }
+]
+```
+
+### Responses
+
+```json
+{
+  "200": {
+    "description": "OK",
+    "content": {
+      "text/plain": {
+        "schema": {
+          "$ref": "#/components/schemas/ConnectionSummary"
+        }
+      },
+      "application/json": {
+        "schema": {
+          "$ref": "#/components/schemas/ConnectionSummary"
+        }
+      },
+      "text/json": {
+        "schema": {
+          "$ref": "#/components/schemas/ConnectionSummary"
+        }
+      }
+    }
+  },
+  "400": {
+    "description": "Bad Request",
+    "content": {
+      "application/problem+json": {
+        "schema": {
+          "$ref": "#/components/schemas/ProblemDetails"
+        }
+      }
+    }
+  }
+}
+```

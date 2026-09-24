@@ -1,0 +1,102 @@
+---
+title: "Completely replace connection access"
+description: "Replace connection access rules"
+---
+
+## PUT `/api/v10/Connections/connections/{id}/access`
+
+**Completely replace connection access**
+
+This endpoint exists to swap the whole access policy atomically. Replacing rather than patching avoids half-applied permission states where someone briefly has access they should not.
+
+Tags: `Connections`
+
+### Parameters
+
+```json
+[
+  {
+    "name": "id",
+    "in": "path",
+    "required": true,
+    "schema": {
+      "type": "string",
+      "format": "uuid"
+    }
+  },
+  {
+    "name": "If-Match",
+    "in": "header",
+    "schema": {
+      "type": "string"
+    }
+  }
+]
+```
+
+### Request Body
+
+```json
+{
+  "content": {
+    "application/json-patch+json": {
+      "schema": {
+        "$ref": "#/components/schemas/UpdateConnectionAccessRequest"
+      }
+    },
+    "application/json": {
+      "schema": {
+        "$ref": "#/components/schemas/UpdateConnectionAccessRequest"
+      }
+    },
+    "text/json": {
+      "schema": {
+        "$ref": "#/components/schemas/UpdateConnectionAccessRequest"
+      }
+    },
+    "application/*+json": {
+      "schema": {
+        "$ref": "#/components/schemas/UpdateConnectionAccessRequest"
+      }
+    }
+  },
+  "required": true
+}
+```
+
+### Responses
+
+```json
+{
+  "200": {
+    "description": "OK",
+    "content": {
+      "text/plain": {
+        "schema": {
+          "$ref": "#/components/schemas/ConnectionAccessSummary"
+        }
+      },
+      "application/json": {
+        "schema": {
+          "$ref": "#/components/schemas/ConnectionAccessSummary"
+        }
+      },
+      "text/json": {
+        "schema": {
+          "$ref": "#/components/schemas/ConnectionAccessSummary"
+        }
+      }
+    }
+  },
+  "400": {
+    "description": "Bad Request",
+    "content": {
+      "application/problem+json": {
+        "schema": {
+          "$ref": "#/components/schemas/ProblemDetails"
+        }
+      }
+    }
+  }
+}
+```

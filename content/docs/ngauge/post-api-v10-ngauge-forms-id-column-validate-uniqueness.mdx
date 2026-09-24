@@ -1,0 +1,84 @@
+---
+title: "Validate Column Uniqueness"
+description: "Enforce unique values"
+---
+
+## POST `/api/v10/ngauge/Forms/{id}/column/validate-uniqueness`
+
+**Validate Column Uniqueness**
+
+This endpoint exists to check that a column holds no duplicates, which is how ID-like fields stay trustworthy. Validating at entry time beats discovering collisions during reporting.
+
+Checks whether the specified column or set of columns in the NGauge form contain only unique values across all records
+
+Tags: `NGague \ Form \ Column`
+
+### Parameters
+
+```json
+[
+  {
+    "name": "id",
+    "in": "path",
+    "required": true,
+    "schema": {
+      "pattern": "^-?(?:0|[1-9]\\d*)$",
+      "type": [
+        "integer",
+        "string"
+      ],
+      "format": "int64"
+    }
+  }
+]
+```
+
+### Request Body
+
+```json
+{
+  "content": {
+    "application/json-patch+json": {
+      "schema": {
+        "$ref": "#/components/schemas/UniqueColumnValidationRequest"
+      }
+    },
+    "application/json": {
+      "schema": {
+        "$ref": "#/components/schemas/UniqueColumnValidationRequest"
+      }
+    },
+    "text/json": {
+      "schema": {
+        "$ref": "#/components/schemas/UniqueColumnValidationRequest"
+      }
+    },
+    "application/*+json": {
+      "schema": {
+        "$ref": "#/components/schemas/UniqueColumnValidationRequest"
+      }
+    }
+  },
+  "required": true
+}
+```
+
+### Responses
+
+```json
+{
+  "200": {
+    "description": "OK"
+  },
+  "400": {
+    "description": "Bad Request",
+    "content": {
+      "application/problem+json": {
+        "schema": {
+          "$ref": "#/components/schemas/ProblemDetails"
+        }
+      }
+    }
+  }
+}
+```

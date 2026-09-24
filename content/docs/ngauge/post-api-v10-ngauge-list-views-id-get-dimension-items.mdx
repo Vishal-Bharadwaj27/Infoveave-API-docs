@@ -1,0 +1,82 @@
+---
+title: "Get Dimension Items for List View"
+description: "Fetch filter items for a view"
+---
+
+## POST `/api/v10/ngauge/list-Views/{id}/get-dimension-items`
+
+**Get Dimension Items for List View**
+
+This endpoint exists to supply the distinct dimension values that drive chart and filter controls. Precomputing them keeps dashboards fast instead of scanning raw rows per interaction.
+
+Tags: `NGague \ List \ List View`
+
+### Parameters
+
+```json
+[
+  {
+    "name": "id",
+    "in": "path",
+    "required": true,
+    "schema": {
+      "pattern": "^-?(?:0|[1-9]\\d*)$",
+      "type": [
+        "integer",
+        "string"
+      ],
+      "format": "int64"
+    }
+  }
+]
+```
+
+### Request Body
+
+```json
+{
+  "content": {
+    "application/json-patch+json": {
+      "schema": {
+        "$ref": "#/components/schemas/ListViewDimensionItemsRequest"
+      }
+    },
+    "application/json": {
+      "schema": {
+        "$ref": "#/components/schemas/ListViewDimensionItemsRequest"
+      }
+    },
+    "text/json": {
+      "schema": {
+        "$ref": "#/components/schemas/ListViewDimensionItemsRequest"
+      }
+    },
+    "application/*+json": {
+      "schema": {
+        "$ref": "#/components/schemas/ListViewDimensionItemsRequest"
+      }
+    }
+  },
+  "required": true
+}
+```
+
+### Responses
+
+```json
+{
+  "200": {
+    "description": "OK"
+  },
+  "400": {
+    "description": "Bad Request",
+    "content": {
+      "application/problem+json": {
+        "schema": {
+          "$ref": "#/components/schemas/ProblemDetails"
+        }
+      }
+    }
+  }
+}
+```

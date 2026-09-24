@@ -1,0 +1,52 @@
+---
+title: "Get List By Id"
+description: "Read one reference list"
+---
+
+## GET `/api/v10/ngauge/lists/{id}`
+
+**Get List By Id**
+
+This endpoint exists so edit screens can load a single list definition. It separates reading configuration from syncing or querying its data.
+
+Tags: `NGague \ List`
+
+### Parameters
+
+```json
+[
+  {
+    "name": "id",
+    "in": "path",
+    "required": true,
+    "schema": {
+      "pattern": "^-?(?:0|[1-9]\\d*)$",
+      "type": [
+        "integer",
+        "string"
+      ],
+      "format": "int64"
+    }
+  }
+]
+```
+
+### Responses
+
+```json
+{
+  "200": {
+    "description": "OK"
+  },
+  "400": {
+    "description": "Bad Request",
+    "content": {
+      "application/problem+json": {
+        "schema": {
+          "$ref": "#/components/schemas/ProblemDetails"
+        }
+      }
+    }
+  }
+}
+```

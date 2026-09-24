@@ -1,0 +1,38 @@
+---
+title: "GET /api/v10/Connections"
+description: "Service probe endpoint"
+---
+
+## GET `/api/v10/Connections`
+
+**GET /api/v10/Connections**
+
+This endpoint exists so gateways, health checks and client apps can verify the Connections service is up and the caller is authenticated, without reading or touching any connection data. It intentionally returns no content.
+
+Tags: `Connections`
+
+### Parameters
+
+```json
+[]
+```
+
+### Responses
+
+```json
+{
+  "200": {
+    "description": "OK"
+  },
+  "400": {
+    "description": "Bad Request",
+    "content": {
+      "application/problem+json": {
+        "schema": {
+          "$ref": "#/components/schemas/ProblemDetails"
+        }
+      }
+    }
+  }
+}
+```

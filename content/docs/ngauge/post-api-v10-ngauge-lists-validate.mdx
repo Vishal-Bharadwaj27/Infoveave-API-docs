@@ -1,0 +1,68 @@
+---
+title: "Validate List"
+description: "Check a list before saving"
+---
+
+## POST `/api/v10/ngauge/lists/validate`
+
+**Validate List**
+
+This endpoint exists to fail fast on a bad list definition. Validating before save or sync protects every form that depends on the list from inheriting broken configuration.
+
+Tags: `NGague \ List`
+
+### Parameters
+
+```json
+[]
+```
+
+### Request Body
+
+```json
+{
+  "content": {
+    "application/json-patch+json": {
+      "schema": {
+        "$ref": "#/components/schemas/ListConfigValidationRequest"
+      }
+    },
+    "application/json": {
+      "schema": {
+        "$ref": "#/components/schemas/ListConfigValidationRequest"
+      }
+    },
+    "text/json": {
+      "schema": {
+        "$ref": "#/components/schemas/ListConfigValidationRequest"
+      }
+    },
+    "application/*+json": {
+      "schema": {
+        "$ref": "#/components/schemas/ListConfigValidationRequest"
+      }
+    }
+  },
+  "required": true
+}
+```
+
+### Responses
+
+```json
+{
+  "200": {
+    "description": "OK"
+  },
+  "400": {
+    "description": "Bad Request",
+    "content": {
+      "application/problem+json": {
+        "schema": {
+          "$ref": "#/components/schemas/ProblemDetails"
+        }
+      }
+    }
+  }
+}
+```

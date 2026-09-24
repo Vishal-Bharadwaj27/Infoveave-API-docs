@@ -1,0 +1,82 @@
+---
+title: "Update List View Schema"
+description: "Adjust a list view schema"
+---
+
+## PATCH `/api/v10/ngauge/list-Views/{id}`
+
+**Update List View Schema**
+
+This endpoint exists to evolve a saved view without rebuilding it. Partial updates let curators tweak visible columns while the underlying list stays untouched.
+
+Tags: `NGague \ List \ List View`
+
+### Parameters
+
+```json
+[
+  {
+    "name": "id",
+    "in": "path",
+    "required": true,
+    "schema": {
+      "pattern": "^-?(?:0|[1-9]\\d*)$",
+      "type": [
+        "integer",
+        "string"
+      ],
+      "format": "int64"
+    }
+  }
+]
+```
+
+### Request Body
+
+```json
+{
+  "content": {
+    "application/json-patch+json": {
+      "schema": {
+        "$ref": "#/components/schemas/ListViewSchema"
+      }
+    },
+    "application/json": {
+      "schema": {
+        "$ref": "#/components/schemas/ListViewSchema"
+      }
+    },
+    "text/json": {
+      "schema": {
+        "$ref": "#/components/schemas/ListViewSchema"
+      }
+    },
+    "application/*+json": {
+      "schema": {
+        "$ref": "#/components/schemas/ListViewSchema"
+      }
+    }
+  },
+  "required": true
+}
+```
+
+### Responses
+
+```json
+{
+  "200": {
+    "description": "OK"
+  },
+  "400": {
+    "description": "Bad Request",
+    "content": {
+      "application/problem+json": {
+        "schema": {
+          "$ref": "#/components/schemas/ProblemDetails"
+        }
+      }
+    }
+  }
+}
+```

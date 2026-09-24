@@ -1,0 +1,109 @@
+---
+title: "Download List View Archive File"
+description: "Download an archived snapshot"
+---
+
+## POST `/api/v10/ngauge/list-Views/{id}/list-archives/download`
+
+**Download List View Archive File**
+
+This endpoint exists to retrieve historical snapshots of a list. Archives matter for audits and for answering what the governed values were on a given date.
+
+Tags: `NGague \ List \ List View`
+
+### Parameters
+
+```json
+[
+  {
+    "name": "id",
+    "in": "path",
+    "required": true,
+    "schema": {
+      "pattern": "^-?(?:0|[1-9]\\d*)$",
+      "type": [
+        "integer",
+        "string"
+      ],
+      "format": "int64"
+    }
+  }
+]
+```
+
+### Request Body
+
+```json
+{
+  "content": {
+    "application/json-patch+json": {
+      "schema": {
+        "oneOf": [
+          {
+            "type": "null"
+          },
+          {
+            "$ref": "#/components/schemas/ListViewArchiveDownloadRequest"
+          }
+        ]
+      }
+    },
+    "application/json": {
+      "schema": {
+        "oneOf": [
+          {
+            "type": "null"
+          },
+          {
+            "$ref": "#/components/schemas/ListViewArchiveDownloadRequest"
+          }
+        ]
+      }
+    },
+    "text/json": {
+      "schema": {
+        "oneOf": [
+          {
+            "type": "null"
+          },
+          {
+            "$ref": "#/components/schemas/ListViewArchiveDownloadRequest"
+          }
+        ]
+      }
+    },
+    "application/*+json": {
+      "schema": {
+        "oneOf": [
+          {
+            "type": "null"
+          },
+          {
+            "$ref": "#/components/schemas/ListViewArchiveDownloadRequest"
+          }
+        ]
+      }
+    }
+  }
+}
+```
+
+### Responses
+
+```json
+{
+  "200": {
+    "description": "OK"
+  },
+  "400": {
+    "description": "Bad Request",
+    "content": {
+      "application/problem+json": {
+        "schema": {
+          "$ref": "#/components/schemas/ProblemDetails"
+        }
+      }
+    }
+  }
+}
+```

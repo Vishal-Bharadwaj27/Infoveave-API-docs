@@ -1,0 +1,38 @@
+---
+title: "Get All Lists"
+description: "List all reference lists"
+---
+
+## GET `/api/v10/ngauge/lists`
+
+**Get All Lists**
+
+This endpoint exists so configuration screens can show every reusable value list in the tenant. Lists are the shared dropdowns and masters that keep data entry consistent across forms.
+
+Tags: `NGague \ List`
+
+### Parameters
+
+```json
+[]
+```
+
+### Responses
+
+```json
+{
+  "200": {
+    "description": "OK"
+  },
+  "400": {
+    "description": "Bad Request",
+    "content": {
+      "application/problem+json": {
+        "schema": {
+          "$ref": "#/components/schemas/ProblemDetails"
+        }
+      }
+    }
+  }
+}
+```

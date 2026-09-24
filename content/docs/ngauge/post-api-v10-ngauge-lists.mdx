@@ -1,0 +1,68 @@
+---
+title: "Create List"
+description: "Create a reference list"
+---
+
+## POST `/api/v10/ngauge/lists`
+
+**Create List**
+
+This endpoint exists to register a new reusable list before any form points at it. Creating the list first guarantees dropdowns always resolve to a known, governed set of values.
+
+Tags: `NGague \ List`
+
+### Parameters
+
+```json
+[]
+```
+
+### Request Body
+
+```json
+{
+  "content": {
+    "application/json-patch+json": {
+      "schema": {
+        "$ref": "#/components/schemas/CreateListWithLinkedListViews"
+      }
+    },
+    "application/json": {
+      "schema": {
+        "$ref": "#/components/schemas/CreateListWithLinkedListViews"
+      }
+    },
+    "text/json": {
+      "schema": {
+        "$ref": "#/components/schemas/CreateListWithLinkedListViews"
+      }
+    },
+    "application/*+json": {
+      "schema": {
+        "$ref": "#/components/schemas/CreateListWithLinkedListViews"
+      }
+    }
+  },
+  "required": true
+}
+```
+
+### Responses
+
+```json
+{
+  "200": {
+    "description": "OK"
+  },
+  "400": {
+    "description": "Bad Request",
+    "content": {
+      "application/problem+json": {
+        "schema": {
+          "$ref": "#/components/schemas/ProblemDetails"
+        }
+      }
+    }
+  }
+}
+```

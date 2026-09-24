@@ -1,0 +1,52 @@
+---
+title: "Delete NGauge Form"
+description: "Delete a form"
+---
+
+## DELETE `/api/v10/ngauge/Forms/{id}`
+
+**Delete NGauge Form**
+
+This endpoint exists to retire forms that should no longer accept entries. Removing the definition centrally stops new bad data at the source.
+
+Tags: `NGague \ Form`
+
+### Parameters
+
+```json
+[
+  {
+    "name": "id",
+    "in": "path",
+    "required": true,
+    "schema": {
+      "pattern": "^-?(?:0|[1-9]\\d*)$",
+      "type": [
+        "integer",
+        "string"
+      ],
+      "format": "int64"
+    }
+  }
+]
+```
+
+### Responses
+
+```json
+{
+  "200": {
+    "description": "OK"
+  },
+  "400": {
+    "description": "Bad Request",
+    "content": {
+      "application/problem+json": {
+        "schema": {
+          "$ref": "#/components/schemas/ProblemDetails"
+        }
+      }
+    }
+  }
+}
+```

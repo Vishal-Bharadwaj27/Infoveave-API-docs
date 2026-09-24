@@ -1,0 +1,38 @@
+---
+title: "Get All List Views"
+description: "List saved list views"
+---
+
+## GET `/api/v10/ngauge/list-Views`
+
+**Get All List Views**
+
+This endpoint exists so users can find their saved slices of list data. Views let different teams look at the same list through their own filters without duplicating it.
+
+Tags: `NGague \ List \ List View`
+
+### Parameters
+
+```json
+[]
+```
+
+### Responses
+
+```json
+{
+  "200": {
+    "description": "OK"
+  },
+  "400": {
+    "description": "Bad Request",
+    "content": {
+      "application/problem+json": {
+        "schema": {
+          "$ref": "#/components/schemas/ProblemDetails"
+        }
+      }
+    }
+  }
+}
+```

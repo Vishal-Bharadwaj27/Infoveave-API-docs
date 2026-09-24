@@ -1,0 +1,48 @@
+---
+title: "Get an OAuth attempt"
+description: "Check an OAuth attempt"
+---
+
+## GET `/api/v10/Connections/oauth/attempts/{id}`
+
+**Get an OAuth attempt**
+
+This endpoint exists so the app can poll what happened while the user completes login in another tab. Polling a server-side attempt keeps tokens out of front-end code entirely.
+
+Tags: `Connections OAuth`
+
+### Parameters
+
+```json
+[
+  {
+    "name": "id",
+    "in": "path",
+    "required": true,
+    "schema": {
+      "type": "string",
+      "format": "uuid"
+    }
+  }
+]
+```
+
+### Responses
+
+```json
+{
+  "200": {
+    "description": "OK"
+  },
+  "400": {
+    "description": "Bad Request",
+    "content": {
+      "application/problem+json": {
+        "schema": {
+          "$ref": "#/components/schemas/ProblemDetails"
+        }
+      }
+    }
+  }
+}
+```

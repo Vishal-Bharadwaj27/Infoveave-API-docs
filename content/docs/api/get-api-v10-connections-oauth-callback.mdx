@@ -1,0 +1,61 @@
+---
+title: "OAuth browser completion callback"
+description: "OAuth provider redirect landing"
+---
+
+## GET `/api/v10/Connections/oauth/callback`
+
+**OAuth browser completion callback**
+
+This endpoint exists as the redirect URL the identity provider sends the browser back to. It captures the authorization response and ties it back to the tracked attempt.
+
+Tags: `Connections OAuth`
+
+### Parameters
+
+```json
+[
+  {
+    "name": "status",
+    "in": "query",
+    "schema": {
+      "type": "string"
+    }
+  },
+  {
+    "name": "handle",
+    "in": "query",
+    "schema": {
+      "type": "string"
+    }
+  },
+  {
+    "name": "attemptId",
+    "in": "query",
+    "schema": {
+      "type": "string",
+      "format": "uuid"
+    }
+  }
+]
+```
+
+### Responses
+
+```json
+{
+  "200": {
+    "description": "OK"
+  },
+  "400": {
+    "description": "Bad Request",
+    "content": {
+      "application/problem+json": {
+        "schema": {
+          "$ref": "#/components/schemas/ProblemDetails"
+        }
+      }
+    }
+  }
+}
+```

@@ -1,0 +1,45 @@
+---
+title: "GET /"
+description: "Service liveness probe"
+---
+
+## GET `/`
+
+**GET /**
+
+This endpoint exists as the simplest possible check that the NGauge service is running. Load balancers and humans alike can hit it without authentication or side effects.
+
+Tags: `NGauge`
+
+### Parameters
+
+```json
+[]
+```
+
+### Responses
+
+```json
+{
+  "200": {
+    "description": "OK",
+    "content": {
+      "text/plain": {
+        "schema": {
+          "type": "string"
+        }
+      }
+    }
+  },
+  "400": {
+    "description": "Bad Request",
+    "content": {
+      "application/problem+json": {
+        "schema": {
+          "$ref": "#/components/schemas/ProblemDetails"
+        }
+      }
+    }
+  }
+}
+```
