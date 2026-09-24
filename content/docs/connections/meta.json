@@ -1,0 +1,23 @@
+{
+  "title": "Connections",
+  "pages": [
+    "index",
+    "get-api-v10-connections-catalogue",
+    "get-api-v10-connections-connections",
+    "get-api-v10-connections-connections-id",
+    "post-api-v10-connections-connections",
+    "put-api-v10-connections-connections-id",
+    "delete-api-v10-connections-connections-id",
+    "post-api-v10-connections-connections-id-restore",
+    "get-api-v10-connections-connections-id-access",
+    "put-api-v10-connections-connections-id-access",
+    "post-api-v10-connections-connections-id-test",
+    "get-api-v10-connections-connections-id-schema-objects",
+    "get-api-v10-connections-connections-id-schema-objects-objectname",
+    "post-api-v10-connections-oauth-attempts",
+    "get-api-v10-connections-oauth-attempts-id",
+    "get-api-v10-connections-oauth-callback",
+    "post-api-v10-connections-oauth-attempts-id-complete",
+    "..."
+  ]
+}
