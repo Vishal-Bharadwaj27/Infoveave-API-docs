@@ -9,6 +9,12 @@ import {
 } from 'fumadocs-ui/layouts/docs/page';
 import { notFound } from 'next/navigation';
 import { getMDXComponents } from '@/components/mdx';
+import { APIPage } from '@/components/api-page';
+import {
+  getOpenAPIDocument,
+  operationExists,
+  parseOperationFromMarkdown,
+} from '@/lib/openapi';
 import type { Metadata } from 'next';
 import { createRelativeLink } from 'fumadocs-ui/mdx';
 import { getPageImageUrl, getPageMarkdownUrl, gitConfig } from '@/lib/shared';
@@ -21,8 +27,38 @@ export default async function Page(props: PageProps<'/docs/[[...slug]]'>) {
   const MDX = page.data.body;
   const markdownUrl = getPageMarkdownUrl(page).url;
 
+  // Render interactive OpenAPI UI (method badges, schema/param tables,
+  // response tabs, try-it-out playground) for /docs/api/* and /docs/ngauge/*.
+  const section = params.slug?.[0];
+  const doc =
+    section === 'api' || section === 'ngauge'
+      ? getOpenAPIDocument(section)
+      : undefined;
+  const processed = await page.data.getText('processed').catch(() => '');
+  // Fall back to the raw MDX file so the `## METHOD /path` heading is intact.
+  let rawFile = '';
+  try {
+    const { readFile } = await import('node:fs/promises');
+    const { join } = await import('node:path');
+    rawFile = await readFile(
+      join(process.cwd(), 'content/docs', `${page.path}.mdx`),
+      'utf8',
+    ).catch(() => '');
+  } catch {
+    rawFile = '';
+  }
+  const operation = doc
+    ? (parseOperationFromMarkdown(rawFile) ??
+      parseOperationFromMarkdown(processed) ??
+      parseOperationFromMarkdown(`${page.data.title} ${page.data.description ?? ''}`))
+    : undefined;
+  const useOpenAPIUI =
+    doc &&
+    operation &&
+    operationExists(doc, operation.method, operation.path);
+
   return (
-    <DocsPage toc={page.data.toc} full={page.data.full}>
+    <DocsPage toc={page.data.toc} full={useOpenAPIUI ? true : page.data.full}>
       <DocsTitle>{page.data.title}</DocsTitle>
       <DocsDescription className="mb-0">{page.data.description}</DocsDescription>
       <div className="flex flex-row gap-2 items-center border-b pb-6">
@@ -32,14 +68,23 @@ export default async function Page(props: PageProps<'/docs/[[...slug]]'>) {
           githubUrl={`https://github.com/${gitConfig.user}/${gitConfig.repo}/blob/${gitConfig.branch}/content/docs/${page.path}`}
         />
       </div>
-      <DocsBody>
-        <MDX
-          components={getMDXComponents({
-            // this allows you to link to other pages with relative file paths
-            a: createRelativeLink(source, page),
-          })}
+      {useOpenAPIUI && doc && operation ? (
+        <APIPage
+          payload={{ bundled: doc, proxyUrl: '/api/proxy' }}
+          operations={[
+            { path: operation.path, method: operation.method },
+          ]}
         />
-      </DocsBody>
+      ) : (
+        <DocsBody>
+          <MDX
+            components={getMDXComponents({
+              // this allows you to link to other pages with relative file paths
+              a: createRelativeLink(source, page),
+            })}
+          />
+        </DocsBody>
+      )}
     </DocsPage>
   );
 }
