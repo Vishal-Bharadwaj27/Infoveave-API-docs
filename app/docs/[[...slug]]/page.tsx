@@ -28,10 +28,10 @@ export default async function Page(props: PageProps<'/docs/[[...slug]]'>) {
   const markdownUrl = getPageMarkdownUrl(page).url;
 
   // Render interactive OpenAPI UI (method badges, schema/param tables,
-  // response tabs, try-it-out playground) for /docs/api/* and /docs/ngauge/*.
+  // response tabs, try-it-out playground) for /docs/connections/* and /docs/ngauge/*.
   const section = params.slug?.[0];
   const doc =
-    section === 'api' || section === 'ngauge'
+    section === 'connections' || section === 'ngauge'
       ? getOpenAPIDocument(section)
       : undefined;
   const processed = await page.data.getText('processed').catch(() => '');
@@ -58,23 +58,30 @@ export default async function Page(props: PageProps<'/docs/[[...slug]]'>) {
     operationExists(doc, operation.method, operation.path);
 
   return (
-    <DocsPage toc={page.data.toc} full={useOpenAPIUI ? true : page.data.full}>
+    <DocsPage
+      toc={useOpenAPIUI ? [] : page.data.toc}
+      full={useOpenAPIUI ? true : page.data.full}
+    >
       <DocsTitle>{page.data.title}</DocsTitle>
       <DocsDescription className="mb-0">{page.data.description}</DocsDescription>
-      <div className="flex flex-row gap-2 items-center border-b pb-6">
-        <MarkdownCopyButton markdownUrl={markdownUrl} />
-        <ViewOptionsPopover
-          markdownUrl={markdownUrl}
-          githubUrl={`https://github.com/${gitConfig.user}/${gitConfig.repo}/blob/${gitConfig.branch}/content/docs/${page.path}`}
-        />
-      </div>
+      {!useOpenAPIUI && (
+        <div className="flex flex-row gap-2 items-center border-b pb-6">
+          <MarkdownCopyButton markdownUrl={markdownUrl} />
+          <ViewOptionsPopover
+            markdownUrl={markdownUrl}
+            githubUrl={`https://github.com/${gitConfig.user}/${gitConfig.repo}/blob/${gitConfig.branch}/content/docs/${page.path}`}
+          />
+        </div>
+      )}
       {useOpenAPIUI && doc && operation ? (
-        <APIPage
-          payload={{ bundled: doc, proxyUrl: '/api/proxy' }}
-          operations={[
-            { path: operation.path, method: operation.method },
-          ]}
-        />
+        <DocsBody>
+          <APIPage
+            payload={{ bundled: doc, proxyUrl: '/api/proxy' }}
+            operations={[
+              { path: operation.path, method: operation.method },
+            ]}
+          />
+        </DocsBody>
       ) : (
         <DocsBody>
           <MDX

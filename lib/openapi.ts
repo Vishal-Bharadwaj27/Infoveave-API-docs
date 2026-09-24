@@ -3,7 +3,7 @@ import ngaugeDoc from '@/openapi-ngauge.json';
 import type { Document, HttpMethods } from 'fumadocs-openapi';
 
 const docs: Record<string, Document> = {
-  api: connectionsDoc as unknown as Document,
+  connections: connectionsDoc as unknown as Document,
   ngauge: ngaugeDoc as unknown as Document,
 };
 
