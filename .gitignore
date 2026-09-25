@@ -24,3 +24,16 @@ yarn-error.log*
 .env*.local
 .vercel
 next-env.d.ts
+
+# AI agent / assistant files
+AGENTS.md
+CLAUDE.md
+GEMINI.md
+.claude/
+.cursor/
+.cursorrules
+.windsurf/
+.windsurfrules
+.clinerules
+.aider*
+.github/copilot-instructions.md

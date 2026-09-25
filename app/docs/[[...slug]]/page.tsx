@@ -9,6 +9,8 @@ import {
 } from 'fumadocs-ui/layouts/docs/page';
 import { notFound } from 'next/navigation';
 import { getMDXComponents } from '@/components/mdx';
+import { EnumHover } from '@/components/enum-hover';
+import { connectionEnums } from '@/lib/connection-enums';
 import { APIPage } from '@/components/api-page';
 import {
   getOpenAPIDocument,
@@ -38,7 +40,7 @@ export default async function Page(props: PageProps<'/docs/[[...slug]]'>) {
     const { readFile } = await import('node:fs/promises');
     const { join } = await import('node:path');
     rawFile = await readFile(
-      join(process.cwd(), 'content/docs', `${page.path}.mdx`),
+      join(process.cwd(), 'content/docs', page.path),
       'utf8',
     ).catch(() => '');
   } catch {
@@ -71,14 +73,21 @@ export default async function Page(props: PageProps<'/docs/[[...slug]]'>) {
         </div>
       )}
       {useOpenAPIUI && doc && operation ? (
-        <DocsBody>
-          <APIPage
-            payload={{ bundled: doc, proxyUrl: '/api/proxy' }}
-            operations={[
-              { path: operation.path, method: operation.method },
-            ]}
-          />
-        </DocsBody>
+        <>
+          <DocsBody>
+            <APIPage
+              payload={{ bundled: doc, proxyUrl: '/api/proxy' }}
+              operations={[
+                { path: operation.path, method: operation.method },
+              ]}
+            />
+          </DocsBody>
+          {/* Opt-in: pages whose MDX contains an `enum-hover` comment get a
+              click/hover popover on their enum type names. */}
+          {rawFile.includes('enum-hover') && (
+            <EnumHover enums={connectionEnums} />
+          )}
+        </>
       ) : (
         <DocsBody>
           <MDX
