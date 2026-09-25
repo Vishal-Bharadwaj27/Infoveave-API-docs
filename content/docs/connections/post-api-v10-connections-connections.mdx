@@ -1,6 +1,6 @@
 ---
 title: "Create a connection"
-description: "Validates the name, category, provider, auth mode, and settings against the provider catalogue, then creates a new tenant-scoped connection and returns its ID, public settings, revision, and metadata without exposing secrets."
+description: "Validates category + provider + authMode + settings as one consistent unit against the provider catalogue, then creates a tenant-scoped connection and returns its ID, public settings, revision, and metadata without exposing secrets."
 ---
 
 {/* enum-hover */}
@@ -9,17 +9,63 @@ description: "Validates the name, category, provider, auth mode, and settings ag
 
 **Create a connection**
 
-This endpoint exists to create a connection with fully validated settings in one step. Validating up front means downstream queries and jobs can resolve credentials securely instead of failing later on a half-configured connection.
+Creates a tenant-scoped connection after validating everything up front, so downstream
+queries and jobs resolve credentials securely instead of failing on a half-configured connection.
 
-Tags: `Connections`
+> Requires authorization; the caller needs connection-create permission (otherwise `403`).
+> Request body limit: 256 KB.
 
-### Parameters
+### Mind map — how the fields lock together
+
+Every field must agree with `provider`. Think of `provider` as the root, and all other
+fields as branches validated against the provider catalogue
+(`GET /api/v10/Connections/catalogue` — the source of truth for required/optional keys):
+
+1. **provider must exist** — else `provider.unknown`. Send the **string name**
+   (e.g. `"Oracle"`), picked from the dropdown — not the number.
+2. **category must equal the provider's category** — else `provider.category`.
+   Example: `"Oracle"` lives in `"Database"` only. Sending `"ObjectStorage"`
+   with `"Oracle"` is rejected.
+3. **authMode must be one the provider supports** — else `provider.authMode`.
+   Example: Oracle supports `"ConnectionString"`, `"Basic"`, `"BearerToken"`.
+   Sending `"ApiKey"` with Oracle is rejected.
+4. **settings / secretSettings keys must be known** — only the union of
+   (provider required + optional keys) and (auth-mode keys) is accepted.
+   Unknown keys are rejected (`setting.unknown`). Max 128 entries each;
+   public values ≤ 4096 chars, secrets ≤ 65536 chars, keys ≤ 128 chars.
+5. **Required gates must all be filled**:
+   - Provider required public keys in `settings` (Oracle: `host`, `database`; `port` optional).
+   - Required secret groups for the auth mode in `secretSettings`
+     (Basic needs `username` **AND** `password` together).
+   - Required public keys for the auth mode in `settings`
+     (e.g. `AwsRoleAssumption` needs `roleArn`).
+
+### Oracle example (Basic auth)
 
 ```json
-[]
+{
+  "name": "Oracle Finance (prod)",
+  "category": "Database",
+  "provider": "Oracle",
+  "authMode": "Basic",
+  "settings": {
+    "host": "oracle.prod.local",
+    "port": "1521",
+    "database": "FINDB"
+  },
+  "secretSettings": {
+    "username": "svc_etl",
+    "password": "****"
+  }
+}
 ```
 
 ### Request Body
+
+All six fields are required: `name` (1–256 chars), `category`, `provider`,
+`authMode` (all three sent as **string names**, picked from the dropdown),
+`settings` (public, echoed back),
+`secretSettings` (encrypted at rest, **never returned**).
 
 ```json
 {
@@ -50,6 +96,17 @@ Tags: `Connections`
 ```
 
 ### Responses
+
+`201 Created` returns a `ConnectionSummary`: `id`, `name`, `category`, `provider`,
+`authMode`, `settings` (public only), `revision` (1 on create), `eTag`
+(`"v"+revision`, also in the `ETag` header — send as `If-Match` on replace/delete),
+`createdBy/createdOn/updatedBy/updatedOn`, `reconnectRequired`, and
+`capabilities` (`supportsTest`, `supportsSchemaDiscovery`).
+Note the asymmetry: you **send** enums as string names (`"Oracle"`), but the
+response **returns** them as numbers (`3`) — see Models for the mapping.
+A `Location` header points at `/api/v10/Connections/connections/{id}`.
+`400` returns a `ConnectionValidationResult` (`issues` explains which gate failed)
+or RFC-7807 `ProblemDetails`.
 
 ```json
 {
