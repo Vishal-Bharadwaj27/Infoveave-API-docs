@@ -1,0 +1,36 @@
+---
+title: "Create Template"
+description: "Create Template"
+---
+
+## POST `/api/v10/data-governance/Templates`
+
+**Create Template**
+
+Tags: `Data Governance \ Templates`
+
+### Parameters
+
+```json
+[]
+```
+
+### Responses
+
+```json
+{
+  "200": {
+    "description": "OK"
+  },
+  "400": {
+    "description": "Bad Request",
+    "content": {
+      "application/problem+json": {
+        "schema": {
+          "$ref": "#/components/schemas/ProblemDetails"
+        }
+      }
+    }
+  }
+}
+```

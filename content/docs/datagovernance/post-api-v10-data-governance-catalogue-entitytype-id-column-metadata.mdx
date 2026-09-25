@@ -1,0 +1,55 @@
+---
+title: "Update Datasource Column Metadata"
+description: "Updates metadata such as description and tags for a specific column in a data source"
+---
+
+## POST `/api/v10/data-governance/Catalogue/{entityType}/{id}/column-metadata`
+
+**Update Datasource Column Metadata**
+
+Updates metadata such as description and tags for a specific column in a data source
+
+Tags: `Data Governance \ Catalogue `
+
+### Parameters
+
+```json
+[
+  {
+    "name": "entityType",
+    "in": "path",
+    "required": true,
+    "schema": {
+      "type": "string"
+    }
+  },
+  {
+    "name": "id",
+    "in": "path",
+    "required": true,
+    "schema": {
+      "type": "string"
+    }
+  }
+]
+```
+
+### Responses
+
+```json
+{
+  "200": {
+    "description": "OK"
+  },
+  "400": {
+    "description": "Bad Request",
+    "content": {
+      "application/problem+json": {
+        "schema": {
+          "$ref": "#/components/schemas/ProblemDetails"
+        }
+      }
+    }
+  }
+}
+```

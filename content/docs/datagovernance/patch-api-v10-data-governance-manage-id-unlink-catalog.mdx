@@ -1,0 +1,52 @@
+---
+title: "Unlink Catalog Items From Govern"
+description: "Removes the existing association between one or more catalog items and a specified Govern"
+---
+
+## PATCH `/api/v10/data-governance/Manage/{id}/unlink-catalog`
+
+**Unlink Catalog Items From Govern**
+
+Removes the existing association between one or more catalog items and a specified Govern
+
+Tags: `Data Governance \ Manage`
+
+### Parameters
+
+```json
+[
+  {
+    "name": "id",
+    "in": "path",
+    "required": true,
+    "schema": {
+      "pattern": "^-?(?:0|[1-9]\\d*)$",
+      "type": [
+        "integer",
+        "string"
+      ],
+      "format": "int64"
+    }
+  }
+]
+```
+
+### Responses
+
+```json
+{
+  "200": {
+    "description": "OK"
+  },
+  "400": {
+    "description": "Bad Request",
+    "content": {
+      "application/problem+json": {
+        "schema": {
+          "$ref": "#/components/schemas/ProblemDetails"
+        }
+      }
+    }
+  }
+}
+```

@@ -1,0 +1,102 @@
+---
+title: "Get Segment Data"
+description: "Get Segment Data"
+---
+
+## GET `/api/v10/data-quality/test-suites/{id}/instances/{instanceId}/segment-data`
+
+**Get Segment Data**
+
+Tags: `Data Quality \ Test Suites \ Instance`
+
+### Parameters
+
+```json
+[
+  {
+    "name": "id",
+    "in": "path",
+    "required": true,
+    "schema": {
+      "pattern": "^-?(?:0|[1-9]\\d*)$",
+      "type": [
+        "integer",
+        "string"
+      ],
+      "format": "int64"
+    }
+  },
+  {
+    "name": "instanceId",
+    "in": "path",
+    "required": true,
+    "schema": {
+      "type": "string"
+    }
+  }
+]
+```
+
+### Responses
+
+```json
+{
+  "200": {
+    "description": "OK",
+    "content": {
+      "text/plain": {
+        "schema": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      },
+      "application/json": {
+        "schema": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      },
+      "text/json": {
+        "schema": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "400": {
+    "description": "Bad Request",
+    "content": {
+      "application/problem+json": {
+        "schema": {
+          "$ref": "#/components/schemas/ProblemDetails"
+        }
+      }
+    }
+  }
+}
+```

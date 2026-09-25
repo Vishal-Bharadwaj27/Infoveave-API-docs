@@ -1,0 +1,107 @@
+---
+title: "Query Single Record by ID"
+description: "Retrieves a **single record by its primary key** identifier.\n\n**Returns:** Single JSON object (not an array)\n\n**Supported Query Parameters:**\n- **$select**: Column projection - `Products(123)?$select=Name,Price`\n- **$expand**: Load relationships - `Products(123)?$expand=Orders`\n\n**String ID Format:** Enclose in single quotes\n- `Products('SKU-001')`\n- `Orders('ORD-2025-001')`\n\n**Numeric ID Format:** Use directly\n- `Products(12345)`\n\n**Examples:**\n`GET /odata/tenant1/datasource1/Products(123)`\n`GET /odata/tenant1/datasource1/Products('ABC')?$expand=Orders`\n\n**Response:** `200 OK` with entity object | `404 Not Found` if record doesn't exist"
+---
+
+## GET `/api/v10/datagraph/odata/{tenantId}/{datasourceId}/{tableName}({id})`
+
+**Query Single Record by ID**
+
+Retrieves a **single record by its primary key** identifier.
+
+**Returns:** Single JSON object (not an array)
+
+**Supported Query Parameters:**
+- **$select**: Column projection - `Products(123)?$select=Name,Price`
+- **$expand**: Load relationships - `Products(123)?$expand=Orders`
+
+**String ID Format:** Enclose in single quotes
+- `Products('SKU-001')`
+- `Orders('ORD-2025-001')`
+
+**Numeric ID Format:** Use directly
+- `Products(12345)`
+
+**Examples:**
+`GET /odata/tenant1/datasource1/Products(123)`
+`GET /odata/tenant1/datasource1/Products('ABC')?$expand=Orders`
+
+**Response:** `200 OK` with entity object | `404 Not Found` if record doesn't exist
+
+Tags: `OData`
+
+### Parameters
+
+```json
+[
+  {
+    "name": "tenantId",
+    "in": "path",
+    "required": true,
+    "schema": {
+      "type": "string"
+    }
+  },
+  {
+    "name": "datasourceId",
+    "in": "path",
+    "required": true,
+    "schema": {
+      "type": "string"
+    }
+  },
+  {
+    "name": "tableName",
+    "in": "path",
+    "required": true,
+    "schema": {
+      "type": "string"
+    }
+  },
+  {
+    "name": "id",
+    "in": "path",
+    "required": true,
+    "schema": {
+      "type": "string"
+    }
+  },
+  {
+    "name": "$select",
+    "in": "query",
+    "schema": {
+      "type": "string"
+    }
+  },
+  {
+    "name": "$expand",
+    "in": "query",
+    "schema": {
+      "type": "string"
+    }
+  }
+]
+```
+
+### Responses
+
+```json
+{
+  "200": {
+    "description": "OK",
+    "content": {
+      "application/json": {}
+    }
+  },
+  "400": {
+    "description": "Bad Request",
+    "content": {
+      "application/problem+json": {
+        "schema": {
+          "$ref": "#/components/schemas/ProblemDetails"
+        }
+      }
+    }
+  }
+}
+```

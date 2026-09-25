@@ -1,0 +1,33 @@
+{
+  "title": "Data Graph",
+  "pages": [
+    "index",
+    "---Cache---",
+    "delete-api-v10-datagraph-cache-tenantid-datasourceid",
+    "delete-api-v10-datagraph-cache-odata-clear",
+    "post-api-v10-datagraph-cache-odata-stats-reset",
+    "get-api-v10-datagraph-cache-odata-stats",
+    "get-api-v10-datagraph-cache-stats",
+    "delete-api-v10-datagraph-cache",
+    "---DataGraph---",
+    "get",
+    "---OData---",
+    "delete-api-v10-datagraph-odata-tenantid-datasourceid-tablename-id",
+    "get-api-v10-datagraph-odata-tenantid-datasourceid-tablename-id",
+    "patch-api-v10-datagraph-odata-tenantid-datasourceid-tablename-id",
+    "get-api-v10-datagraph-odata-tenantid-datasourceid-tablename",
+    "post-api-v10-datagraph-odata-tenantid-datasourceid-tablename",
+    "get-api-v10-datagraph-odata-tenantid-datasourceid-metadata",
+    "get-api-v10-datagraph-odata-tenantid-datasourceid",
+    "---PerformanceMetrics---",
+    "get-api-v10-datagraph-performance-nested-level",
+    "get-api-v10-datagraph-performance-nested",
+    "get-api-v10-datagraph-performance-relationships-sourcetable-relationshipname-targettable",
+    "get-api-v10-datagraph-performance-summary",
+    "---PerformanceMonitoring---",
+    "delete-api-v10-datagraph-performance-metrics",
+    "get-api-v10-datagraph-performance-relationship-sourcetable-relationshipname-targettable",
+    "get-api-v10-datagraph-performance-stats",
+    "..."
+  ]
+}

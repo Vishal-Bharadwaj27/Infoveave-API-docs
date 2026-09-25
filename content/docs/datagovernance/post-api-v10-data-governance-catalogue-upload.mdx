@@ -1,0 +1,38 @@
+---
+title: "Upload Description For Catalogue"
+description: "This method uploads descriptions for all catalogs of the specified entity type"
+---
+
+## POST `/api/v10/data-governance/Catalogue/upload`
+
+**Upload Description For Catalogue**
+
+This method uploads descriptions for all catalogs of the specified entity type
+
+Tags: `Data Governance \ Catalogue `
+
+### Parameters
+
+```json
+[]
+```
+
+### Responses
+
+```json
+{
+  "200": {
+    "description": "OK"
+  },
+  "400": {
+    "description": "Bad Request",
+    "content": {
+      "application/problem+json": {
+        "schema": {
+          "$ref": "#/components/schemas/ProblemDetails"
+        }
+      }
+    }
+  }
+}
+```

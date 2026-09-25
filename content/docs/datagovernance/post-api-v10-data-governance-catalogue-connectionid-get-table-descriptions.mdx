@@ -1,0 +1,50 @@
+---
+title: "Get Table Descriptions"
+description: "Get Table Descriptions"
+---
+
+## POST `/api/v10/data-governance/Catalogue/{connectionId}/get-table-descriptions`
+
+**Get Table Descriptions**
+
+Tags: `Data Governance \ Catalogue `
+
+### Parameters
+
+```json
+[
+  {
+    "name": "connectionId",
+    "in": "path",
+    "required": true,
+    "schema": {
+      "pattern": "^-?(?:0|[1-9]\\d*)$",
+      "type": [
+        "integer",
+        "string"
+      ],
+      "format": "int64"
+    }
+  }
+]
+```
+
+### Responses
+
+```json
+{
+  "200": {
+    "description": "OK"
+  },
+  "400": {
+    "description": "Bad Request",
+    "content": {
+      "application/problem+json": {
+        "schema": {
+          "$ref": "#/components/schemas/ProblemDetails"
+        }
+      }
+    }
+  }
+}
+```

@@ -1,0 +1,41 @@
+---
+title: "Clear OData Query Cache"
+description: "Clear all cached OData query results."
+---
+
+## DELETE `/api/v10/datagraph/cache/odata/clear`
+
+**Clear OData Query Cache**
+
+Clear all cached OData query results.
+
+Tags: `Cache`
+
+### Parameters
+
+```json
+[]
+```
+
+### Responses
+
+```json
+{
+  "200": {
+    "description": "OK",
+    "content": {
+      "application/json": {}
+    }
+  },
+  "400": {
+    "description": "Bad Request",
+    "content": {
+      "application/problem+json": {
+        "schema": {
+          "$ref": "#/components/schemas/ProblemDetails"
+        }
+      }
+    }
+  }
+}
+```

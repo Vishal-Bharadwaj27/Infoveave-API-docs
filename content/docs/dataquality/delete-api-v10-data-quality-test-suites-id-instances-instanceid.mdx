@@ -1,0 +1,75 @@
+---
+title: "Delete Execution Instance"
+description: "Delete Execution Instance"
+---
+
+## DELETE `/api/v10/data-quality/test-suites/{id}/instances/{instanceId}`
+
+**Delete Execution Instance**
+
+Tags: `Data Quality \ Test Suites \ Instance`
+
+### Parameters
+
+```json
+[
+  {
+    "name": "id",
+    "in": "path",
+    "required": true,
+    "schema": {
+      "pattern": "^-?(?:0|[1-9]\\d*)$",
+      "type": [
+        "integer",
+        "string"
+      ],
+      "format": "int64"
+    }
+  },
+  {
+    "name": "instanceId",
+    "in": "path",
+    "required": true,
+    "schema": {
+      "type": "string"
+    }
+  }
+]
+```
+
+### Responses
+
+```json
+{
+  "200": {
+    "description": "OK",
+    "content": {
+      "text/plain": {
+        "schema": {
+          "$ref": "#/components/schemas/DataQualityDeleteResponse"
+        }
+      },
+      "application/json": {
+        "schema": {
+          "$ref": "#/components/schemas/DataQualityDeleteResponse"
+        }
+      },
+      "text/json": {
+        "schema": {
+          "$ref": "#/components/schemas/DataQualityDeleteResponse"
+        }
+      }
+    }
+  },
+  "400": {
+    "description": "Bad Request",
+    "content": {
+      "application/problem+json": {
+        "schema": {
+          "$ref": "#/components/schemas/ProblemDetails"
+        }
+      }
+    }
+  }
+}
+```

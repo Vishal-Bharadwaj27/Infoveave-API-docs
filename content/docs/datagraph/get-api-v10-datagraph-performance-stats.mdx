@@ -1,0 +1,45 @@
+---
+title: "Get Performance Statistics"
+description: "Retrieve overall performance statistics including cache metrics, query performance, and slow query analysis."
+---
+
+## GET `/api/v10/datagraph/performance/stats`
+
+**Get Performance Statistics**
+
+Retrieve overall performance statistics including cache metrics, query performance, and slow query analysis.
+
+Tags: `PerformanceMonitoring`
+
+### Parameters
+
+```json
+[]
+```
+
+### Responses
+
+```json
+{
+  "200": {
+    "description": "OK",
+    "content": {
+      "application/json": {
+        "schema": {
+          "$ref": "#/components/schemas/PerformanceStatisticsResponse"
+        }
+      }
+    }
+  },
+  "400": {
+    "description": "Bad Request",
+    "content": {
+      "application/problem+json": {
+        "schema": {
+          "$ref": "#/components/schemas/ProblemDetails"
+        }
+      }
+    }
+  }
+}
+```

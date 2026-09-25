@@ -1,0 +1,45 @@
+---
+title: "Clear Performance Metrics"
+description: "Clear all recorded performance metrics and reset cache statistics."
+---
+
+## DELETE `/api/v10/datagraph/performance/metrics`
+
+**Clear Performance Metrics**
+
+Clear all recorded performance metrics and reset cache statistics.
+
+Tags: `PerformanceMonitoring`
+
+### Parameters
+
+```json
+[]
+```
+
+### Responses
+
+```json
+{
+  "200": {
+    "description": "OK",
+    "content": {
+      "application/json": {
+        "schema": {
+          "$ref": "#/components/schemas/CacheInvalidationResponse"
+        }
+      }
+    }
+  },
+  "400": {
+    "description": "Bad Request",
+    "content": {
+      "application/problem+json": {
+        "schema": {
+          "$ref": "#/components/schemas/ProblemDetails"
+        }
+      }
+    }
+  }
+}
+```

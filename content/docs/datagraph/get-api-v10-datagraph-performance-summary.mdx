@@ -1,0 +1,45 @@
+---
+title: "Get Performance Summary"
+description: "Retrieve overall performance summary for all queries including cache hit rate, slow queries, and N+1 patterns."
+---
+
+## GET `/api/v10/datagraph/performance/summary`
+
+**Get Performance Summary**
+
+Retrieve overall performance summary for all queries including cache hit rate, slow queries, and N+1 patterns.
+
+Tags: `PerformanceMetrics`
+
+### Parameters
+
+```json
+[]
+```
+
+### Responses
+
+```json
+{
+  "200": {
+    "description": "OK",
+    "content": {
+      "application/json": {
+        "schema": {
+          "$ref": "#/components/schemas/PerformanceSummaryResponse"
+        }
+      }
+    }
+  },
+  "400": {
+    "description": "Bad Request",
+    "content": {
+      "application/problem+json": {
+        "schema": {
+          "$ref": "#/components/schemas/ProblemDetails"
+        }
+      }
+    }
+  }
+}
+```

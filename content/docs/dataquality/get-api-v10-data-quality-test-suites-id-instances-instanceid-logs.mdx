@@ -1,0 +1,70 @@
+---
+title: "Get Instance Logs"
+description: "Get Instance Logs"
+---
+
+## GET `/api/v10/data-quality/test-suites/{id}/instances/{instanceId}/logs`
+
+**Get Instance Logs**
+
+Tags: `Data Quality \ Test Suites \ Instance`
+
+### Parameters
+
+```json
+[
+  {
+    "name": "instanceId",
+    "in": "path",
+    "required": true,
+    "schema": {
+      "type": "string"
+    }
+  },
+  {
+    "name": "id",
+    "in": "path",
+    "required": true,
+    "schema": {
+      "type": "string"
+    }
+  }
+]
+```
+
+### Responses
+
+```json
+{
+  "200": {
+    "description": "OK",
+    "content": {
+      "text/plain": {
+        "schema": {
+          "type": "string"
+        }
+      },
+      "application/json": {
+        "schema": {
+          "type": "string"
+        }
+      },
+      "text/json": {
+        "schema": {
+          "type": "string"
+        }
+      }
+    }
+  },
+  "400": {
+    "description": "Bad Request",
+    "content": {
+      "application/problem+json": {
+        "schema": {
+          "$ref": "#/components/schemas/ProblemDetails"
+        }
+      }
+    }
+  }
+}
+```

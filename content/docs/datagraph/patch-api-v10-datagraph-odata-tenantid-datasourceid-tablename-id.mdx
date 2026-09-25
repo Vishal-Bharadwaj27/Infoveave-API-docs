@@ -1,0 +1,97 @@
+---
+title: "Update Existing Record"
+description: "**Updates an existing entity** with partial or complete data using true PATCH semantics.\n\n**Process:**\n1. Locates record by ID\n2. Validates provided fields only (not entire record)\n3. Sanitizes input data\n4. Updates specified fields in database\n5. Invalidates table cache\n6. Returns 200 OK with complete updated record\n\n**Request Body:** JSON with fields to update (send only changed fields)\n```json\n{ \"Price\": 1199.99, \"Stock\": 45 }\n```\n\n**Key Behavior:** Only specified fields updated; others unchanged\n\n**ID Format:** String IDs in single quotes - `Orders('ORD-123')`\n\n**Response:**\n- **200 OK**: Complete updated record with all fields\n- **400 Bad Request**: Validation error\n- **404 Not Found**: Record doesn't exist\n- **500 Internal Server Error**: Database error"
+---
+
+## PATCH `/api/v10/datagraph/odata/{tenantId}/{datasourceId}/{tableName}({id})`
+
+**Update Existing Record**
+
+**Updates an existing entity** with partial or complete data using true PATCH semantics.
+
+**Process:**
+1. Locates record by ID
+2. Validates provided fields only (not entire record)
+3. Sanitizes input data
+4. Updates specified fields in database
+5. Invalidates table cache
+6. Returns 200 OK with complete updated record
+
+**Request Body:** JSON with fields to update (send only changed fields)
+```json
+{ "Price": 1199.99, "Stock": 45 }
+```
+
+**Key Behavior:** Only specified fields updated; others unchanged
+
+**ID Format:** String IDs in single quotes - `Orders('ORD-123')`
+
+**Response:**
+- **200 OK**: Complete updated record with all fields
+- **400 Bad Request**: Validation error
+- **404 Not Found**: Record doesn't exist
+- **500 Internal Server Error**: Database error
+
+Tags: `OData`
+
+### Parameters
+
+```json
+[
+  {
+    "name": "tenantId",
+    "in": "path",
+    "required": true,
+    "schema": {
+      "type": "string"
+    }
+  },
+  {
+    "name": "datasourceId",
+    "in": "path",
+    "required": true,
+    "schema": {
+      "type": "string"
+    }
+  },
+  {
+    "name": "tableName",
+    "in": "path",
+    "required": true,
+    "schema": {
+      "type": "string"
+    }
+  },
+  {
+    "name": "id",
+    "in": "path",
+    "required": true,
+    "schema": {
+      "type": "string"
+    }
+  }
+]
+```
+
+### Responses
+
+```json
+{
+  "200": {
+    "description": "OK",
+    "content": {
+      "application/json": {}
+    }
+  },
+  "400": {
+    "description": "Bad Request",
+    "content": {
+      "application/problem+json": {
+        "schema": {
+          "$ref": "#/components/schemas/ProblemDetails"
+        }
+      }
+    }
+  }
+}
+```

@@ -1,0 +1,45 @@
+---
+title: "Invalidate All Cache"
+description: "Invalidate all cached GraphQL instances. This will force all instances to be rebuilt on the next request."
+---
+
+## DELETE `/api/v10/datagraph/cache`
+
+**Invalidate All Cache**
+
+Invalidate all cached GraphQL instances. This will force all instances to be rebuilt on the next request.
+
+Tags: `Cache`
+
+### Parameters
+
+```json
+[]
+```
+
+### Responses
+
+```json
+{
+  "200": {
+    "description": "OK",
+    "content": {
+      "application/json": {
+        "schema": {
+          "$ref": "#/components/schemas/CacheInvalidationResponse"
+        }
+      }
+    }
+  },
+  "400": {
+    "description": "Bad Request",
+    "content": {
+      "application/problem+json": {
+        "schema": {
+          "$ref": "#/components/schemas/ProblemDetails"
+        }
+      }
+    }
+  }
+}
+```

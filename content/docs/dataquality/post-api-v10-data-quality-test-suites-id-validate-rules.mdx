@@ -1,0 +1,79 @@
+---
+title: "Validate Data Quality Rules"
+description: "Validate Data Quality Rules"
+---
+
+## POST `/api/v10/data-quality/test-suites/{id}/validate-rules`
+
+**Validate Data Quality Rules**
+
+Tags: `Data Quality \ Test Suites`
+
+### Parameters
+
+```json
+[
+  {
+    "name": "id",
+    "in": "path",
+    "required": true,
+    "schema": {
+      "pattern": "^-?(?:0|[1-9]\\d*)$",
+      "type": [
+        "integer",
+        "string"
+      ],
+      "format": "int64"
+    }
+  },
+  {
+    "name": "sampleSize",
+    "in": "query",
+    "schema": {
+      "pattern": "^-?(?:0|[1-9]\\d*)$",
+      "type": [
+        "integer",
+        "string"
+      ],
+      "format": "int32"
+    }
+  }
+]
+```
+
+### Responses
+
+```json
+{
+  "200": {
+    "description": "OK",
+    "content": {
+      "text/plain": {
+        "schema": {
+          "$ref": "#/components/schemas/ParsedDataQualityExecutionMetadata"
+        }
+      },
+      "application/json": {
+        "schema": {
+          "$ref": "#/components/schemas/ParsedDataQualityExecutionMetadata"
+        }
+      },
+      "text/json": {
+        "schema": {
+          "$ref": "#/components/schemas/ParsedDataQualityExecutionMetadata"
+        }
+      }
+    }
+  },
+  "400": {
+    "description": "Bad Request",
+    "content": {
+      "application/problem+json": {
+        "schema": {
+          "$ref": "#/components/schemas/ProblemDetails"
+        }
+      }
+    }
+  }
+}
+```

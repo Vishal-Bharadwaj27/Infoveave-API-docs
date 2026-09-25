@@ -1,0 +1,53 @@
+---
+title: "Get All Media Items By Entity Id"
+description: "Get All Media Items By Entity Id"
+---
+
+## GET `/api/v10/data-governance/Catalogue/media/{entityType}/{id}/documents`
+
+**Get All Media Items By Entity Id**
+
+Tags: `Data Governance \ Catalogue `
+
+### Parameters
+
+```json
+[
+  {
+    "name": "entityType",
+    "in": "path",
+    "required": true,
+    "schema": {
+      "type": "string"
+    }
+  },
+  {
+    "name": "id",
+    "in": "path",
+    "required": true,
+    "schema": {
+      "type": "string"
+    }
+  }
+]
+```
+
+### Responses
+
+```json
+{
+  "200": {
+    "description": "OK"
+  },
+  "400": {
+    "description": "Bad Request",
+    "content": {
+      "application/problem+json": {
+        "schema": {
+          "$ref": "#/components/schemas/ProblemDetails"
+        }
+      }
+    }
+  }
+}
+```

@@ -1,0 +1,62 @@
+---
+title: "Invalidate Specific Cache"
+description: "Invalidate the cached GraphQL instance for a specific tenant and datasource combination."
+---
+
+## DELETE `/api/v10/datagraph/cache/{tenantId}/{datasourceId}`
+
+**Invalidate Specific Cache**
+
+Invalidate the cached GraphQL instance for a specific tenant and datasource combination.
+
+Tags: `Cache`
+
+### Parameters
+
+```json
+[
+  {
+    "name": "tenantId",
+    "in": "path",
+    "required": true,
+    "schema": {
+      "type": "string"
+    }
+  },
+  {
+    "name": "datasourceId",
+    "in": "path",
+    "required": true,
+    "schema": {
+      "type": "string"
+    }
+  }
+]
+```
+
+### Responses
+
+```json
+{
+  "200": {
+    "description": "OK",
+    "content": {
+      "application/json": {
+        "schema": {
+          "$ref": "#/components/schemas/CacheInvalidationResponse"
+        }
+      }
+    }
+  },
+  "400": {
+    "description": "Bad Request",
+    "content": {
+      "application/problem+json": {
+        "schema": {
+          "$ref": "#/components/schemas/ProblemDetails"
+        }
+      }
+    }
+  }
+}
+```

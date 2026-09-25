@@ -1,0 +1,50 @@
+---
+title: "Introspect schema with AI enrichment"
+description: "Introspect schema with AI enrichment"
+---
+
+## POST `/api/v10/data-quality/data-introspection/connections/{id}/start-introspection`
+
+**Introspect schema with AI enrichment**
+
+Tags: `Data Quality \ Data Introspection`
+
+### Parameters
+
+```json
+[
+  {
+    "name": "id",
+    "in": "path",
+    "required": true,
+    "schema": {
+      "pattern": "^-?(?:0|[1-9]\\d*)$",
+      "type": [
+        "integer",
+        "string"
+      ],
+      "format": "int64"
+    }
+  }
+]
+```
+
+### Responses
+
+```json
+{
+  "200": {
+    "description": "OK"
+  },
+  "400": {
+    "description": "Bad Request",
+    "content": {
+      "application/problem+json": {
+        "schema": {
+          "$ref": "#/components/schemas/ProblemDetails"
+        }
+      }
+    }
+  }
+}
+```

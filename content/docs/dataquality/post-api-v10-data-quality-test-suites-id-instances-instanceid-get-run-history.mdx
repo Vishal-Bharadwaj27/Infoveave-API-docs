@@ -1,0 +1,75 @@
+---
+title: "Get Run History"
+description: "Get Run History"
+---
+
+## POST `/api/v10/data-quality/test-suites/{id}/instances/{instanceId}/get-run-history`
+
+**Get Run History**
+
+Tags: `Data Quality \ Test Suites \ Instance`
+
+### Parameters
+
+```json
+[
+  {
+    "name": "id",
+    "in": "path",
+    "required": true,
+    "schema": {
+      "pattern": "^-?(?:0|[1-9]\\d*)$",
+      "type": [
+        "integer",
+        "string"
+      ],
+      "format": "int64"
+    }
+  },
+  {
+    "name": "instanceId",
+    "in": "path",
+    "required": true,
+    "schema": {
+      "type": "string"
+    }
+  }
+]
+```
+
+### Responses
+
+```json
+{
+  "200": {
+    "description": "OK",
+    "content": {
+      "text/plain": {
+        "schema": {
+          "$ref": "#/components/schemas/FilteredDataQualityRunHistoryResponse"
+        }
+      },
+      "application/json": {
+        "schema": {
+          "$ref": "#/components/schemas/FilteredDataQualityRunHistoryResponse"
+        }
+      },
+      "text/json": {
+        "schema": {
+          "$ref": "#/components/schemas/FilteredDataQualityRunHistoryResponse"
+        }
+      }
+    }
+  },
+  "400": {
+    "description": "Bad Request",
+    "content": {
+      "application/problem+json": {
+        "schema": {
+          "$ref": "#/components/schemas/ProblemDetails"
+        }
+      }
+    }
+  }
+}
+```

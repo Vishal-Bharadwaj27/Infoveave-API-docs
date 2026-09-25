@@ -1,0 +1,38 @@
+---
+title: "Create"
+description: "This method is responsible for creating tags, domain tiers, and glossary terms"
+---
+
+## POST `/api/v10/data-governance/Manage`
+
+**Create**
+
+This method is responsible for creating tags, domain tiers, and glossary terms
+
+Tags: `Data Governance \ Manage`
+
+### Parameters
+
+```json
+[]
+```
+
+### Responses
+
+```json
+{
+  "200": {
+    "description": "OK"
+  },
+  "400": {
+    "description": "Bad Request",
+    "content": {
+      "application/problem+json": {
+        "schema": {
+          "$ref": "#/components/schemas/ProblemDetails"
+        }
+      }
+    }
+  }
+}
+```
