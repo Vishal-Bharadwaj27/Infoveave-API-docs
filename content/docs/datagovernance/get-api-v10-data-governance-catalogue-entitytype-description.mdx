@@ -1,0 +1,45 @@
+---
+title: "Get Catalogue Description By Entity"
+description: "Get Catalogue Description By Entity"
+---
+
+## GET `/api/v10/data-governance/Catalogue/{entityType}/description`
+
+**Get Catalogue Description By Entity**
+
+Tags: `Data Governance \ Catalogue `
+
+### Parameters
+
+```json
+[
+  {
+    "name": "entityType",
+    "in": "path",
+    "required": true,
+    "schema": {
+      "type": "string"
+    }
+  }
+]
+```
+
+### Responses
+
+```json
+{
+  "200": {
+    "description": "OK"
+  },
+  "400": {
+    "description": "Bad Request",
+    "content": {
+      "application/problem+json": {
+        "schema": {
+          "$ref": "#/components/schemas/ProblemDetails"
+        }
+      }
+    }
+  }
+}
+```

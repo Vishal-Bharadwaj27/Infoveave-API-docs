@@ -1,0 +1,84 @@
+---
+title: "Create New Record"
+description: "**Creates a new entity** with validated input data.\n\n**Process:**\n1. Validates required fields and data types\n2. Checks constraints and relationships\n3. Sanitizes input to prevent injection\n4. Inserts record into database\n5. Invalidates table cache\n6. Returns 201 Created with generated IDs\n\n**Request Body:** JSON object with column values\n```json\n{ \"Name\": \"Product\", \"Price\": 99.99, \"Category\": \"Electronics\" }\n```\n\n**Response:**\n- **201 Created**: Complete record with generated IDs + `Location` header\n- **400 Bad Request**: Validation failed or missing required fields\n- **500 Internal Server Error**: Database error"
+---
+
+## POST `/api/v10/datagraph/odata/{tenantId}/{datasourceId}/{tableName}`
+
+**Create New Record**
+
+**Creates a new entity** with validated input data.
+
+**Process:**
+1. Validates required fields and data types
+2. Checks constraints and relationships
+3. Sanitizes input to prevent injection
+4. Inserts record into database
+5. Invalidates table cache
+6. Returns 201 Created with generated IDs
+
+**Request Body:** JSON object with column values
+```json
+{ "Name": "Product", "Price": 99.99, "Category": "Electronics" }
+```
+
+**Response:**
+- **201 Created**: Complete record with generated IDs + `Location` header
+- **400 Bad Request**: Validation failed or missing required fields
+- **500 Internal Server Error**: Database error
+
+Tags: `OData`
+
+### Parameters
+
+```json
+[
+  {
+    "name": "tenantId",
+    "in": "path",
+    "required": true,
+    "schema": {
+      "type": "string"
+    }
+  },
+  {
+    "name": "datasourceId",
+    "in": "path",
+    "required": true,
+    "schema": {
+      "type": "string"
+    }
+  },
+  {
+    "name": "tableName",
+    "in": "path",
+    "required": true,
+    "schema": {
+      "type": "string"
+    }
+  }
+]
+```
+
+### Responses
+
+```json
+{
+  "200": {
+    "description": "OK",
+    "content": {
+      "application/json": {}
+    }
+  },
+  "400": {
+    "description": "Bad Request",
+    "content": {
+      "application/problem+json": {
+        "schema": {
+          "$ref": "#/components/schemas/ProblemDetails"
+        }
+      }
+    }
+  }
+}
+```

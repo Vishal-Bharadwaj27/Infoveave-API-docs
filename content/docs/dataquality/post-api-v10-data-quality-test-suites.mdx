@@ -1,0 +1,53 @@
+---
+title: "Create Data Quality"
+description: "Create Data Quality"
+---
+
+## POST `/api/v10/data-quality/test-suites`
+
+**Create Data Quality**
+
+Tags: `Data Quality \ Test Suites`
+
+### Parameters
+
+```json
+[]
+```
+
+### Responses
+
+```json
+{
+  "200": {
+    "description": "OK",
+    "content": {
+      "text/plain": {
+        "schema": {
+          "$ref": "#/components/schemas/DataQualityParsedResponse"
+        }
+      },
+      "application/json": {
+        "schema": {
+          "$ref": "#/components/schemas/DataQualityParsedResponse"
+        }
+      },
+      "text/json": {
+        "schema": {
+          "$ref": "#/components/schemas/DataQualityParsedResponse"
+        }
+      }
+    }
+  },
+  "400": {
+    "description": "Bad Request",
+    "content": {
+      "application/problem+json": {
+        "schema": {
+          "$ref": "#/components/schemas/ProblemDetails"
+        }
+      }
+    }
+  }
+}
+```

@@ -1,0 +1,36 @@
+---
+title: "Analyse Data Quality"
+description: "Analyse Data Quality"
+---
+
+## POST `/api/v10/data-quality/test-suites/analyse-quality`
+
+**Analyse Data Quality**
+
+Tags: `TestSuites`
+
+### Parameters
+
+```json
+[]
+```
+
+### Responses
+
+```json
+{
+  "200": {
+    "description": "OK"
+  },
+  "400": {
+    "description": "Bad Request",
+    "content": {
+      "application/problem+json": {
+        "schema": {
+          "$ref": "#/components/schemas/ProblemDetails"
+        }
+      }
+    }
+  }
+}
+```

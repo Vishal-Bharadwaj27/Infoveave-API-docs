@@ -1,0 +1,71 @@
+---
+title: "Get OData Metadata Document"
+description: "Returns the complete OData CSDL (Conceptual Schema Definition Language) metadata document in XML format.\n\n**Includes:**\n- Entity Types: All available tables with properties and data types\n- Properties: Column definitions with type information and nullability\n- Navigation Properties: Relationships between entities (one-to-many, many-to-one)\n- Associations: Relationship definitions with multiplicity information\n\n**Use Cases:**\n- OData client tools discover the data model\n- API documentation generators parse for UI\n- Query builders reference this for validation\n\n**Example:** `GET /odata/tenant1/datasource1/$metadata`"
+---
+
+## GET `/api/v10/datagraph/odata/{tenantId}/{datasourceId}/$metadata`
+
+**Get OData Metadata Document**
+
+Returns the complete OData CSDL (Conceptual Schema Definition Language) metadata document in XML format.
+
+**Includes:**
+- Entity Types: All available tables with properties and data types
+- Properties: Column definitions with type information and nullability
+- Navigation Properties: Relationships between entities (one-to-many, many-to-one)
+- Associations: Relationship definitions with multiplicity information
+
+**Use Cases:**
+- OData client tools discover the data model
+- API documentation generators parse for UI
+- Query builders reference this for validation
+
+**Example:** `GET /odata/tenant1/datasource1/$metadata`
+
+Tags: `OData`
+
+### Parameters
+
+```json
+[
+  {
+    "name": "tenantId",
+    "in": "path",
+    "required": true,
+    "schema": {
+      "type": "string"
+    }
+  },
+  {
+    "name": "datasourceId",
+    "in": "path",
+    "required": true,
+    "schema": {
+      "type": "string"
+    }
+  }
+]
+```
+
+### Responses
+
+```json
+{
+  "200": {
+    "description": "OK",
+    "content": {
+      "application/xml": {}
+    }
+  },
+  "400": {
+    "description": "Bad Request",
+    "content": {
+      "application/problem+json": {
+        "schema": {
+          "$ref": "#/components/schemas/ProblemDetails"
+        }
+      }
+    }
+  }
+}
+```

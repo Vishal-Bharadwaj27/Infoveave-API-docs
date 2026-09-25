@@ -1,0 +1,67 @@
+---
+title: "Update Data Introspectioned Column"
+description: "Update Data Introspectioned Column"
+---
+
+## PATCH `/api/v10/data-quality/data-introspection/{connectionId}/column`
+
+**Update Data Introspectioned Column**
+
+Tags: `Data Quality \ Data Introspection`
+
+### Parameters
+
+```json
+[
+  {
+    "name": "connectionId",
+    "in": "path",
+    "required": true,
+    "schema": {
+      "pattern": "^-?(?:0|[1-9]\\d*)$",
+      "type": [
+        "integer",
+        "string"
+      ],
+      "format": "int64"
+    }
+  }
+]
+```
+
+### Responses
+
+```json
+{
+  "200": {
+    "description": "OK",
+    "content": {
+      "text/plain": {
+        "schema": {
+          "$ref": "#/components/schemas/IntrospectionColumnResponse"
+        }
+      },
+      "application/json": {
+        "schema": {
+          "$ref": "#/components/schemas/IntrospectionColumnResponse"
+        }
+      },
+      "text/json": {
+        "schema": {
+          "$ref": "#/components/schemas/IntrospectionColumnResponse"
+        }
+      }
+    }
+  },
+  "400": {
+    "description": "Bad Request",
+    "content": {
+      "application/problem+json": {
+        "schema": {
+          "$ref": "#/components/schemas/ProblemDetails"
+        }
+      }
+    }
+  }
+}
+```

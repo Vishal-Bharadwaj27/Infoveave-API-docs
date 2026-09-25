@@ -1,0 +1,150 @@
+---
+title: "Query Collection with OData Parameters"
+description: "Queries a table with **comprehensive OData support** for filtering, sorting, pagination, and relationship expansion.\n\n**Query Parameters:**\n- **$filter**: `Age gt 18 and Status eq 'Active'` - Comparison (eq, ne, gt, lt, ge, le) + logical (and, or, not)\n- **$select**: `Name,Email,Phone` - Project columns; relationships always included\n- **$orderby**: `Name asc, Date desc` - Sort by multiple columns with direction\n- **$expand**: `Orders` or `Orders($expand=Items)` - Load related entities with batch optimization\n- **$skip**: `20` - Offset for pagination\n- **$top**: `10` - Limit records (max 1000)\n- **$count**: `true` - Include total in `@odata.count`\n\n**Security:**\n- SQL injection prevention via pattern detection\n- Column-level access control\n- Parameterized SQL execution\n\n**Performance:**\n- Query result caching (5-minute TTL, auto-invalidated on mutations)\n- Relationship batching (60-70× fewer queries)\n- GZip compression (40-60% bandwidth reduction)\n\n**Examples:**\n`GET /odata/tenant1/datasource1/Products?$filter=Price gt 100`\n`GET /odata/tenant1/datasource1/Orders?$expand=Items&$count=true`\n\n**Response:** Returns `{ \"value\": [...], \"@odata.count\": N }` on success"
+---
+
+## GET `/api/v10/datagraph/odata/{tenantId}/{datasourceId}/{tableName}`
+
+**Query Collection with OData Parameters**
+
+Queries a table with **comprehensive OData support** for filtering, sorting, pagination, and relationship expansion.
+
+**Query Parameters:**
+- **$filter**: `Age gt 18 and Status eq 'Active'` - Comparison (eq, ne, gt, lt, ge, le) + logical (and, or, not)
+- **$select**: `Name,Email,Phone` - Project columns; relationships always included
+- **$orderby**: `Name asc, Date desc` - Sort by multiple columns with direction
+- **$expand**: `Orders` or `Orders($expand=Items)` - Load related entities with batch optimization
+- **$skip**: `20` - Offset for pagination
+- **$top**: `10` - Limit records (max 1000)
+- **$count**: `true` - Include total in `@odata.count`
+
+**Security:**
+- SQL injection prevention via pattern detection
+- Column-level access control
+- Parameterized SQL execution
+
+**Performance:**
+- Query result caching (5-minute TTL, auto-invalidated on mutations)
+- Relationship batching (60-70× fewer queries)
+- GZip compression (40-60% bandwidth reduction)
+
+**Examples:**
+`GET /odata/tenant1/datasource1/Products?$filter=Price gt 100`
+`GET /odata/tenant1/datasource1/Orders?$expand=Items&$count=true`
+
+**Response:** Returns `{ "value": [...], "@odata.count": N }` on success
+
+Tags: `OData`
+
+### Parameters
+
+```json
+[
+  {
+    "name": "tenantId",
+    "in": "path",
+    "required": true,
+    "schema": {
+      "type": "string"
+    }
+  },
+  {
+    "name": "datasourceId",
+    "in": "path",
+    "required": true,
+    "schema": {
+      "type": "string"
+    }
+  },
+  {
+    "name": "tableName",
+    "in": "path",
+    "required": true,
+    "schema": {
+      "type": "string"
+    }
+  },
+  {
+    "name": "$filter",
+    "in": "query",
+    "schema": {
+      "type": "string"
+    }
+  },
+  {
+    "name": "$select",
+    "in": "query",
+    "schema": {
+      "type": "string"
+    }
+  },
+  {
+    "name": "$orderby",
+    "in": "query",
+    "schema": {
+      "type": "string"
+    }
+  },
+  {
+    "name": "$expand",
+    "in": "query",
+    "schema": {
+      "type": "string"
+    }
+  },
+  {
+    "name": "$skip",
+    "in": "query",
+    "schema": {
+      "pattern": "^-?(?:0|[1-9]\\d*)$",
+      "type": [
+        "integer",
+        "string"
+      ],
+      "format": "int32"
+    }
+  },
+  {
+    "name": "$top",
+    "in": "query",
+    "schema": {
+      "pattern": "^-?(?:0|[1-9]\\d*)$",
+      "type": [
+        "integer",
+        "string"
+      ],
+      "format": "int32"
+    }
+  },
+  {
+    "name": "$count",
+    "in": "query",
+    "schema": {
+      "type": "boolean"
+    }
+  }
+]
+```
+
+### Responses
+
+```json
+{
+  "200": {
+    "description": "OK",
+    "content": {
+      "application/json": {}
+    }
+  },
+  "400": {
+    "description": "Bad Request",
+    "content": {
+      "application/problem+json": {
+        "schema": {
+          "$ref": "#/components/schemas/ProblemDetails"
+        }
+      }
+    }
+  }
+}
+```

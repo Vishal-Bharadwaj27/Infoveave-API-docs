@@ -1,0 +1,38 @@
+---
+title: "Link Catalog Items From Project"
+description: "Establishes a relationship between domain and a specified project"
+---
+
+## PATCH `/api/v10/data-governance/Manage/link-project-to-domain`
+
+**Link Catalog Items From Project**
+
+Establishes a relationship between domain and a specified project
+
+Tags: `Data Governance \ Manage`
+
+### Parameters
+
+```json
+[]
+```
+
+### Responses
+
+```json
+{
+  "200": {
+    "description": "OK"
+  },
+  "400": {
+    "description": "Bad Request",
+    "content": {
+      "application/problem+json": {
+        "schema": {
+          "$ref": "#/components/schemas/ProblemDetails"
+        }
+      }
+    }
+  }
+}
+```

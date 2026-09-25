@@ -1,0 +1,38 @@
+---
+title: "Unlink Project From Domain"
+description: "Removes the existing association between domain and a specified Project"
+---
+
+## PATCH `/api/v10/data-governance/Manage/unlink-project-from-domain`
+
+**Unlink Project From Domain**
+
+Removes the existing association between domain and a specified Project
+
+Tags: `Data Governance \ Manage`
+
+### Parameters
+
+```json
+[]
+```
+
+### Responses
+
+```json
+{
+  "200": {
+    "description": "OK"
+  },
+  "400": {
+    "description": "Bad Request",
+    "content": {
+      "application/problem+json": {
+        "schema": {
+          "$ref": "#/components/schemas/ProblemDetails"
+        }
+      }
+    }
+  }
+}
+```

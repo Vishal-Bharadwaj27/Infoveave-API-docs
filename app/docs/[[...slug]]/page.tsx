@@ -28,12 +28,9 @@ export default async function Page(props: PageProps<'/docs/[[...slug]]'>) {
   const markdownUrl = getPageMarkdownUrl(page).url;
 
   // Render interactive OpenAPI UI (method badges, schema/param tables,
-  // response tabs, try-it-out playground) for /docs/connections/* and /docs/ngauge/*.
+  // response tabs, try-it-out playground) for each documented service.
   const section = params.slug?.[0];
-  const doc =
-    section === 'connections' || section === 'ngauge'
-      ? getOpenAPIDocument(section)
-      : undefined;
+  const doc = section ? getOpenAPIDocument(section) : undefined;
   const processed = await page.data.getText('processed').catch(() => '');
   // Fall back to the raw MDX file so the `## METHOD /path` heading is intact.
   let rawFile = '';

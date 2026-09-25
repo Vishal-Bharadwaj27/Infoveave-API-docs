@@ -1,0 +1,55 @@
+---
+title: "Update Catalogue Information"
+description: "This method updates the domain, tags, tier, glossary, verification status, and description for the given catalogue"
+---
+
+## PATCH `/api/v10/data-governance/Catalogue/{entityType}/{id}`
+
+**Update Catalogue Information**
+
+This method updates the domain, tags, tier, glossary, verification status, and description for the given catalogue
+
+Tags: `Data Governance \ Catalogue `
+
+### Parameters
+
+```json
+[
+  {
+    "name": "entityType",
+    "in": "path",
+    "required": true,
+    "schema": {
+      "type": "string"
+    }
+  },
+  {
+    "name": "id",
+    "in": "path",
+    "required": true,
+    "schema": {
+      "type": "string"
+    }
+  }
+]
+```
+
+### Responses
+
+```json
+{
+  "200": {
+    "description": "OK"
+  },
+  "400": {
+    "description": "Bad Request",
+    "content": {
+      "application/problem+json": {
+        "schema": {
+          "$ref": "#/components/schemas/ProblemDetails"
+        }
+      }
+    }
+  }
+}
+```

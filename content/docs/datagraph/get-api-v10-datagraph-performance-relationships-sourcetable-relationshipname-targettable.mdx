@@ -1,0 +1,70 @@
+---
+title: "Get Relationship Performance Metrics"
+description: "Retrieve detailed performance metrics for a specific relationship query including query count, cache statistics, and execution times."
+---
+
+## GET `/api/v10/datagraph/performance/relationships/{sourceTable}/{relationshipName}/{targetTable}`
+
+**Get Relationship Performance Metrics**
+
+Retrieve detailed performance metrics for a specific relationship query including query count, cache statistics, and execution times.
+
+Tags: `PerformanceMetrics`
+
+### Parameters
+
+```json
+[
+  {
+    "name": "sourceTable",
+    "in": "path",
+    "required": true,
+    "schema": {
+      "type": "string"
+    }
+  },
+  {
+    "name": "relationshipName",
+    "in": "path",
+    "required": true,
+    "schema": {
+      "type": "string"
+    }
+  },
+  {
+    "name": "targetTable",
+    "in": "path",
+    "required": true,
+    "schema": {
+      "type": "string"
+    }
+  }
+]
+```
+
+### Responses
+
+```json
+{
+  "200": {
+    "description": "OK",
+    "content": {
+      "application/json": {
+        "schema": {
+          "$ref": "#/components/schemas/RelationshipPerformanceResponse"
+        }
+      }
+    }
+  },
+  "400": {
+    "description": "Bad Request",
+    "content": {
+      "application/problem+json": {
+        "schema": {
+          "$ref": "#/components/schemas/ProblemDetails"
+        }
+      }
+    }
+  }
+}
+```

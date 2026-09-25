@@ -1,0 +1,62 @@
+---
+title: "Get All Data Qualities"
+description: "Get All Data Qualities"
+---
+
+## GET `/api/v10/data-quality/test-suites`
+
+**Get All Data Qualities**
+
+Tags: `Data Quality \ Test Suites`
+
+### Parameters
+
+```json
+[]
+```
+
+### Responses
+
+```json
+{
+  "200": {
+    "description": "OK",
+    "content": {
+      "text/plain": {
+        "schema": {
+          "type": "array",
+          "items": {
+            "$ref": "#/components/schemas/DataQualitySchema"
+          }
+        }
+      },
+      "application/json": {
+        "schema": {
+          "type": "array",
+          "items": {
+            "$ref": "#/components/schemas/DataQualitySchema"
+          }
+        }
+      },
+      "text/json": {
+        "schema": {
+          "type": "array",
+          "items": {
+            "$ref": "#/components/schemas/DataQualitySchema"
+          }
+        }
+      }
+    }
+  },
+  "400": {
+    "description": "Bad Request",
+    "content": {
+      "application/problem+json": {
+        "schema": {
+          "$ref": "#/components/schemas/ProblemDetails"
+        }
+      }
+    }
+  }
+}
+```

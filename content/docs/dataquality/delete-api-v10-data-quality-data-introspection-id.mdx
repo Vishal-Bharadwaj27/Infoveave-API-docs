@@ -1,0 +1,50 @@
+---
+title: "Delete Data Introspection"
+description: "Delete Data Introspection"
+---
+
+## DELETE `/api/v10/data-quality/data-introspection/{id}`
+
+**Delete Data Introspection**
+
+Tags: `Data Quality \ Data Introspection`
+
+### Parameters
+
+```json
+[
+  {
+    "name": "id",
+    "in": "path",
+    "required": true,
+    "schema": {
+      "pattern": "^-?(?:0|[1-9]\\d*)$",
+      "type": [
+        "integer",
+        "string"
+      ],
+      "format": "int64"
+    }
+  }
+]
+```
+
+### Responses
+
+```json
+{
+  "200": {
+    "description": "OK"
+  },
+  "400": {
+    "description": "Bad Request",
+    "content": {
+      "application/problem+json": {
+        "schema": {
+          "$ref": "#/components/schemas/ProblemDetails"
+        }
+      }
+    }
+  }
+}
+```

@@ -1,0 +1,75 @@
+---
+title: "Get OData Service Document"
+description: "Returns a service document listing all available **entity sets (tables)** that can be queried for this datasource.\n\n**Response Includes:**\n- Entity set names and their direct access URLs\n- Tenant and datasource context information\n\n**Use Cases:**\n- Discovering available tables in a datasource\n- Client applications listing accessible entities\n- API navigation and discoverability\n\n**Example Request:**\n`GET /odata/tenant1/datasource1/`\n\n**Example Response:**\n```json\n{ \"entitySets\": [{ \"name\": \"Products\", \"url\": \"...\" }] }\n```"
+---
+
+## GET `/api/v10/datagraph/odata/{tenantId}/{datasourceId}`
+
+**Get OData Service Document**
+
+Returns a service document listing all available **entity sets (tables)** that can be queried for this datasource.
+
+**Response Includes:**
+- Entity set names and their direct access URLs
+- Tenant and datasource context information
+
+**Use Cases:**
+- Discovering available tables in a datasource
+- Client applications listing accessible entities
+- API navigation and discoverability
+
+**Example Request:**
+`GET /odata/tenant1/datasource1/`
+
+**Example Response:**
+```json
+{ "entitySets": [{ "name": "Products", "url": "..." }] }
+```
+
+Tags: `OData`
+
+### Parameters
+
+```json
+[
+  {
+    "name": "tenantId",
+    "in": "path",
+    "required": true,
+    "schema": {
+      "type": "string"
+    }
+  },
+  {
+    "name": "datasourceId",
+    "in": "path",
+    "required": true,
+    "schema": {
+      "type": "string"
+    }
+  }
+]
+```
+
+### Responses
+
+```json
+{
+  "200": {
+    "description": "OK",
+    "content": {
+      "application/json": {}
+    }
+  },
+  "400": {
+    "description": "Bad Request",
+    "content": {
+      "application/problem+json": {
+        "schema": {
+          "$ref": "#/components/schemas/ProblemDetails"
+        }
+      }
+    }
+  }
+}
+```

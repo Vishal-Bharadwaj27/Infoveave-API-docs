@@ -1,0 +1,52 @@
+---
+title: "Update Glossary Synonyms"
+description: "Updates the list of synonyms associated with a specific glossary"
+---
+
+## PATCH `/api/v10/data-governance/Manage/glossaries/{id}/synonyms`
+
+**Update Glossary Synonyms**
+
+Updates the list of synonyms associated with a specific glossary
+
+Tags: `Data Governance \ Manage`
+
+### Parameters
+
+```json
+[
+  {
+    "name": "id",
+    "in": "path",
+    "required": true,
+    "schema": {
+      "pattern": "^-?(?:0|[1-9]\\d*)$",
+      "type": [
+        "integer",
+        "string"
+      ],
+      "format": "int64"
+    }
+  }
+]
+```
+
+### Responses
+
+```json
+{
+  "200": {
+    "description": "OK"
+  },
+  "400": {
+    "description": "Bad Request",
+    "content": {
+      "application/problem+json": {
+        "schema": {
+          "$ref": "#/components/schemas/ProblemDetails"
+        }
+      }
+    }
+  }
+}
+```

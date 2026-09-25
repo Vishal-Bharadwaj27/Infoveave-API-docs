@@ -1,0 +1,89 @@
+---
+title: "Delete Record"
+description: "**Deletes an existing entity** from the table.\n\n**Process:**\n1. Verifies record exists by ID\n2. Deletes record from database\n3. Invalidates table cache\n4. Returns 204 No Content (no body)\n\n**ID Format:** String IDs in single quotes\n- `Products('SKU-001')`\n- Numeric IDs without quotes: `Products(12345)`\n\n**Response:**\n- **204 No Content**: Success, no response body\n- **404 Not Found**: Record doesn't exist\n- **500 Internal Server Error**: Database error\n\n**Example:**\n`DELETE /odata/tenant1/datasource1/Products(12345)`"
+---
+
+## DELETE `/api/v10/datagraph/odata/{tenantId}/{datasourceId}/{tableName}({id})`
+
+**Delete Record**
+
+**Deletes an existing entity** from the table.
+
+**Process:**
+1. Verifies record exists by ID
+2. Deletes record from database
+3. Invalidates table cache
+4. Returns 204 No Content (no body)
+
+**ID Format:** String IDs in single quotes
+- `Products('SKU-001')`
+- Numeric IDs without quotes: `Products(12345)`
+
+**Response:**
+- **204 No Content**: Success, no response body
+- **404 Not Found**: Record doesn't exist
+- **500 Internal Server Error**: Database error
+
+**Example:**
+`DELETE /odata/tenant1/datasource1/Products(12345)`
+
+Tags: `OData`
+
+### Parameters
+
+```json
+[
+  {
+    "name": "tenantId",
+    "in": "path",
+    "required": true,
+    "schema": {
+      "type": "string"
+    }
+  },
+  {
+    "name": "datasourceId",
+    "in": "path",
+    "required": true,
+    "schema": {
+      "type": "string"
+    }
+  },
+  {
+    "name": "tableName",
+    "in": "path",
+    "required": true,
+    "schema": {
+      "type": "string"
+    }
+  },
+  {
+    "name": "id",
+    "in": "path",
+    "required": true,
+    "schema": {
+      "type": "string"
+    }
+  }
+]
+```
+
+### Responses
+
+```json
+{
+  "200": {
+    "description": "OK"
+  },
+  "400": {
+    "description": "Bad Request",
+    "content": {
+      "application/problem+json": {
+        "schema": {
+          "$ref": "#/components/schemas/ProblemDetails"
+        }
+      }
+    }
+  }
+}
+```

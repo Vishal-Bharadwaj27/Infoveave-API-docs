@@ -1,0 +1,53 @@
+---
+title: "Get Data Introspection Information"
+description: "Get Data Introspection Information"
+---
+
+## POST `/api/v10/data-quality/data-introspection/get-column-information`
+
+**Get Data Introspection Information**
+
+Tags: `Data Quality \ Data Introspection`
+
+### Parameters
+
+```json
+[]
+```
+
+### Responses
+
+```json
+{
+  "200": {
+    "description": "OK",
+    "content": {
+      "text/plain": {
+        "schema": {
+          "$ref": "#/components/schemas/TableIntrospectionColumnsResponse"
+        }
+      },
+      "application/json": {
+        "schema": {
+          "$ref": "#/components/schemas/TableIntrospectionColumnsResponse"
+        }
+      },
+      "text/json": {
+        "schema": {
+          "$ref": "#/components/schemas/TableIntrospectionColumnsResponse"
+        }
+      }
+    }
+  },
+  "400": {
+    "description": "Bad Request",
+    "content": {
+      "application/problem+json": {
+        "schema": {
+          "$ref": "#/components/schemas/ProblemDetails"
+        }
+      }
+    }
+  }
+}
+```

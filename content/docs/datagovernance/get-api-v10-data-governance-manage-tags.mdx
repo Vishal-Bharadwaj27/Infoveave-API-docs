@@ -1,0 +1,36 @@
+---
+title: "Get All Tags"
+description: "Get All Tags"
+---
+
+## GET `/api/v10/data-governance/Manage/tags`
+
+**Get All Tags**
+
+Tags: `Data Governance \ Manage`
+
+### Parameters
+
+```json
+[]
+```
+
+### Responses
+
+```json
+{
+  "200": {
+    "description": "OK"
+  },
+  "400": {
+    "description": "Bad Request",
+    "content": {
+      "application/problem+json": {
+        "schema": {
+          "$ref": "#/components/schemas/ProblemDetails"
+        }
+      }
+    }
+  }
+}
+```

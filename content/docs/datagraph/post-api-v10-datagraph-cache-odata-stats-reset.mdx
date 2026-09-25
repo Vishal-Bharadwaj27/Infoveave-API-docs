@@ -1,0 +1,41 @@
+---
+title: "Reset OData Cache Statistics"
+description: "Reset cache statistics counters (hit/miss/invalidation counts)."
+---
+
+## POST `/api/v10/datagraph/cache/odata/stats/reset`
+
+**Reset OData Cache Statistics**
+
+Reset cache statistics counters (hit/miss/invalidation counts).
+
+Tags: `Cache`
+
+### Parameters
+
+```json
+[]
+```
+
+### Responses
+
+```json
+{
+  "200": {
+    "description": "OK",
+    "content": {
+      "application/json": {}
+    }
+  },
+  "400": {
+    "description": "Bad Request",
+    "content": {
+      "application/problem+json": {
+        "schema": {
+          "$ref": "#/components/schemas/ProblemDetails"
+        }
+      }
+    }
+  }
+}
+```

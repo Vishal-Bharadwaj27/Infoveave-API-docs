@@ -1,0 +1,36 @@
+---
+title: "Get All Projects"
+description: "Get All Projects"
+---
+
+## GET `/api/v10/data-governance/Manage/project`
+
+**Get All Projects**
+
+Tags: `Data Governance \ Manage`
+
+### Parameters
+
+```json
+[]
+```
+
+### Responses
+
+```json
+{
+  "200": {
+    "description": "OK"
+  },
+  "400": {
+    "description": "Bad Request",
+    "content": {
+      "application/problem+json": {
+        "schema": {
+          "$ref": "#/components/schemas/ProblemDetails"
+        }
+      }
+    }
+  }
+}
+```

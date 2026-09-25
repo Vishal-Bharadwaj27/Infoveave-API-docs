@@ -1,0 +1,38 @@
+---
+title: "Get All Catalogue Items Tags"
+description: "Retrieves a list of all unique tags that have been assigned to catalog items"
+---
+
+## GET `/api/v10/data-governance/Manage/catalogue-items/tags`
+
+**Get All Catalogue Items Tags**
+
+Retrieves a list of all unique tags that have been assigned to catalog items
+
+Tags: `Data Governance \ Manage`
+
+### Parameters
+
+```json
+[]
+```
+
+### Responses
+
+```json
+{
+  "200": {
+    "description": "OK"
+  },
+  "400": {
+    "description": "Bad Request",
+    "content": {
+      "application/problem+json": {
+        "schema": {
+          "$ref": "#/components/schemas/ProblemDetails"
+        }
+      }
+    }
+  }
+}
+```

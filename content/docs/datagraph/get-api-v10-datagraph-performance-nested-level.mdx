@@ -1,0 +1,56 @@
+---
+title: "Get Nesting Level Metrics"
+description: "Retrieve performance metrics for queries at a specific nesting depth level (1-10) with level-specific recommendations."
+---
+
+## GET `/api/v10/datagraph/performance/nested/{level}`
+
+**Get Nesting Level Metrics**
+
+Retrieve performance metrics for queries at a specific nesting depth level (1-10) with level-specific recommendations.
+
+Tags: `PerformanceMetrics`
+
+### Parameters
+
+```json
+[
+  {
+    "name": "level",
+    "in": "path",
+    "required": true,
+    "schema": {
+      "pattern": "^-?(?:0|[1-9]\\d*)$",
+      "type": "integer",
+      "format": "int32"
+    }
+  }
+]
+```
+
+### Responses
+
+```json
+{
+  "200": {
+    "description": "OK",
+    "content": {
+      "application/json": {
+        "schema": {
+          "$ref": "#/components/schemas/NestingLevelMetricsResponse"
+        }
+      }
+    }
+  },
+  "400": {
+    "description": "Bad Request",
+    "content": {
+      "application/problem+json": {
+        "schema": {
+          "$ref": "#/components/schemas/ProblemDetails"
+        }
+      }
+    }
+  }
+}
+```

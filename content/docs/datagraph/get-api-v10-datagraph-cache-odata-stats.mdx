@@ -1,0 +1,41 @@
+---
+title: "Get OData Query Cache Statistics"
+description: "Retrieve OData query result cache statistics including hit rate and performance metrics."
+---
+
+## GET `/api/v10/datagraph/cache/odata/stats`
+
+**Get OData Query Cache Statistics**
+
+Retrieve OData query result cache statistics including hit rate and performance metrics.
+
+Tags: `Cache`
+
+### Parameters
+
+```json
+[]
+```
+
+### Responses
+
+```json
+{
+  "200": {
+    "description": "OK",
+    "content": {
+      "application/json": {}
+    }
+  },
+  "400": {
+    "description": "Bad Request",
+    "content": {
+      "application/problem+json": {
+        "schema": {
+          "$ref": "#/components/schemas/ProblemDetails"
+        }
+      }
+    }
+  }
+}
+```

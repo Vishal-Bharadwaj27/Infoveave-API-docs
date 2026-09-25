@@ -1,0 +1,60 @@
+---
+title: "Get AI Chat Context"
+description: "Retrieve the AI chat context associated with the specified entity"
+---
+
+## GET `/api/v10/data-governance/Catalogue/{entityType}/{id}/ai/chat-context`
+
+**Get AI Chat Context**
+
+Retrieve the AI chat context associated with the specified entity
+
+Tags: `Data Governance \ Catalogue \ AI`
+
+### Parameters
+
+```json
+[
+  {
+    "name": "entityType",
+    "in": "path",
+    "required": true,
+    "schema": {
+      "type": "string"
+    }
+  },
+  {
+    "name": "id",
+    "in": "path",
+    "required": true,
+    "schema": {
+      "pattern": "^-?(?:0|[1-9]\\d*)$",
+      "type": [
+        "integer",
+        "string"
+      ],
+      "format": "int64"
+    }
+  }
+]
+```
+
+### Responses
+
+```json
+{
+  "200": {
+    "description": "OK"
+  },
+  "400": {
+    "description": "Bad Request",
+    "content": {
+      "application/problem+json": {
+        "schema": {
+          "$ref": "#/components/schemas/ProblemDetails"
+        }
+      }
+    }
+  }
+}
+```

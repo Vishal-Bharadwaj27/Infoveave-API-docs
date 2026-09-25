@@ -1,0 +1,52 @@
+---
+title: "Update"
+description: "This method updates tags, domain tiers, and glossary terms"
+---
+
+## PUT `/api/v10/data-governance/Manage/{id}`
+
+**Update**
+
+This method updates tags, domain tiers, and glossary terms
+
+Tags: `Data Governance \ Manage`
+
+### Parameters
+
+```json
+[
+  {
+    "name": "id",
+    "in": "path",
+    "required": true,
+    "schema": {
+      "pattern": "^-?(?:0|[1-9]\\d*)$",
+      "type": [
+        "integer",
+        "string"
+      ],
+      "format": "int64"
+    }
+  }
+]
+```
+
+### Responses
+
+```json
+{
+  "200": {
+    "description": "OK"
+  },
+  "400": {
+    "description": "Bad Request",
+    "content": {
+      "application/problem+json": {
+        "schema": {
+          "$ref": "#/components/schemas/ProblemDetails"
+        }
+      }
+    }
+  }
+}
+```

@@ -1,0 +1,45 @@
+---
+title: "Get Nested Query Metrics"
+description: "Retrieve performance statistics specific to nested batching operations including slow queries and optimization opportunities."
+---
+
+## GET `/api/v10/datagraph/performance/nested`
+
+**Get Nested Query Metrics**
+
+Retrieve performance statistics specific to nested batching operations including slow queries and optimization opportunities.
+
+Tags: `PerformanceMetrics`
+
+### Parameters
+
+```json
+[]
+```
+
+### Responses
+
+```json
+{
+  "200": {
+    "description": "OK",
+    "content": {
+      "application/json": {
+        "schema": {
+          "$ref": "#/components/schemas/NestedQueryMetricsResponse"
+        }
+      }
+    }
+  },
+  "400": {
+    "description": "Bad Request",
+    "content": {
+      "application/problem+json": {
+        "schema": {
+          "$ref": "#/components/schemas/ProblemDetails"
+        }
+      }
+    }
+  }
+}
+```

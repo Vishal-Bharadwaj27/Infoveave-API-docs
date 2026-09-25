@@ -1,0 +1,62 @@
+---
+title: "Get All Data Introspections"
+description: "Get All Data Introspections"
+---
+
+## GET `/api/v10/data-quality/data-introspection`
+
+**Get All Data Introspections**
+
+Tags: `Data Quality \ Data Introspection`
+
+### Parameters
+
+```json
+[]
+```
+
+### Responses
+
+```json
+{
+  "200": {
+    "description": "OK",
+    "content": {
+      "text/plain": {
+        "schema": {
+          "type": "array",
+          "items": {
+            "$ref": "#/components/schemas/DataIntrospectionSchema"
+          }
+        }
+      },
+      "application/json": {
+        "schema": {
+          "type": "array",
+          "items": {
+            "$ref": "#/components/schemas/DataIntrospectionSchema"
+          }
+        }
+      },
+      "text/json": {
+        "schema": {
+          "type": "array",
+          "items": {
+            "$ref": "#/components/schemas/DataIntrospectionSchema"
+          }
+        }
+      }
+    }
+  },
+  "400": {
+    "description": "Bad Request",
+    "content": {
+      "application/problem+json": {
+        "schema": {
+          "$ref": "#/components/schemas/ProblemDetails"
+        }
+      }
+    }
+  }
+}
+```

@@ -1,0 +1,36 @@
+---
+title: "Get All AI Media Items"
+description: "Get All AI Media Items"
+---
+
+## GET `/api/v10/data-governance/Catalogue/media/ai`
+
+**Get All AI Media Items**
+
+Tags: `Data Governance \ Catalogue \ AI`
+
+### Parameters
+
+```json
+[]
+```
+
+### Responses
+
+```json
+{
+  "200": {
+    "description": "OK"
+  },
+  "400": {
+    "description": "Bad Request",
+    "content": {
+      "application/problem+json": {
+        "schema": {
+          "$ref": "#/components/schemas/ProblemDetails"
+        }
+      }
+    }
+  }
+}
+```

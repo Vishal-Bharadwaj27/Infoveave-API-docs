@@ -1,0 +1,80 @@
+---
+title: "Update Data Introspection"
+description: "Update Data Introspection"
+---
+
+## PUT `/api/v10/data-quality/data-introspection/{connectionId}/{id}`
+
+**Update Data Introspection**
+
+Tags: `Data Quality \ Data Introspection`
+
+### Parameters
+
+```json
+[
+  {
+    "name": "connectionId",
+    "in": "path",
+    "required": true,
+    "schema": {
+      "pattern": "^-?(?:0|[1-9]\\d*)$",
+      "type": [
+        "integer",
+        "string"
+      ],
+      "format": "int64"
+    }
+  },
+  {
+    "name": "id",
+    "in": "path",
+    "required": true,
+    "schema": {
+      "pattern": "^-?(?:0|[1-9]\\d*)$",
+      "type": [
+        "integer",
+        "string"
+      ],
+      "format": "int64"
+    }
+  }
+]
+```
+
+### Responses
+
+```json
+{
+  "200": {
+    "description": "OK",
+    "content": {
+      "text/plain": {
+        "schema": {
+          "$ref": "#/components/schemas/DataIntrospectionSchema"
+        }
+      },
+      "application/json": {
+        "schema": {
+          "$ref": "#/components/schemas/DataIntrospectionSchema"
+        }
+      },
+      "text/json": {
+        "schema": {
+          "$ref": "#/components/schemas/DataIntrospectionSchema"
+        }
+      }
+    }
+  },
+  "400": {
+    "description": "Bad Request",
+    "content": {
+      "application/problem+json": {
+        "schema": {
+          "$ref": "#/components/schemas/ProblemDetails"
+        }
+      }
+    }
+  }
+}
+```

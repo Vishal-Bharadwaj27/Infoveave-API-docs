@@ -1,0 +1,36 @@
+---
+title: "Get All Domains"
+description: "Get All Domains"
+---
+
+## GET `/api/v10/data-governance/Manage/domains`
+
+**Get All Domains**
+
+Tags: `Data Governance \ Manage`
+
+### Parameters
+
+```json
+[]
+```
+
+### Responses
+
+```json
+{
+  "200": {
+    "description": "OK"
+  },
+  "400": {
+    "description": "Bad Request",
+    "content": {
+      "application/problem+json": {
+        "schema": {
+          "$ref": "#/components/schemas/ProblemDetails"
+        }
+      }
+    }
+  }
+}
+```

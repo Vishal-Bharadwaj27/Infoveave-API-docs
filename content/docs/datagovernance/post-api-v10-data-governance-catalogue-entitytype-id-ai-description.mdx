@@ -1,0 +1,55 @@
+---
+title: "Update AI Description"
+description: "Generate an updated description for the provided entity using AI"
+---
+
+## POST `/api/v10/data-governance/Catalogue/{entityType}/{id}/ai/description`
+
+**Update AI Description**
+
+Generate an updated description for the provided entity using AI
+
+Tags: `Data Governance \ Catalogue \ AI`
+
+### Parameters
+
+```json
+[
+  {
+    "name": "entityType",
+    "in": "path",
+    "required": true,
+    "schema": {
+      "type": "string"
+    }
+  },
+  {
+    "name": "id",
+    "in": "path",
+    "required": true,
+    "schema": {
+      "type": "string"
+    }
+  }
+]
+```
+
+### Responses
+
+```json
+{
+  "200": {
+    "description": "OK"
+  },
+  "400": {
+    "description": "Bad Request",
+    "content": {
+      "application/problem+json": {
+        "schema": {
+          "$ref": "#/components/schemas/ProblemDetails"
+        }
+      }
+    }
+  }
+}
+```

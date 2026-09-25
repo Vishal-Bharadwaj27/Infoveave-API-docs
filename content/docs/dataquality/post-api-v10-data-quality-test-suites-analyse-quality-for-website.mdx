@@ -1,0 +1,36 @@
+---
+title: "Analyse Data Quality using AI"
+description: "Analyse Data Quality using AI"
+---
+
+## POST `/api/v10/data-quality/test-suites/analyse-quality-for-website`
+
+**Analyse Data Quality using AI**
+
+Tags: `TestSuites`
+
+### Parameters
+
+```json
+[]
+```
+
+### Responses
+
+```json
+{
+  "200": {
+    "description": "OK"
+  },
+  "400": {
+    "description": "Bad Request",
+    "content": {
+      "application/problem+json": {
+        "schema": {
+          "$ref": "#/components/schemas/ProblemDetails"
+        }
+      }
+    }
+  }
+}
+```

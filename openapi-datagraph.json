@@ -1,0 +1,2024 @@
+{
+  "openapi": "3.1.1",
+  "info": {
+    "title": "Infoveave V10",
+    "description": "Infoveave V10 APIs (Gateway)",
+    "termsOfService": "https://infoveave.com/product/terms",
+    "contact": {
+      "name": "Naresh Jois",
+      "url": "mailto:naresh@noesyssoftware.com"
+    },
+    "license": {
+      "name": "Infoveave SAAS/On-site License",
+      "url": "https://infoveave.com/product/license"
+    },
+    "version": "v10"
+  },
+  "servers": [
+    {
+      "url": "http://localhost:10017/"
+    }
+  ],
+  "paths": {
+    "/": {
+      "get": {
+        "tags": [
+          "DataGraph"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v10/datagraph/cache/{tenantId}/{datasourceId}": {
+      "delete": {
+        "tags": [
+          "Cache"
+        ],
+        "summary": "Invalidate Specific Cache",
+        "description": "Invalidate the cached GraphQL instance for a specific tenant and datasource combination.",
+        "parameters": [
+          {
+            "name": "tenantId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "datasourceId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CacheInvalidationResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v10/datagraph/cache": {
+      "delete": {
+        "tags": [
+          "Cache"
+        ],
+        "summary": "Invalidate All Cache",
+        "description": "Invalidate all cached GraphQL instances. This will force all instances to be rebuilt on the next request.",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CacheInvalidationResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v10/datagraph/cache/stats": {
+      "get": {
+        "tags": [
+          "Cache"
+        ],
+        "summary": "Get Cache Statistics",
+        "description": "Retrieve current cache statistics including total entries, valid entries, and expiration status.",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CacheStatisticsResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v10/datagraph/cache/odata/stats": {
+      "get": {
+        "tags": [
+          "Cache"
+        ],
+        "summary": "Get OData Query Cache Statistics",
+        "description": "Retrieve OData query result cache statistics including hit rate and performance metrics.",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": { }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v10/datagraph/cache/odata/clear": {
+      "delete": {
+        "tags": [
+          "Cache"
+        ],
+        "summary": "Clear OData Query Cache",
+        "description": "Clear all cached OData query results.",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": { }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v10/datagraph/cache/odata/stats/reset": {
+      "post": {
+        "tags": [
+          "Cache"
+        ],
+        "summary": "Reset OData Cache Statistics",
+        "description": "Reset cache statistics counters (hit/miss/invalidation counts).",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": { }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v10/datagraph/odata/{tenantId}/{datasourceId}/$metadata": {
+      "get": {
+        "tags": [
+          "OData"
+        ],
+        "summary": "Get OData Metadata Document",
+        "description": "Returns the complete OData CSDL (Conceptual Schema Definition Language) metadata document in XML format.\n\n**Includes:**\n- Entity Types: All available tables with properties and data types\n- Properties: Column definitions with type information and nullability\n- Navigation Properties: Relationships between entities (one-to-many, many-to-one)\n- Associations: Relationship definitions with multiplicity information\n\n**Use Cases:**\n- OData client tools discover the data model\n- API documentation generators parse for UI\n- Query builders reference this for validation\n\n**Example:** `GET /odata/tenant1/datasource1/$metadata`",
+        "parameters": [
+          {
+            "name": "tenantId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "datasourceId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/xml": { }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v10/datagraph/odata/{tenantId}/{datasourceId}": {
+      "get": {
+        "tags": [
+          "OData"
+        ],
+        "summary": "Get OData Service Document",
+        "description": "Returns a service document listing all available **entity sets (tables)** that can be queried for this datasource.\n\n**Response Includes:**\n- Entity set names and their direct access URLs\n- Tenant and datasource context information\n\n**Use Cases:**\n- Discovering available tables in a datasource\n- Client applications listing accessible entities\n- API navigation and discoverability\n\n**Example Request:**\n`GET /odata/tenant1/datasource1/`\n\n**Example Response:**\n```json\n{ \"entitySets\": [{ \"name\": \"Products\", \"url\": \"...\" }] }\n```",
+        "parameters": [
+          {
+            "name": "tenantId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "datasourceId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": { }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v10/datagraph/odata/{tenantId}/{datasourceId}/{tableName}": {
+      "get": {
+        "tags": [
+          "OData"
+        ],
+        "summary": "Query Collection with OData Parameters",
+        "description": "Queries a table with **comprehensive OData support** for filtering, sorting, pagination, and relationship expansion.\n\n**Query Parameters:**\n- **$filter**: `Age gt 18 and Status eq 'Active'` - Comparison (eq, ne, gt, lt, ge, le) + logical (and, or, not)\n- **$select**: `Name,Email,Phone` - Project columns; relationships always included\n- **$orderby**: `Name asc, Date desc` - Sort by multiple columns with direction\n- **$expand**: `Orders` or `Orders($expand=Items)` - Load related entities with batch optimization\n- **$skip**: `20` - Offset for pagination\n- **$top**: `10` - Limit records (max 1000)\n- **$count**: `true` - Include total in `@odata.count`\n\n**Security:**\n- SQL injection prevention via pattern detection\n- Column-level access control\n- Parameterized SQL execution\n\n**Performance:**\n- Query result caching (5-minute TTL, auto-invalidated on mutations)\n- Relationship batching (60-70× fewer queries)\n- GZip compression (40-60% bandwidth reduction)\n\n**Examples:**\n`GET /odata/tenant1/datasource1/Products?$filter=Price gt 100`\n`GET /odata/tenant1/datasource1/Orders?$expand=Items&$count=true`\n\n**Response:** Returns `{ \"value\": [...], \"@odata.count\": N }` on success",
+        "parameters": [
+          {
+            "name": "tenantId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "datasourceId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "tableName",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "$filter",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "$select",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "$orderby",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "$expand",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "$skip",
+            "in": "query",
+            "schema": {
+              "pattern": "^-?(?:0|[1-9]\\d*)$",
+              "type": [
+                "integer",
+                "string"
+              ],
+              "format": "int32"
+            }
+          },
+          {
+            "name": "$top",
+            "in": "query",
+            "schema": {
+              "pattern": "^-?(?:0|[1-9]\\d*)$",
+              "type": [
+                "integer",
+                "string"
+              ],
+              "format": "int32"
+            }
+          },
+          {
+            "name": "$count",
+            "in": "query",
+            "schema": {
+              "type": "boolean"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": { }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "OData"
+        ],
+        "summary": "Create New Record",
+        "description": "**Creates a new entity** with validated input data.\n\n**Process:**\n1. Validates required fields and data types\n2. Checks constraints and relationships\n3. Sanitizes input to prevent injection\n4. Inserts record into database\n5. Invalidates table cache\n6. Returns 201 Created with generated IDs\n\n**Request Body:** JSON object with column values\n```json\n{ \"Name\": \"Product\", \"Price\": 99.99, \"Category\": \"Electronics\" }\n```\n\n**Response:**\n- **201 Created**: Complete record with generated IDs + `Location` header\n- **400 Bad Request**: Validation failed or missing required fields\n- **500 Internal Server Error**: Database error",
+        "parameters": [
+          {
+            "name": "tenantId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "datasourceId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "tableName",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json-patch+json": {
+              "schema": {
+                "type": "object"
+              }
+            },
+            "application/json": {
+              "schema": {
+                "type": "object"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "type": "object"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "type": "object"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": { }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v10/datagraph/odata/{tenantId}/{datasourceId}/{tableName}({id})": {
+      "get": {
+        "tags": [
+          "OData"
+        ],
+        "summary": "Query Single Record by ID",
+        "description": "Retrieves a **single record by its primary key** identifier.\n\n**Returns:** Single JSON object (not an array)\n\n**Supported Query Parameters:**\n- **$select**: Column projection - `Products(123)?$select=Name,Price`\n- **$expand**: Load relationships - `Products(123)?$expand=Orders`\n\n**String ID Format:** Enclose in single quotes\n- `Products('SKU-001')`\n- `Orders('ORD-2025-001')`\n\n**Numeric ID Format:** Use directly\n- `Products(12345)`\n\n**Examples:**\n`GET /odata/tenant1/datasource1/Products(123)`\n`GET /odata/tenant1/datasource1/Products('ABC')?$expand=Orders`\n\n**Response:** `200 OK` with entity object | `404 Not Found` if record doesn't exist",
+        "parameters": [
+          {
+            "name": "tenantId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "datasourceId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "tableName",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "$select",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "$expand",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": { }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        }
+      },
+      "patch": {
+        "tags": [
+          "OData"
+        ],
+        "summary": "Update Existing Record",
+        "description": "**Updates an existing entity** with partial or complete data using true PATCH semantics.\n\n**Process:**\n1. Locates record by ID\n2. Validates provided fields only (not entire record)\n3. Sanitizes input data\n4. Updates specified fields in database\n5. Invalidates table cache\n6. Returns 200 OK with complete updated record\n\n**Request Body:** JSON with fields to update (send only changed fields)\n```json\n{ \"Price\": 1199.99, \"Stock\": 45 }\n```\n\n**Key Behavior:** Only specified fields updated; others unchanged\n\n**ID Format:** String IDs in single quotes - `Orders('ORD-123')`\n\n**Response:**\n- **200 OK**: Complete updated record with all fields\n- **400 Bad Request**: Validation error\n- **404 Not Found**: Record doesn't exist\n- **500 Internal Server Error**: Database error",
+        "parameters": [
+          {
+            "name": "tenantId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "datasourceId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "tableName",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json-patch+json": {
+              "schema": {
+                "type": "object"
+              }
+            },
+            "application/json": {
+              "schema": {
+                "type": "object"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "type": "object"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "type": "object"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": { }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "OData"
+        ],
+        "summary": "Delete Record",
+        "description": "**Deletes an existing entity** from the table.\n\n**Process:**\n1. Verifies record exists by ID\n2. Deletes record from database\n3. Invalidates table cache\n4. Returns 204 No Content (no body)\n\n**ID Format:** String IDs in single quotes\n- `Products('SKU-001')`\n- Numeric IDs without quotes: `Products(12345)`\n\n**Response:**\n- **204 No Content**: Success, no response body\n- **404 Not Found**: Record doesn't exist\n- **500 Internal Server Error**: Database error\n\n**Example:**\n`DELETE /odata/tenant1/datasource1/Products(12345)`",
+        "parameters": [
+          {
+            "name": "tenantId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "datasourceId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "tableName",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v10/datagraph/performance/summary": {
+      "get": {
+        "tags": [
+          "PerformanceMetrics"
+        ],
+        "summary": "Get Performance Summary",
+        "description": "Retrieve overall performance summary for all queries including cache hit rate, slow queries, and N+1 patterns.",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PerformanceSummaryResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v10/datagraph/performance/nested": {
+      "get": {
+        "tags": [
+          "PerformanceMetrics"
+        ],
+        "summary": "Get Nested Query Metrics",
+        "description": "Retrieve performance statistics specific to nested batching operations including slow queries and optimization opportunities.",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/NestedQueryMetricsResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v10/datagraph/performance/nested/{level}": {
+      "get": {
+        "tags": [
+          "PerformanceMetrics"
+        ],
+        "summary": "Get Nesting Level Metrics",
+        "description": "Retrieve performance metrics for queries at a specific nesting depth level (1-10) with level-specific recommendations.",
+        "parameters": [
+          {
+            "name": "level",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "pattern": "^-?(?:0|[1-9]\\d*)$",
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/NestingLevelMetricsResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v10/datagraph/performance/relationships/{sourceTable}/{relationshipName}/{targetTable}": {
+      "get": {
+        "tags": [
+          "PerformanceMetrics"
+        ],
+        "summary": "Get Relationship Performance Metrics",
+        "description": "Retrieve detailed performance metrics for a specific relationship query including query count, cache statistics, and execution times.",
+        "parameters": [
+          {
+            "name": "sourceTable",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "relationshipName",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "targetTable",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RelationshipPerformanceResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v10/datagraph/performance/metrics": {
+      "delete": {
+        "tags": [
+          "PerformanceMonitoring"
+        ],
+        "summary": "Clear Performance Metrics",
+        "description": "Clear all recorded performance metrics and reset cache statistics.",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CacheInvalidationResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v10/datagraph/performance/stats": {
+      "get": {
+        "tags": [
+          "PerformanceMonitoring"
+        ],
+        "summary": "Get Performance Statistics",
+        "description": "Retrieve overall performance statistics including cache metrics, query performance, and slow query analysis.",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PerformanceStatisticsResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v10/datagraph/performance/relationship/{sourceTable}/{relationshipName}/{targetTable}": {
+      "get": {
+        "tags": [
+          "PerformanceMonitoring"
+        ],
+        "summary": "Get Relationship Metrics",
+        "description": "Retrieve detailed performance metrics for a specific relationship query pattern including execution times and cache statistics.",
+        "parameters": [
+          {
+            "name": "sourceTable",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "relationshipName",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "targetTable",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RelationshipMetricsResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "CacheInvalidationResponse": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string"
+          },
+          "tenantId": {
+            "type": [
+              "null",
+              "string"
+            ]
+          },
+          "datasourceId": {
+            "type": [
+              "null",
+              "string"
+            ]
+          },
+          "timestamp": {
+            "type": "string",
+            "format": "date-time"
+          }
+        }
+      },
+      "CacheMetrics": {
+        "type": "object",
+        "properties": {
+          "totalEntries": {
+            "pattern": "^-?(?:0|[1-9]\\d*)$",
+            "type": [
+              "integer",
+              "string"
+            ],
+            "format": "int32"
+          },
+          "validEntries": {
+            "pattern": "^-?(?:0|[1-9]\\d*)$",
+            "type": [
+              "integer",
+              "string"
+            ],
+            "format": "int32"
+          },
+          "expiredEntries": {
+            "pattern": "^-?(?:0|[1-9]\\d*)$",
+            "type": [
+              "integer",
+              "string"
+            ],
+            "format": "int32"
+          },
+          "hitCount": {
+            "pattern": "^-?(?:0|[1-9]\\d*)$",
+            "type": [
+              "integer",
+              "string"
+            ],
+            "format": "int32"
+          },
+          "missCount": {
+            "pattern": "^-?(?:0|[1-9]\\d*)$",
+            "type": [
+              "integer",
+              "string"
+            ],
+            "format": "int32"
+          },
+          "hitRate": {
+            "type": [
+              "null",
+              "string"
+            ]
+          },
+          "invalidationCount": {
+            "pattern": "^-?(?:0|[1-9]\\d*)$",
+            "type": [
+              "integer",
+              "string"
+            ],
+            "format": "int32"
+          }
+        }
+      },
+      "CacheStatistics": {
+        "type": "object",
+        "properties": {
+          "totalEntries": {
+            "pattern": "^-?(?:0|[1-9]\\d*)$",
+            "type": [
+              "integer",
+              "string"
+            ],
+            "format": "int32"
+          },
+          "activeEntries": {
+            "pattern": "^-?(?:0|[1-9]\\d*)$",
+            "type": [
+              "integer",
+              "string"
+            ],
+            "format": "int32"
+          },
+          "expiredEntries": {
+            "pattern": "^-?(?:0|[1-9]\\d*)$",
+            "type": [
+              "integer",
+              "string"
+            ],
+            "format": "int32"
+          }
+        }
+      },
+      "CacheStatisticsResponse": {
+        "type": "object",
+        "properties": {
+          "statistics": {
+            "oneOf": [
+              {
+                "type": "null"
+              },
+              {
+                "$ref": "#/components/schemas/CacheStatistics"
+              }
+            ]
+          },
+          "timestamp": {
+            "type": "string",
+            "format": "date-time"
+          }
+        }
+      },
+      "CacheStatsDetail": {
+        "type": "object",
+        "properties": {
+          "hitCount": {
+            "pattern": "^-?(?:0|[1-9]\\d*)$",
+            "type": [
+              "integer",
+              "string"
+            ],
+            "format": "int32"
+          },
+          "missCount": {
+            "pattern": "^-?(?:0|[1-9]\\d*)$",
+            "type": [
+              "integer",
+              "string"
+            ],
+            "format": "int32"
+          },
+          "hitRate": {
+            "pattern": "^-?(?:0|[1-9]\\d*)(?:\\.\\d+)?(?:[eE][+-]?\\d+)?$",
+            "type": [
+              "number",
+              "string"
+            ],
+            "format": "double"
+          }
+        }
+      },
+      "DataMetrics": {
+        "type": "object",
+        "properties": {
+          "totalRowsReturned": {
+            "pattern": "^-?(?:0|[1-9]\\d*)$",
+            "type": [
+              "integer",
+              "string"
+            ],
+            "format": "int64"
+          },
+          "averageRowsPerQuery": {
+            "type": [
+              "null",
+              "string"
+            ]
+          }
+        }
+      },
+      "DataStatsDetail": {
+        "type": "object",
+        "properties": {
+          "totalRowsReturned": {
+            "pattern": "^-?(?:0|[1-9]\\d*)$",
+            "type": [
+              "integer",
+              "string"
+            ],
+            "format": "int64"
+          },
+          "averageRowsPerQuery": {
+            "pattern": "^-?(?:0|[1-9]\\d*)(?:\\.\\d+)?(?:[eE][+-]?\\d+)?$",
+            "type": [
+              "number",
+              "string"
+            ],
+            "format": "double"
+          }
+        }
+      },
+      "ExecutionTimeDetail": {
+        "type": "object",
+        "properties": {
+          "average": {
+            "type": [
+              "null",
+              "string"
+            ]
+          },
+          "min": {
+            "type": [
+              "null",
+              "string"
+            ]
+          },
+          "max": {
+            "type": [
+              "null",
+              "string"
+            ]
+          },
+          "total": {
+            "type": [
+              "null",
+              "string"
+            ]
+          }
+        }
+      },
+      "LevelMetricsData": {
+        "type": "object",
+        "properties": {
+          "level": {
+            "pattern": "^-?(?:0|[1-9]\\d*)$",
+            "type": [
+              "integer",
+              "string"
+            ],
+            "format": "int32"
+          },
+          "description": {
+            "type": [
+              "null",
+              "string"
+            ]
+          },
+          "totalQueries": {
+            "pattern": "^-?(?:0|[1-9]\\d*)$",
+            "type": [
+              "integer",
+              "string"
+            ],
+            "format": "int32"
+          },
+          "averageExecutionMs": {
+            "pattern": "^-?(?:0|[1-9]\\d*)(?:\\.\\d+)?(?:[eE][+-]?\\d+)?$",
+            "type": [
+              "number",
+              "string"
+            ],
+            "format": "double"
+          },
+          "maxExecutionMs": {
+            "pattern": "^-?(?:0|[1-9]\\d*)$",
+            "type": [
+              "integer",
+              "string"
+            ],
+            "format": "int64"
+          },
+          "batchQueryCount": {
+            "pattern": "^-?(?:0|[1-9]\\d*)$",
+            "type": [
+              "integer",
+              "string"
+            ],
+            "format": "int32"
+          },
+          "cacheHitRate": {
+            "type": [
+              "null",
+              "string"
+            ]
+          },
+          "slowQueriesCount": {
+            "pattern": "^-?(?:0|[1-9]\\d*)$",
+            "type": [
+              "integer",
+              "string"
+            ],
+            "format": "int32"
+          },
+          "recommendations": {
+            "type": [
+              "null",
+              "array"
+            ],
+            "items": {
+              "type": "string"
+            }
+          }
+        }
+      },
+      "MetricsClearResponse": {
+        "type": "object",
+        "properties": {
+          "success": {
+            "type": "boolean"
+          },
+          "message": {
+            "type": [
+              "null",
+              "string"
+            ]
+          },
+          "timestamp": {
+            "type": "string",
+            "format": "date-time"
+          }
+        }
+      },
+      "N1PatternDetail": {
+        "type": "object",
+        "properties": {
+          "relationship": {
+            "type": [
+              "null",
+              "string"
+            ]
+          },
+          "queryCount": {
+            "pattern": "^-?(?:0|[1-9]\\d*)$",
+            "type": [
+              "integer",
+              "string"
+            ],
+            "format": "int32"
+          },
+          "totalExecutionTimeMs": {
+            "pattern": "^-?(?:0|[1-9]\\d*)$",
+            "type": [
+              "integer",
+              "string"
+            ],
+            "format": "int64"
+          },
+          "averageExecutionTimeMs": {
+            "type": [
+              "null",
+              "string"
+            ]
+          },
+          "savingsWithBatching": {
+            "type": [
+              "null",
+              "string"
+            ]
+          }
+        }
+      },
+      "N1QueryPatternInfo": {
+        "type": "object",
+        "properties": {
+          "sourceTable": {
+            "type": "string"
+          },
+          "relationshipName": {
+            "type": "string"
+          },
+          "targetTable": {
+            "type": "string"
+          },
+          "queryCount": {
+            "pattern": "^-?(?:0|[1-9]\\d*)$",
+            "type": [
+              "integer",
+              "string"
+            ],
+            "format": "int32"
+          },
+          "totalExecutionTimeMs": {
+            "pattern": "^-?(?:0|[1-9]\\d*)$",
+            "type": [
+              "integer",
+              "string"
+            ],
+            "format": "int64"
+          },
+          "averageExecutionTimeMs": {
+            "pattern": "^-?(?:0|[1-9]\\d*)(?:\\.\\d+)?(?:[eE][+-]?\\d+)?$",
+            "type": [
+              "number",
+              "string"
+            ],
+            "format": "double"
+          }
+        }
+      },
+      "NestedMetricsData": {
+        "type": "object",
+        "properties": {
+          "totalNestedBatches": {
+            "pattern": "^-?(?:0|[1-9]\\d*)$",
+            "type": [
+              "integer",
+              "string"
+            ],
+            "format": "int32"
+          },
+          "cacheHitRate": {
+            "pattern": "^-?(?:0|[1-9]\\d*)(?:\\.\\d+)?(?:[eE][+-]?\\d+)?$",
+            "type": [
+              "number",
+              "string"
+            ],
+            "format": "double"
+          },
+          "averageExecutionMs": {
+            "pattern": "^-?(?:0|[1-9]\\d*)(?:\\.\\d+)?(?:[eE][+-]?\\d+)?$",
+            "type": [
+              "number",
+              "string"
+            ],
+            "format": "double"
+          },
+          "maxExecutionMs": {
+            "pattern": "^-?(?:0|[1-9]\\d*)$",
+            "type": [
+              "integer",
+              "string"
+            ],
+            "format": "int64"
+          },
+          "minExecutionMs": {
+            "pattern": "^-?(?:0|[1-9]\\d*)$",
+            "type": [
+              "integer",
+              "string"
+            ],
+            "format": "int64"
+          },
+          "slowQueries": {
+            "type": [
+              "null",
+              "array"
+            ]
+          },
+          "optimizationOpportunities": {
+            "type": [
+              "null",
+              "array"
+            ],
+            "items": {
+              "type": "string"
+            }
+          }
+        }
+      },
+      "NestedQueryMetricsResponse": {
+        "type": "object",
+        "properties": {
+          "success": {
+            "type": "boolean"
+          },
+          "timestamp": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "data": {
+            "oneOf": [
+              {
+                "type": "null"
+              },
+              {
+                "$ref": "#/components/schemas/NestedMetricsData"
+              }
+            ]
+          }
+        }
+      },
+      "NestingLevelMetricsResponse": {
+        "type": "object",
+        "properties": {
+          "success": {
+            "type": "boolean"
+          },
+          "timestamp": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "data": {
+            "oneOf": [
+              {
+                "type": "null"
+              },
+              {
+                "$ref": "#/components/schemas/LevelMetricsData"
+              }
+            ]
+          }
+        }
+      },
+      "OptimizationMetrics": {
+        "type": "object",
+        "properties": {
+          "slowQueries": {
+            "pattern": "^-?(?:0|[1-9]\\d*)$",
+            "type": [
+              "integer",
+              "string"
+            ],
+            "format": "int32"
+          },
+          "n1Patterns": {
+            "pattern": "^-?(?:0|[1-9]\\d*)$",
+            "type": [
+              "integer",
+              "string"
+            ],
+            "format": "int32"
+          },
+          "slowQueriesDetails": {
+            "type": [
+              "null",
+              "array"
+            ],
+            "items": {
+              "$ref": "#/components/schemas/SlowQueryDetail"
+            }
+          },
+          "n1PatternsDetails": {
+            "type": [
+              "null",
+              "array"
+            ],
+            "items": {
+              "$ref": "#/components/schemas/N1PatternDetail"
+            }
+          }
+        }
+      },
+      "PerformanceStatisticsResponse": {
+        "type": "object",
+        "properties": {
+          "timestamp": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "cache": {
+            "oneOf": [
+              {
+                "type": "null"
+              },
+              {
+                "$ref": "#/components/schemas/CacheMetrics"
+              }
+            ]
+          },
+          "queries": {
+            "oneOf": [
+              {
+                "type": "null"
+              },
+              {
+                "$ref": "#/components/schemas/QueryMetrics"
+              }
+            ]
+          },
+          "timing": {
+            "oneOf": [
+              {
+                "type": "null"
+              },
+              {
+                "$ref": "#/components/schemas/TimingMetrics"
+              }
+            ]
+          },
+          "optimization": {
+            "oneOf": [
+              {
+                "type": "null"
+              },
+              {
+                "$ref": "#/components/schemas/OptimizationMetrics"
+              }
+            ]
+          }
+        }
+      },
+      "PerformanceSummaryResponse": {
+        "type": "object",
+        "properties": {
+          "success": {
+            "type": "boolean"
+          },
+          "timestamp": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "data": {
+            "oneOf": [
+              {
+                "type": "null"
+              },
+              {
+                "$ref": "#/components/schemas/RelationshipPerformanceSummary"
+              }
+            ]
+          }
+        }
+      },
+      "QueryCountMetrics": {
+        "type": "object",
+        "properties": {
+          "queryCount": {
+            "pattern": "^-?(?:0|[1-9]\\d*)$",
+            "type": [
+              "integer",
+              "string"
+            ],
+            "format": "int32"
+          },
+          "cacheHitCount": {
+            "pattern": "^-?(?:0|[1-9]\\d*)$",
+            "type": [
+              "integer",
+              "string"
+            ],
+            "format": "int32"
+          },
+          "cacheMissCount": {
+            "pattern": "^-?(?:0|[1-9]\\d*)$",
+            "type": [
+              "integer",
+              "string"
+            ],
+            "format": "int32"
+          },
+          "cacheHitRate": {
+            "type": [
+              "null",
+              "string"
+            ]
+          }
+        }
+      },
+      "QueryMetrics": {
+        "type": "object",
+        "properties": {
+          "totalQueries": {
+            "pattern": "^-?(?:0|[1-9]\\d*)$",
+            "type": [
+              "integer",
+              "string"
+            ],
+            "format": "int32"
+          },
+          "cacheHits": {
+            "pattern": "^-?(?:0|[1-9]\\d*)$",
+            "type": [
+              "integer",
+              "string"
+            ],
+            "format": "int32"
+          },
+          "cacheMisses": {
+            "pattern": "^-?(?:0|[1-9]\\d*)$",
+            "type": [
+              "integer",
+              "string"
+            ],
+            "format": "int32"
+          },
+          "batchQueries": {
+            "pattern": "^-?(?:0|[1-9]\\d*)$",
+            "type": [
+              "integer",
+              "string"
+            ],
+            "format": "int32"
+          },
+          "cacheHitRate": {
+            "type": [
+              "null",
+              "string"
+            ]
+          }
+        }
+      },
+      "RelationshipMetricsDetails": {
+        "type": "object",
+        "properties": {
+          "relationship": {
+            "type": [
+              "null",
+              "string"
+            ]
+          },
+          "queryCount": {
+            "pattern": "^-?(?:0|[1-9]\\d*)$",
+            "type": [
+              "integer",
+              "string"
+            ],
+            "format": "int32"
+          },
+          "cacheStats": {
+            "oneOf": [
+              {
+                "type": "null"
+              },
+              {
+                "$ref": "#/components/schemas/CacheStatsDetail"
+              }
+            ]
+          },
+          "executionTime": {
+            "oneOf": [
+              {
+                "type": "null"
+              },
+              {
+                "$ref": "#/components/schemas/ExecutionTimeDetail"
+              }
+            ]
+          },
+          "dataStats": {
+            "oneOf": [
+              {
+                "type": "null"
+              },
+              {
+                "$ref": "#/components/schemas/DataStatsDetail"
+              }
+            ]
+          }
+        }
+      },
+      "RelationshipMetricsResponse": {
+        "type": "object",
+        "properties": {
+          "relationship": {
+            "type": [
+              "null",
+              "string"
+            ]
+          },
+          "queryMetrics": {
+            "oneOf": [
+              {
+                "type": "null"
+              },
+              {
+                "$ref": "#/components/schemas/QueryCountMetrics"
+              }
+            ]
+          },
+          "timing": {
+            "oneOf": [
+              {
+                "type": "null"
+              },
+              {
+                "$ref": "#/components/schemas/TimingMetrics"
+              }
+            ]
+          },
+          "dataMetrics": {
+            "oneOf": [
+              {
+                "type": "null"
+              },
+              {
+                "$ref": "#/components/schemas/DataMetrics"
+              }
+            ]
+          },
+          "recommendations": {
+            "type": [
+              "null",
+              "array"
+            ],
+            "items": {
+              "type": "string"
+            }
+          }
+        }
+      },
+      "RelationshipPerformanceResponse": {
+        "type": "object",
+        "properties": {
+          "success": {
+            "type": "boolean"
+          },
+          "timestamp": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "data": {
+            "oneOf": [
+              {
+                "type": "null"
+              },
+              {
+                "$ref": "#/components/schemas/RelationshipMetricsDetails"
+              }
+            ]
+          }
+        }
+      },
+      "RelationshipPerformanceSummary": {
+        "type": "object",
+        "properties": {
+          "totalQueries": {
+            "pattern": "^-?(?:0|[1-9]\\d*)$",
+            "type": [
+              "integer",
+              "string"
+            ],
+            "format": "int32"
+          },
+          "cacheHits": {
+            "pattern": "^-?(?:0|[1-9]\\d*)$",
+            "type": [
+              "integer",
+              "string"
+            ],
+            "format": "int32"
+          },
+          "cacheMisses": {
+            "pattern": "^-?(?:0|[1-9]\\d*)$",
+            "type": [
+              "integer",
+              "string"
+            ],
+            "format": "int32"
+          },
+          "batchQueries": {
+            "pattern": "^-?(?:0|[1-9]\\d*)$",
+            "type": [
+              "integer",
+              "string"
+            ],
+            "format": "int32"
+          },
+          "cacheHitRate": {
+            "pattern": "^-?(?:0|[1-9]\\d*)(?:\\.\\d+)?(?:[eE][+-]?\\d+)?$",
+            "type": [
+              "number",
+              "string"
+            ],
+            "format": "double"
+          },
+          "totalExecutionTimeMs": {
+            "pattern": "^-?(?:0|[1-9]\\d*)$",
+            "type": [
+              "integer",
+              "string"
+            ],
+            "format": "int64"
+          },
+          "averageExecutionTimeMs": {
+            "pattern": "^-?(?:0|[1-9]\\d*)(?:\\.\\d+)?(?:[eE][+-]?\\d+)?$",
+            "type": [
+              "number",
+              "string"
+            ],
+            "format": "double"
+          },
+          "maxExecutionTimeMs": {
+            "pattern": "^-?(?:0|[1-9]\\d*)$",
+            "type": [
+              "integer",
+              "string"
+            ],
+            "format": "int64"
+          },
+          "minExecutionTimeMs": {
+            "pattern": "^-?(?:0|[1-9]\\d*)$",
+            "type": [
+              "integer",
+              "string"
+            ],
+            "format": "int64"
+          },
+          "slowQueries": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/SlowQueryInfo"
+            }
+          },
+          "n1Patterns": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/N1QueryPatternInfo"
+            }
+          }
+        }
+      },
+      "SlowQueryDetail": {
+        "type": "object",
+        "properties": {
+          "relationship": {
+            "type": [
+              "null",
+              "string"
+            ]
+          },
+          "executionTimeMs": {
+            "pattern": "^-?(?:0|[1-9]\\d*)$",
+            "type": [
+              "integer",
+              "string"
+            ],
+            "format": "int64"
+          },
+          "timestamp": {
+            "type": "string",
+            "format": "date-time"
+          }
+        }
+      },
+      "SlowQueryInfo": {
+        "type": "object",
+        "properties": {
+          "sourceTable": {
+            "type": "string"
+          },
+          "relationshipName": {
+            "type": "string"
+          },
+          "targetTable": {
+            "type": "string"
+          },
+          "executionTimeMs": {
+            "pattern": "^-?(?:0|[1-9]\\d*)$",
+            "type": [
+              "integer",
+              "string"
+            ],
+            "format": "int64"
+          },
+          "timestamp": {
+            "type": "string",
+            "format": "date-time"
+          }
+        }
+      },
+      "TimingMetrics": {
+        "type": "object",
+        "properties": {
+          "totalExecutionTimeMs": {
+            "pattern": "^-?(?:0|[1-9]\\d*)$",
+            "type": [
+              "integer",
+              "string"
+            ],
+            "format": "int64"
+          },
+          "averageExecutionTimeMs": {
+            "type": [
+              "null",
+              "string"
+            ]
+          },
+          "maxExecutionTimeMs": {
+            "pattern": "^-?(?:0|[1-9]\\d*)$",
+            "type": [
+              "integer",
+              "string"
+            ],
+            "format": "int64"
+          },
+          "minExecutionTimeMs": {
+            "pattern": "^-?(?:0|[1-9]\\d*)$",
+            "type": [
+              "integer",
+              "string"
+            ],
+            "format": "int64"
+          }
+        }
+      }
+    }
+  },
+  "tags": [
+    {
+      "name": "DataGraph"
+    },
+    {
+      "name": "Cache"
+    },
+    {
+      "name": "OData"
+    },
+    {
+      "name": "PerformanceMetrics"
+    },
+    {
+      "name": "PerformanceMonitoring"
+    }
+  ]
+}
