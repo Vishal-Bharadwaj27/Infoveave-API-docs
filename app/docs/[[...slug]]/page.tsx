@@ -9,6 +9,7 @@ import {
 } from 'fumadocs-ui/layouts/docs/page';
 import { notFound } from 'next/navigation';
 import { getMDXComponents } from '@/components/mdx';
+import { ProviderCompatibility } from '@/components/provider-compatibility';
 import { EnumHover } from '@/components/enum-hover';
 import { connectionEnums } from '@/lib/connection-enums';
 import { APIPage } from '@/components/api-page';
@@ -85,7 +86,10 @@ export default async function Page(props: PageProps<'/docs/[[...slug]]'>) {
           {/* Opt-in: pages whose MDX contains an `enum-hover` comment get a
               click/hover popover on their enum type names. */}
           {rawFile.includes('enum-hover') && (
-            <EnumHover enums={connectionEnums} />
+            <>
+              <EnumHover enums={connectionEnums} />
+              <ProviderCompatibility />
+            </>
           )}
         </>
       ) : (
