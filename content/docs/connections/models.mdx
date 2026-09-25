@@ -1,0 +1,63 @@
+---
+title: "Models"
+description: "Enum values used by the Connections API"
+---
+
+Enums used by the Connections API. Send the number in requests. Open a model to see its values.
+
+<Accordions>
+<Accordion title="ConnectionCategory">
+The kind of system being connected. It must match the provider's category.
+
+| Value | Name | Covers |
+| --- | --- | --- |
+| 0 | Database | Relational, warehouse and document databases |
+| 1 | ObjectStorage | S3, Blob, GCS |
+| 2 | FileTransfer | FTP, SFTP, SMB, WebDAV |
+| 3 | DocumentStorage | Drive, SharePoint, Dropbox |
+| 4 | Email | SMTP, IMAP, Gmail |
+| 5 | GenericApi | REST, GraphQL, OData, Webhook |
+| 6 | Application | Salesforce, Stripe, Jira, Slack and similar |
+| 7 | Messaging | Kafka, SQS, Service Bus and similar |
+| 8 | AiProvider | OpenAI, Claude, Gemini and similar |
+| 9 | Custom | Custom, PGP, Age |
+</Accordion>
+<Accordion title="ConnectionProvider">
+The exact system to connect to. The number range shows its category.
+
+| Category | Providers (value = name) |
+| --- | --- |
+| Database (0 to 13) | 0 Sqlite, 1 DuckDb, 2 SqlServer, 3 Oracle, 4 MySql, 5 Databricks, 6 Snowflake, 7 Postgres, 8 ClickHouse, 9 BigQuery, 10 Athena, 11 MongoDb, 12 Cassandra, 13 AzureDocumentDb |
+| ObjectStorage (100s) | 100 S3, 101 AzureBlob, 102 AzureDataLakeGen2, 103 GoogleCloudStorage, 104 S3Compatible |
+| FileTransfer (200s) | 200 Ftp, 201 Sftp, 202 Smb, 203 WebDav |
+| DocumentStorage (300s) | 300 GoogleDrive, 301 OneDrive, 302 SharePoint, 303 Dropbox, 304 Box |
+| Email (400s) | 400 Smtp, 401 Imap, 402 Pop3, 403 Exchange, 404 Gmail, 405 Mailgun |
+| GenericApi (500s) | 500 RestApi, 501 GraphQl, 502 OData, 503 Webhook, 504 Http |
+| Application (600s) | 600 Salesforce, 601 Sap, 602 Zoho, 603 Braintree, 604 HubSpot, 605 Stripe, 606 Shopify, 607 QuickBooks, 608 NetSuite, 609 ServiceNow, 610 Jira, 611 Zendesk, 612 Slack, 613 Dynamics, 614 Workday |
+| Messaging (700s) | 700 Kafka, 701 RabbitMq, 702 AwsSqs, 703 AwsSns, 704 AzureServiceBus, 705 GooglePubSub, 706 RedisStreams |
+| AiProvider (800s) | 800 OpenAi, 801 AnthropicClaude, 802 Gemini, 803 DeepSeek, 804 OpenRouter |
+| Custom (900s) | 900 Custom, 901 Pgp, 902 Age |
+</Accordion>
+<Accordion title="ConnectionAuthMode">
+How the connection signs in.
+
+| Value | Name |
+| --- | --- |
+| 0 | None |
+| 1 | ConnectionString |
+| 2 | ApiKey |
+| 3 | BearerToken |
+| 4 | Basic |
+| 5 | OAuthClientCredentials |
+| 6 | OAuthAuthorizationCode |
+| 7 | CustomHeaders |
+| 8 | ServiceAccountJson |
+| 9 | AwsCredentials |
+| 10 | AwsRoleAssumption |
+| 11 | AzureServicePrincipal |
+| 12 | AzureManagedIdentity |
+| 13 | GcpServiceAccount |
+
+Each provider supports only some auth modes, and each mode needs particular secrets. For example `ConnectionString` needs `connectionString`, `ApiKey` needs `apiKey`, `BearerToken` needs `accessToken` or `bearerToken`, `Basic` needs `username` and `password`, and `OAuthClientCredentials` needs `clientSecret` (plus a public `clientId`).
+</Accordion>
+</Accordions>

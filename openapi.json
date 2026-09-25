@@ -179,11 +179,30 @@
                   "$ref": "#/components/schemas/ConnectionSummary"
                 }
               }
+            },
+            "headers": {
+              "ETag": {
+                "description": "Fingerprint of the new connection. Same value as eTag in the body; send it as If-Match on later replace or delete calls.",
+                "schema": {
+                  "type": "string"
+                }
+              },
+              "Location": {
+                "description": "URL of the new connection: /api/v10/Connections/connections/{id}.",
+                "schema": {
+                  "type": "string"
+                }
+              }
             }
           },
           "400": {
-            "description": "Bad Request",
+            "description": "Bad Request. The body was invalid; issues explains why.",
             "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ConnectionValidationResult"
+                }
+              },
               "application/problem+json": {
                 "schema": {
                   "$ref": "#/components/schemas/ProblemDetails"
@@ -1019,10 +1038,12 @@
         "type": "object",
         "properties": {
           "supportsTest": {
-            "type": "boolean"
+            "type": "boolean",
+            "description": "True if the Test endpoint can run a live connection check for this provider. Currently only Sqlite supports it."
           },
           "supportsSchemaDiscovery": {
-            "type": "boolean"
+            "type": "boolean",
+            "description": "True if the schema endpoints can list this connection's tables. Currently only Database + Sqlite supports it."
           }
         }
       },
@@ -1296,25 +1317,31 @@
         "properties": {
           "id": {
             "type": "string",
-            "format": "uuid"
+            "format": "uuid",
+            "description": "ID of the new connection. Save it: every later get, replace, delete or test call needs it."
           },
           "name": {
-            "type": "string"
+            "type": "string",
+            "description": "The name you sent. Shown in pickers and dropdowns."
           },
           "category": {
-            "$ref": "#/components/schemas/ConnectionCategory"
+            "$ref": "#/components/schemas/ConnectionCategory",
+            "description": "The category you sent."
           },
           "provider": {
-            "$ref": "#/components/schemas/ConnectionProvider"
+            "$ref": "#/components/schemas/ConnectionProvider",
+            "description": "The provider you connected to."
           },
           "authMode": {
-            "$ref": "#/components/schemas/ConnectionAuthMode"
+            "$ref": "#/components/schemas/ConnectionAuthMode",
+            "description": "The sign-in method that was accepted."
           },
           "settings": {
             "type": "object",
             "additionalProperties": {
               "type": "string"
-            }
+            },
+            "description": "The public settings you sent, echoed back (host, database, port and so on)."
           },
           "revision": {
             "pattern": "^-?(?:0|[1-9]\\d*)$",
@@ -1322,10 +1349,12 @@
               "integer",
               "string"
             ],
-            "format": "int64"
+            "format": "int64",
+            "description": "Version number of the connection. It is 1 when created and increases each time it is replaced."
           },
           "eTag": {
-            "type": "string"
+            "type": "string",
+            "description": "Fingerprint of this version. Send it back as If-Match when you replace or delete the connection. Also returned in the ETag header."
           },
           "createdBy": {
             "pattern": "^-?(?:0|[1-9]\\d*)$",
@@ -1333,11 +1362,13 @@
               "integer",
               "string"
             ],
-            "format": "int64"
+            "format": "int64",
+            "description": "ID of the user who created the connection."
           },
           "createdOn": {
             "type": "string",
-            "format": "date-time"
+            "format": "date-time",
+            "description": "When the connection was created (UTC)."
           },
           "updatedBy": {
             "pattern": "^-?(?:0|[1-9]\\d*)$",
@@ -1346,22 +1377,27 @@
               "integer",
               "string"
             ],
-            "format": "int64"
+            "format": "int64",
+            "description": "ID of the user who last replaced the connection. Null until the first replace."
           },
           "updatedOn": {
             "type": [
               "null",
               "string"
             ],
-            "format": "date-time"
+            "format": "date-time",
+            "description": "When the connection was last replaced (UTC). Null until the first replace."
           },
           "reconnectRequired": {
-            "type": "boolean"
+            "type": "boolean",
+            "description": "True when the saved OAuth sign-in has expired and the user must authorize again."
           },
           "capabilities": {
-            "$ref": "#/components/schemas/ConnectionCapabilities"
+            "$ref": "#/components/schemas/ConnectionCapabilities",
+            "description": "What you can do with this connection."
           }
-        }
+        },
+        "description": "The connection that was created. Secrets are never included, only public settings."
       },
       "ConnectionTestResult": {
         "required": [
@@ -1393,30 +1429,39 @@
         "type": "object",
         "properties": {
           "name": {
-            "type": "string"
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 256,
+            "description": "A friendly name for the connection, such as \"Analytics Postgres (prod)\". Up to 256 characters."
           },
           "category": {
-            "$ref": "#/components/schemas/ConnectionCategory"
+            "$ref": "#/components/schemas/ConnectionCategory",
+            "description": "The type of system you are connecting to, such as a database or an email service. It must match the provider. Send the number."
           },
           "provider": {
-            "$ref": "#/components/schemas/ConnectionProvider"
+            "$ref": "#/components/schemas/ConnectionProvider",
+            "description": "The exact system to connect to, such as Postgres or Salesforce. Send the number."
           },
           "authMode": {
-            "$ref": "#/components/schemas/ConnectionAuthMode"
+            "$ref": "#/components/schemas/ConnectionAuthMode",
+            "description": "How the connection signs in, such as username and password or an API key. Each provider supports only some modes. Send the number."
           },
           "settings": {
             "type": "object",
             "additionalProperties": {
               "type": "string"
-            }
+            },
+            "description": "Non-secret details such as host, database or port. Every value is text, even numbers. Use only the keys listed for your provider in the catalogue."
           },
           "secretSettings": {
             "type": "object",
             "additionalProperties": {
               "type": "string"
-            }
+            },
+            "description": "Sensitive details such as a username, password or API key. They are stored encrypted and are never shown again. Use only the keys your sign-in method needs."
           }
-        }
+        },
+        "description": "Details of the connection to create."
       },
       "DocumentationLink": {
         "required": [
@@ -1694,6 +1739,70 @@
           }
         },
         "additionalProperties": {}
+      },
+      "ConnectionValidationResult": {
+        "type": "object",
+        "required": [
+          "isValid",
+          "issues"
+        ],
+        "description": "Returned when the request fails validation. Nothing was created.",
+        "properties": {
+          "isValid": {
+            "type": "boolean",
+            "description": "False means the request was rejected. Fix the issues below and try again."
+          },
+          "issues": {
+            "type": "array",
+            "description": "One entry for each rule that failed, such as a missing setting, an unknown key or a provider and category that do not match.",
+            "items": {
+              "$ref": "#/components/schemas/ConnectionValidationIssue"
+            }
+          }
+        }
+      },
+      "ConnectionValidationIssue": {
+        "type": "object",
+        "required": [
+          "code",
+          "message",
+          "severity"
+        ],
+        "properties": {
+          "code": {
+            "type": "string",
+            "description": "Short ID of the rule that failed, for example name.invalid, provider.unknown, provider.category, provider.authMode, setting.required, secret.required, setting.unknown, setting.value.limit, setting.value.invalid or setting.port.invalid."
+          },
+          "message": {
+            "type": "string",
+            "description": "Plain-language explanation, for example \"Required setting 'host' is missing.\" Safe to show to a user."
+          },
+          "severity": {
+            "$ref": "#/components/schemas/ConnectionValidationSeverity",
+            "description": "How serious the issue is. Always Error here."
+          },
+          "settingKey": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "description": "The settings or secretSettings key that caused the error, such as host. Null for whole-request errors like an invalid name."
+          }
+        }
+      },
+      "ConnectionValidationSeverity": {
+        "type": "integer",
+        "enum": [
+          0,
+          1,
+          2
+        ],
+        "x-enumNames": [
+          "Information",
+          "Warning",
+          "Error"
+        ],
+        "description": "0 = Information, 1 = Warning, 2 = Error."
       }
     }
   },
