@@ -3,7 +3,7 @@ import ngaugeDoc from '@/openapi-ngauge.json';
 import datagovernanceDoc from '@/openapi-datagovernance.json';
 import datagraphDoc from '@/openapi-datagraph.json';
 import dataqualityDoc from '@/openapi-dataquality.json';
-import administrationDoc from '@/openapi-administration.json';
+import administrationDoc from '@/openapi-administration copy.json';
 import type { Document, HttpMethods } from 'fumadocs-openapi';
 
 const docs: Record<string, Document> = {
