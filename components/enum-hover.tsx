@@ -3,6 +3,8 @@
 import { Popover } from '@base-ui/react/popover';
 import { Filter } from 'lucide-react';
 import { useEffect, useRef, useState } from 'react';
+import { createRoot, type Root } from 'react-dom/client';
+import { EnumSelect } from './enum-select';
 
 type EnumMap = Record<string, [string, number][]>;
 
@@ -73,11 +75,80 @@ export function EnumHover({ enums }: { enums: EnumMap }) {
         }
       }
     };
+    // In the "Try it" form, swap the number inputs for the enum fields with a
+    // dropdown of names. The React-controlled input stays (hidden) and gets the
+    // chosen number through a native `input` event, so the form state, request
+    // body and curl sample all keep working.
+    const selectFor: Record<string, string> = {
+      '_body._category': 'ConnectionCategory',
+      '_body._provider': 'ConnectionProvider',
+      '_body._authMode': 'ConnectionAuthMode',
+    };
+    const setNative = (input: HTMLInputElement, value: string) => {
+      const set = Object.getOwnPropertyDescriptor(
+        HTMLInputElement.prototype,
+        'value',
+      )?.set;
+      set?.call(input, value);
+      input.dispatchEvent(new Event('input', { bubbles: true }));
+    };
+    const mounted = new Map<
+      string,
+      { root: Root; host: HTMLElement; input: HTMLInputElement; last: string }
+    >();
+    const render = (id: string, enumName: string) => {
+      const m = mounted.get(id)!;
+      m.root.render(
+        <EnumSelect
+          options={enums[enumName]}
+          value={m.input.value}
+          grouped={enumName === 'ConnectionProvider'}
+          onChange={(v) => setNative(m.input, v)}
+        />,
+      );
+      m.last = m.input.value;
+    };
+    const dropdowns = () => {
+      for (const [id, enumName] of Object.entries(selectFor)) {
+        const input = document.getElementById(id) as HTMLInputElement | null;
+        const m = mounted.get(id);
+        // Drop dropdowns whose input was re-rendered or removed.
+        if (m && (!input || input !== m.input || !m.host.isConnected)) {
+          const root = m.root;
+          m.host.remove();
+          mounted.delete(id);
+          setTimeout(() => root.unmount());
+        }
+        if (!input || !hydrated(input)) continue;
+        const cur = mounted.get(id);
+        if (cur) {
+          if (cur.last !== input.value) render(id, enumName);
+          continue;
+        }
+        const host = document.createElement('div');
+        input.style.display = 'none';
+        input.after(host);
+        mounted.set(id, { root: createRoot(host), host, input, last: '' });
+        render(id, enumName);
+      }
+    };
+
     mark();
-    const interval = setInterval(mark, 400);
+    dropdowns();
+    const interval = setInterval(() => {
+      mark();
+      dropdowns();
+    }, 400);
 
     return () => {
       clearInterval(interval);
+      for (const m of mounted.values()) {
+        const root = m.root;
+        m.host.remove();
+        m.input.style.display = '';
+        setTimeout(() => root.unmount());
+      }
+      mounted.clear();
       document.removeEventListener('click', onClick);
       document.removeEventListener('keydown', onKey);
     };
@@ -94,7 +165,7 @@ export function EnumHover({ enums }: { enums: EnumMap }) {
   return (
     <>
     {/* Field descriptions: muted gray and small, like the page subtitle. Only on pages that use this component. */}
-    <style>{'#nd-page .prose-no-margin p { font-size: 13px; line-height: 1.5; color: var(--color-fd-muted-foreground); }'}</style>
+    <style>{'#nd-page .prose-no-margin p { font-size: 13px; line-height: 1.5; color: color-mix(in srgb, var(--color-fd-foreground) 70%, var(--color-fd-muted-foreground)); }'}</style>
     <Popover.Root
       open={tip !== null}
       onOpenChange={(open, details) => {
