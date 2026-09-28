@@ -1,6 +1,6 @@
 ---
 title: "Create Connection"
-description: "Create Connection"
+description: "Registers a new external connection for the tenant, given a name, connection type, credential type, and a type-specific configuration blob. Only checks the fields are present and the name is unique — it does not verify the type/credential/configuration actually match, so use the table below to pick a working combination."
 ---
 
 {/* admin-connection-guide */}
@@ -9,8 +9,5 @@ description: "Create Connection"
 
 **Create Connection**
 
-Creates a tenant-scoped core connection in one step. Send `Name`, `Configuration`, `ConnectionType` and `CredentialType` (all required — `ConnectionCreateRequestValidator`). The handler persists the connection, then returns the schema with secrets redacted (`GetRedactedConnectionConfig`). Use the returned `Id` for every follow-up call.
-
-Workflow: create → `GET {id}/tables` to discover tables → `POST {id}/get-columns` for columns → `POST {id}/table/get-sample-data` to preview → `POST {id}/execute-query` to run queries. OAuth types go through `GET oauth/authorize` then `POST {connectionType}/authorize-callback`; re-check with `POST oauth/{id}/validate-credentials`. Pin a working connection with `PATCH {id}/set-as-default`.
 
 Tags: `Core \ Connection`
