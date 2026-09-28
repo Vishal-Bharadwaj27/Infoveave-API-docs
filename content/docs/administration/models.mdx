@@ -1,0 +1,26 @@
+---
+title: "Models"
+description: "Enum values used by the Administration API"
+---
+
+Enums used by the Administration API. Connection type and credential type names are sent as strings.
+
+<Accordions>
+<Accordion title="ConnectionType (admin)">
+The kind of system a core connection points to. From `ConnectionType` in `Infoveave.Services.MetadataModels/ConnectionTypeEnum.cs` (also mirrored in `Infoveave.Services.FuseDataModels/CommonModels/Consolidated.cs` and `Infoveave.Services.OAuthModels/OAuthEnums.cs`).
+
+| Values |
+| --- |
+| Api, Braintree, Genesys, GraphQL, Salesforce, Azure, Database, Ftp, Email, S3, SendEmail, SsisEtl, MicrosoftDynamics, Mailgun, GoogleDrive, GoogleAnalytics, GoogleForm, GoogleSheets, GoogleTranslate, GoogleBigQuery, GoogleCloudStorage, Jira, LinkedIn, MicrosoftTeams, Shopify, Slack, WhatsApp, OneDrive, Dropbox, Box, Gmail, Outlook, HubSpot, Zoho, GitHub, Monday, PayPal, OpenAI, Claude, Gemini, Sap, Kafka, None |
+</Accordion>
+<Accordion title="CredentialType (admin)">
+How a core connection authenticates. From `CredentialType` in `Infoveave.Services.FuseDataModels/CommonModels/Consolidated.cs:802`.
+
+| Value | Meaning |
+| --- | --- |
+| ClientCredentials | Server-to-server OAuth client id/secret flow |
+| ServiceAccount | Google-style service account key (BigQuery, GCS) |
+| AuthCode | Interactive OAuth authorization-code flow with refresh tokens |
+| None | No credentials stored |
+</Accordion>
+</Accordions>

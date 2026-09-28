@@ -106,10 +106,10 @@ const categories: Category[] = [
   },
   {
     name: 'Custom',
-    accepts: ['None', 'ApiKey', 'BearerToken', 'Basic', 'CustomHeaders'],
+    accepts: ['None (Pgp, Age)', 'None, ApiKey, BearerToken, Basic, CustomHeaders (Custom)'],
     rows: [
       { providers: ['Custom'], fits: ['None', 'ApiKey', 'BearerToken', 'Basic', 'CustomHeaders'] },
-      { providers: ['Pgp', 'Age'], fits: ['None'] },
+      { providers: ['Pgp', 'Age'], fits: ['None'], note: 'Only None is accepted for key-store providers.' },
     ],
   },
 ];
@@ -121,9 +121,9 @@ export function ProviderCompatibility() {
         Which options go together
       </h2>
       <p className="mt-2 text-fd-muted-foreground">
-        The API only checks that the auth mode is on the category&apos;s list. It
-        does not check the provider, so a pairing such as S3 with
-        AzureManagedIdentity is accepted even though it makes no sense. The
+        The API checks that the provider belongs to the category and that the auth mode
+        is in that provider&apos;s SupportedAuthModes list. The
+        Pgp with ApiKey is rejected. The
         &quot;Fits&quot; column shows the modes that match each provider&apos;s
         own settings; it is guidance, not enforced.
       </p>

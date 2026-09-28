@@ -4,6 +4,7 @@ import ngaugeMeta from '@/content/docs/ngauge/meta.json';
 import datagovernanceMeta from '@/content/docs/datagovernance/meta.json';
 import datagraphMeta from '@/content/docs/datagraph/meta.json';
 import dataqualityMeta from '@/content/docs/dataquality/meta.json';
+import administrationMeta from '@/content/docs/administration/meta.json';
 import { METHOD_STYLES, methodFromFileName, source } from '@/lib/source';
 
 const SECTIONS = [
@@ -12,6 +13,7 @@ const SECTIONS = [
   { slug: 'datagovernance', order: datagovernanceMeta.pages },
   { slug: 'datagraph', order: datagraphMeta.pages },
   { slug: 'dataquality', order: dataqualityMeta.pages },
+  { slug: 'administration', order: administrationMeta.pages },
 ];
 
 // Landing-page grid: one card per operation, grouped by service.
