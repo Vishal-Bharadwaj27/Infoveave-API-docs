@@ -3,6 +3,7 @@ import ngaugeDoc from '@/openapi-ngauge.json';
 import datagovernanceDoc from '@/openapi-datagovernance.json';
 import datagraphDoc from '@/openapi-datagraph.json';
 import dataqualityDoc from '@/openapi-dataquality.json';
+import administrationDoc from '@/openapi-administration.json';
 import type { Document, HttpMethods } from 'fumadocs-openapi';
 
 const docs: Record<string, Document> = {
@@ -11,6 +12,7 @@ const docs: Record<string, Document> = {
   datagovernance: withProblemDetailsFallback(datagovernanceDoc),
   datagraph: withProblemDetailsFallback(datagraphDoc),
   dataquality: withProblemDetailsFallback(dataqualityDoc),
+  administration: withProblemDetailsFallback(administrationDoc),
 };
 
 // Some service specs reference `#/components/schemas/ProblemDetails` without
