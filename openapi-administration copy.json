@@ -6618,16 +6618,20 @@
         "type": "object",
         "properties": {
           "name": {
-            "type": "string"
+            "type": "string",
+            "description": "Display name of the connection."
           },
           "configuration": {
-            "type": "string"
+            "type": "string",
+            "description": "Connection settings as a JSON string; the shape depends on connectionType and credentialType."
           },
           "connectionType": {
-            "type": "string"
+            "type": "string",
+            "description": "Which external system this connects to (e.g. Database, Salesforce)."
           },
           "credentialType": {
-            "type": "string"
+            "type": "string",
+            "description": "Which auth style the connection uses (e.g. None, AuthCode, ClientCredentials, ServiceAccount)."
           }
         }
       },
@@ -6646,16 +6650,20 @@
               "integer",
               "string"
             ],
-            "format": "int64"
+            "format": "int64",
+            "description": "Unique ID of the connection, assigned on creation."
           },
           "name": {
-            "type": "string"
+            "type": "string",
+            "description": "Display name of the connection."
           },
           "configuration": {
-            "type": "string"
+            "type": "string",
+            "description": "Connection settings as a JSON string; secrets inside it are redacted."
           },
           "connectionType": {
-            "type": "string"
+            "type": "string",
+            "description": "Which external system this connects to (e.g. Database, Salesforce)."
           },
           "createdBy": {
             "pattern": "^-?(?:0|[1-9]\\d*)$",
@@ -6663,30 +6671,35 @@
               "integer",
               "string"
             ],
-            "format": "int64"
+            "format": "int64",
+            "description": "User ID who created the connection."
           },
           "createdOn": {
             "type": [
               "null",
               "string"
             ],
-            "format": "date-time"
+            "format": "date-time",
+            "description": "Timestamp when the connection was created."
           },
           "updatedOn": {
             "type": [
               "null",
               "string"
             ],
-            "format": "date-time"
+            "format": "date-time",
+            "description": "Timestamp of the last update, or null if never updated."
           },
           "isPublic": {
-            "type": "boolean"
+            "type": "boolean",
+            "description": "Whether all users in the tenant can use this connection."
           },
           "folder": {
             "type": [
               "null",
               "string"
-            ]
+            ],
+            "description": "Folder this connection is organized under, if any."
           },
           "sharedWith": {
             "type": [
@@ -6700,7 +6713,8 @@
                 "string"
               ],
               "format": "int64"
-            }
+            },
+            "description": "User IDs this connection is explicitly shared with."
           },
           "sharedWithRoles": {
             "type": [
@@ -6714,7 +6728,8 @@
                 "string"
               ],
               "format": "int64"
-            }
+            },
+            "description": "Role IDs this connection is explicitly shared with."
           },
           "updatedBy": {
             "pattern": "^-?(?:0|[1-9]\\d*)$",
@@ -6723,22 +6738,26 @@
               "integer",
               "string"
             ],
-            "format": "int64"
+            "format": "int64",
+            "description": "User ID who last updated the connection, if any."
           },
           "credentialType": {
-            "type": "string"
+            "type": "string",
+            "description": "Which auth style the connection uses (e.g. None, AuthCode, ClientCredentials, ServiceAccount)."
           },
           "databaseType": {
             "type": [
               "null",
               "string"
-            ]
+            ],
+            "description": "Specific database engine, only set for Database connections."
           },
           "defaultPrimaryKey": {
             "type": [
               "null",
               "string"
-            ]
+            ],
+            "description": "Default primary key column, only set for Database connections."
           }
         }
       },
@@ -6921,7 +6940,7 @@
           "level": {
             "type": "string"
           },
-          "fiscalYears": { },
+          "fiscalYears": {},
           "createdOn": {
             "type": "string",
             "format": "date-time"

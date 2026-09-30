@@ -1,0 +1,33 @@
+{
+  "title": "User",
+  "pages": [
+    "patch-api-v10-administration-user-preferences-toggle-tabbed-browsing",
+    "patch-api-v10-administration-user-preferences-tab-group",
+    "get-api-v10-administration-user-preferences-can-impersonate",
+    "post-api-v10-administration-user-preferences-impersonate",
+    "post-api-v10-administration-user-preferences-validate-password",
+    "patch-api-v10-administration-user-preferences-change-password",
+    "patch-api-v10-administration-user-preferences-profile",
+    "patch-api-v10-administration-user-preferences-profile-image",
+    "get-api-v10-administration-user-preferences-2fa-enabled",
+    "patch-api-v10-administration-user-preferences-2fa-toggle",
+    "post-api-v10-administration-user-preferences-2fa-validate-otp",
+    "get-api-v10-administration-user-preferences-spring-board",
+    "put-api-v10-administration-user-preferences-spring-board",
+    "patch-api-v10-administration-user-preferences-spring-board-reset",
+    "get-api-v10-administration-Users",
+    "post-api-v10-administration-Users",
+    "put-api-v10-administration-Users-id",
+    "delete-api-v10-administration-Users-id",
+    "get-api-v10-administration-Users-id",
+    "get-api-v10-administration-Users-current-user",
+    "get-api-v10-administration-Users-id-shared-resources",
+    "post-api-v10-administration-Users-id-clone",
+    "get-api-v10-administration-Users-id-profile-image",
+    "patch-api-v10-administration-Users-id-toggle-lock",
+    "get-api-v10-administration-Users-download-template",
+    "post-api-v10-administration-Users-upload-users",
+    "get-api-v10-administration-Users-id-entities",
+    "post-api-v10-administration-Users-id-logs"
+  ]
+}

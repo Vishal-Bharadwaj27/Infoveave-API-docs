@@ -1,0 +1,7 @@
+{
+  "title": "ExternalLoginSetting",
+  "pages": [
+    "get-api-v10-administration-external-login-settings",
+    "patch-api-v10-administration-external-login-settings"
+  ]
+}

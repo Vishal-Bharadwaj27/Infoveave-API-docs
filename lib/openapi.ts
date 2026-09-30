@@ -1,39 +1,56 @@
-import connectionsDoc from '@/openapi.json';
-import ngaugeDoc from '@/openapi-ngauge.json';
-import datagovernanceDoc from '@/openapi-datagovernance.json';
-import datagraphDoc from '@/openapi-datagraph.json';
-import dataqualityDoc from '@/openapi-dataquality.json';
 import administrationDoc from '@/openapi-administration copy.json';
 import type { Document, HttpMethods } from 'fumadocs-openapi';
 
-const docs: Record<string, Document> = {
-  connections: connectionsDoc as unknown as Document,
-  ngauge: ngaugeDoc as unknown as Document,
-  datagovernance: withProblemDetailsFallback(datagovernanceDoc),
-  datagraph: withProblemDetailsFallback(datagraphDoc),
-  dataquality: withProblemDetailsFallback(dataqualityDoc),
-  administration: withProblemDetailsFallback(administrationDoc),
+// RFC 7807 shape, matching what the Infoveave services actually return.
+const PROBLEM_DETAILS_SCHEMA = {
+  type: 'object',
+  properties: {
+    type: {
+      type: 'string',
+      nullable: true,
+      description: 'A short code or URL identifying the error type.',
+    },
+    title: {
+      type: 'string',
+      nullable: true,
+      description: 'Short, human-readable summary of the error.',
+    },
+    status: {
+      type: 'integer',
+      format: 'int32',
+      nullable: true,
+      description: 'HTTP status code.',
+    },
+    detail: {
+      type: 'string',
+      nullable: true,
+      description: 'Specific explanation of what went wrong.',
+    },
+    instance: {
+      type: 'string',
+      nullable: true,
+      description: 'Identifier for this specific error occurrence, if provided.',
+    },
+  },
+  additionalProperties: {},
 };
 
-// Some service specs reference `#/components/schemas/ProblemDetails` without
-// defining it, which crashes the OpenAPI renderer at build time. Backfill it
-// from the connections spec (RFC 7807 shape) when missing.
+// The administration spec references `#/components/schemas/ProblemDetails`
+// without defining it, which crashes the OpenAPI renderer at build time.
 function withProblemDetailsFallback(spec: unknown): Document {
   const doc = spec as Document & {
     components?: { schemas?: Record<string, unknown> };
   };
   doc.components ??= {};
   doc.components.schemas ??= {};
-  if (!doc.components.schemas.ProblemDetails) {
-    const fallback = (
-      connectionsDoc as unknown as {
-        components?: { schemas?: Record<string, unknown> };
-      }
-    ).components?.schemas?.ProblemDetails;
-    if (fallback) doc.components.schemas.ProblemDetails = fallback;
-  }
+  doc.components.schemas.ProblemDetails ??=
+    PROBLEM_DETAILS_SCHEMA as unknown as Record<string, unknown>;
   return doc;
 }
+
+const docs: Record<string, Document> = {
+  administration: withProblemDetailsFallback(administrationDoc),
+};
 
 export function getOpenAPIDocument(section: string): Document | undefined {
   return docs[section];

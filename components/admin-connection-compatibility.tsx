@@ -1,50 +1,64 @@
 // Which ConnectionType goes with which CredentialType for the
 // Administration service's POST /api/v10/core/connections.
 //
-// Verified against, in Infoveave-vNext:
-// - Modules/Connection/Models/ApiModels.cs:27-34 ConnectionCreateRequest (all 4 fields required, all free strings)
-// - Modules/Connection/Validators/ConnectionValidators.cs:8-23 (only checks non-empty — no cross-validation of pairing)
-// - Modules/Connection/Handlers/ConnectionsHandler.cs:93-133 CreateConnection (stores both fields as-is, no enum parsing)
-// - Modules/Connection/Handlers/ConnectionsHandler.cs:44 (ConnectionType aliased to MetadataModels.ConnectionType, 43 values)
-// - Modules/Connection/Handlers/ConnectionsHandler.cs:623 ClientCredentials branch, :664 ServiceAccount branch (in ValidateOAuthCredentials)
-// - Modules/Connection/Handlers/ConnectionsHandler.cs:766-774 (GetConnectionDetails parses ConnectionType against the SMALLER
-//   OAuthEnums.ConnectionType, 39 values, only when CredentialType is AuthCode or ClientCredentials — throws if the value
-//   isn't one of those 39; caught silently, but token handling fails for that connection)
-// - ServiceModels/.../OAuthModels/OAuthEnums.cs:5-45 (the 39-value ConnectionType actually used by the OAuth/refresh code path)
-// - ServiceModels/.../MetadataModels/ConnectionTypeEnum.cs:3-48 (the 43-value ConnectionType the create endpoint stores against)
+// The API itself does not enforce any of this — ConnectionType and
+// CredentialType are both free strings, and the validator only checks
+// they're non-empty. The pairings below come from FuseData's own connection
+// models, which are what actually read and use these same connections.
 type Row = { types: string[]; credentials: string[]; note?: string };
 
 const rows: Row[] = [
   {
     types: ['Database'],
     credentials: ['None'],
-    // note: 'Configuration is a SqlConnection JSON (host/port/username/password/database) — see StaticHelper.cs:21 and ConnectionsHandler.cs:731 for the special-casing. Not enforced by the API; this is the conventional pairing.',
+    note: 'Configuration is a plain connection string (host, port, username, password, database). Not enforced by the API; this is the only pairing that matches the Configuration shape.',
   },
   {
-    types: ['GoogleBigQuery', 'GoogleCloudStorage'],
-    credentials: ['ServiceAccount'],
-    // note: 'Configuration must include serviceAccountDetails — the filename of a service-account JSON already uploaded under the tenant\u2019s Certificates folder (ConnectionsHandler.cs:664-681). Not restricted to these two types by code, but this is the only combination the validation endpoint actually knows how to check.',
+    types: ['GoogleBigQuery'],
+    credentials: ['AuthCode', 'ServiceAccount'],
+    note: 'AuthCode is the default. ServiceAccount needs Configuration to include the filename of a service-account JSON already uploaded for the tenant.',
   },
   {
-    types: [
-      'Salesforce', 'GoogleDrive', 'Gmail', 'OneDrive', 'Dropbox', 'Box',
-      'HubSpot', 'Zoho', 'Jira', 'Slack', 'Shopify', 'Monday',
-    ],
+    types: ['GoogleCloudStorage'],
+    credentials: ['AuthCode'],
+    note: 'ServiceAccount is not offered for this type, even though it looks similar to BigQuery.',
+  },
+  {
+    types: ['GitHub', 'GoogleAnalytics', 'Jira', 'Shopify'],
+    credentials: ['AuthCode'],
+    note: 'AuthCode connections are normally produced by GET oauth/authorize → POST {connectionType}/authorize-callback, not posted directly here. ClientCredentials is not offered for any of these four.',
+  },
+  {
+    types: ['Salesforce'],
     credentials: ['AuthCode', 'ClientCredentials'],
-    // note: 'These 12 are the OAuth-capable values in OAuthEnums.ConnectionType. AuthCode connections are normally produced by GET oauth/authorize \u2192 POST {connectionType}/authorize-callback, not posted directly here. ClientCredentials is for server-to-server; Configuration should match OAuthConnectionModel (clientId, clientSecret, authUrl). Monday and Shopify skip the missing-refresh-token warning (ConnectionsHandler.cs:61).',
+    note: 'AuthCode is the default. ClientCredentials is for server-to-server use; Configuration should carry clientId, clientSecret, and authUrl.',
+  },
+  {
+    types: ['PayPal'],
+    credentials: ['ClientCredentials'],
+    note: 'ClientCredentials only — AuthCode is not offered for this type.',
+  },
+  {
+    types: ['Braintree'],
+    credentials: ['ClientCredentials'],
+    note: 'Configuration should carry clientId, clientSecret, and authUrl, matching a client-credentials style connection.',
+  },
+  {
+    types: ['GoogleDrive', 'Gmail', 'OneDrive', 'Dropbox', 'Box', 'HubSpot', 'Zoho', 'Slack', 'Monday'],
+    credentials: ['AuthCode'],
+    note: 'These are OAuth-capable, but only AuthCode is confirmed for them — treat ClientCredentials as unsupported for this group.',
   },
   {
     types: ['Api', 'GraphQL', 'Ftp', 'Email', 'S3', 'Azure'],
     credentials: ['None', 'ClientCredentials'],
-    // note: 'Credentials travel inside Configuration. ClientCredentials is safe for these — all 6 exist in both ConnectionType enums used by the create and refresh paths.',
+    note: 'Credentials travel inside Configuration. ClientCredentials is for endpoints that speak OAuth client-credentials.',
   },
   {
     types: ['Sap', 'Kafka', 'OpenAI', 'Claude', 'Gemini'],
     credentials: ['None'],
-    // note: 'Use None only. These 5 exist in the 43-value ConnectionType this endpoint stores against, but NOT in the 39-value OAuthEnums.ConnectionType the refresh/details path parses against — pairing them with AuthCode or ClientCredentials passes creation but throws (silently caught) the first time the connection\u2019s details are resolved for use.',
+    note: 'Use None only. AuthCode or ClientCredentials will pass creation but fail silently the first time the connection is actually used.',
   },
 ];
-
 
 export function AdminConnectionCompatibility() {
   return (
