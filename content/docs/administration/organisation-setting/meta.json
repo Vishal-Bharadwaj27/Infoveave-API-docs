@@ -1,0 +1,11 @@
+{
+  "title": "OrganisationSetting",
+  "pages": [
+    "get-api-v10-administration-organisation-settings",
+    "patch-api-v10-administration-organisation-settings",
+    "get-api-v10-administration-organisation-settings-tenant-public",
+    "put-api-v10-administration-organisation-settings-branding",
+    "put-api-v10-administration-organisation-settings-organisation-chart-defaults",
+    "get-api-v10-administration-organisation-settings-organisation-chart-defaults"
+  ]
+}

@@ -1,0 +1,9 @@
+{
+  "title": "Trash",
+  "pages": [
+    "get-api-v10-administration-trash",
+    "delete-api-v10-administration-trash",
+    "delete-api-v10-administration-trash-entityType-entityId",
+    "patch-api-v10-administration-trash-entityType-entityId-restore"
+  ]
+}

@@ -38,3 +38,16 @@ html > body[data-scroll-locked] {
     overflow-y: auto;
   }
 }
+
+/* Field descriptions in the OpenAPI request/response schema viewer: they sit
+   directly below the field name (fumadocs-openapi's own layout), just dial
+   the text down 2px from the 14px field-name row and make it read as plain
+   black instead of the default muted gray. */
+.prose-no-margin.py-2.empty\:hidden {
+  font-size: 0.75rem;
+  color: #000;
+}
+
+.dark .prose-no-margin.py-2.empty\:hidden {
+  color: #e5e5e5;
+}

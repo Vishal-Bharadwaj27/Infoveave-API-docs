@@ -1,0 +1,16 @@
+{
+  "title": "Calendar",
+  "pages": [
+    "get-api-v10-administration-calendar-Holidays",
+    "post-api-v10-administration-calendar-Holidays",
+    "delete-api-v10-administration-calendar-Holidays-id",
+    "post-api-v10-administration-calendar-Holidays-upload",
+    "get-api-v10-administration-calendars-Reporting",
+    "post-api-v10-administration-calendars-Reporting",
+    "put-api-v10-administration-calendars-Reporting-id",
+    "delete-api-v10-administration-calendars-Reporting-id",
+    "post-api-v10-administration-calendars-Reporting-get-years",
+    "get-api-v10-administration-calendars-Reporting-id-years-year",
+    "delete-api-v10-administration-calendars-Reporting-id-years-year"
+  ]
+}

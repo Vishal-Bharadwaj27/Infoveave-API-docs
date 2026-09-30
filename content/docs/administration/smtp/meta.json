@@ -1,0 +1,8 @@
+{
+  "title": "Smtp",
+  "pages": [
+    "get-api-v10-administration-Smtp",
+    "put-api-v10-administration-Smtp",
+    "delete-api-v10-administration-Smtp"
+  ]
+}

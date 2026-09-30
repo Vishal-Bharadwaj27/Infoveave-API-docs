@@ -1,0 +1,9 @@
+{
+  "title": "Audit",
+  "pages": [
+    "post-api-v10-administration-Audit",
+    "post-api-v10-administration-Audit-detail",
+    "get-api-v10-administration-Audit-infoboards",
+    "get-api-v10-administration-Audit-reports"
+  ]
+}

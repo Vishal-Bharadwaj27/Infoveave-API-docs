@@ -1,0 +1,7 @@
+{
+  "title": "Account",
+  "pages": [
+    "patch-api-v10-administration-Accounts-forgot-password",
+    "patch-api-v10-administration-Accounts-id-reset-password"
+  ]
+}

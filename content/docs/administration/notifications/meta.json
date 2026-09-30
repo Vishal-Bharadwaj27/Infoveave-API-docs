@@ -1,0 +1,9 @@
+{
+  "title": "Notifications",
+  "pages": [
+    "get-api-v10-core-Notifications",
+    "delete-api-v10-core-Notifications",
+    "get-api-v10-core-Notifications-id-table-content",
+    "delete-api-v10-core-Notifications-delete-all-notifications-before-dateString"
+  ]
+}

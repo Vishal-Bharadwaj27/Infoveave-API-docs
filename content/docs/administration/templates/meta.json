@@ -1,0 +1,9 @@
+{
+  "title": "Templates",
+  "pages": [
+    "get-api-v10-administration-templates",
+    "get-api-v10-administration-templates-id",
+    "post-api-v10-administration-templates-id",
+    "get-api-v10-administration-templates-infoboard-id"
+  ]
+}

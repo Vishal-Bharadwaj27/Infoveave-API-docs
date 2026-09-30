@@ -1,0 +1,12 @@
+{
+  "title": "Tenant",
+  "pages": [
+    "post-api-v10-administration-Tenants",
+    "post-api-v10-administration-Tenants-exists",
+    "post-api-v10-administration-Tenants-is-active",
+    "get-api-v10-administration-Tenants-tenant-info",
+    "put-api-v10-administration-Tenants-extend-trail-period",
+    "post-api-v10-administration-Tenants-get-logs",
+    "get-api-v10-administration-Tenants-tenant-logo"
+  ]
+}
